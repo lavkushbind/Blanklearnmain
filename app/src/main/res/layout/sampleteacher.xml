@@ -4,21 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="16dp"
     android:layout_marginTop="5sp"
+    android:background="@drawable/folded_corner"
     android:outlineAmbientShadowColor="@color/white"
     android:outlineSpotShadowColor="@color/white"
-    android:padding="1dp"
-    android:background="@drawable/folded_corner"
+    app:cardCornerRadius="10dp"
 
-    app:cardElevation="1dp">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:background="@drawable/folded_corner"
-        >
+        android:background="@drawable/folded_corner">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profilepic"
@@ -73,19 +71,29 @@
             app:layout_constraintStart_toEndOf="@+id/profilepic"
             app:layout_constraintTop_toBottomOf="@+id/tname" />
 
+        <TextView
+            android:id="@+id/textView81"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:text="Buy free trial lesson"
+            android:textColor="#FF9800"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view8" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/textView75"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginStart="20dp"
             android:background="@drawable/signbg"
             android:padding="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view8">
+            app:layout_constraintStart_toEndOf="@+id/profilepic"
+            app:layout_constraintTop_toBottomOf="@+id/textView58">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -109,16 +117,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="/ h"
+                    android:text="/ monthly"
                     android:textColor="#FF9800" />
 
-                <TextView
-                    android:id="@+id/textView81"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="Buy free trial lesson"
-                    android:textColor="#FF9800" />
             </LinearLayout>
 
 
@@ -159,7 +160,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="32dp"
             android:maxLines="5"
@@ -168,7 +168,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView58" />
+            app:layout_constraintTop_toBottomOf="@+id/textView75" />
 
         <View
             android:id="@+id/view8"

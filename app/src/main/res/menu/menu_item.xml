@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/black">
+    android:background="#01072B">
 
     <item
         android:id="@+id/home"
@@ -8,17 +8,6 @@
         android:title="home"
 
 
-        />
-    <item
-        android:id="@+id/search"
-        android:icon="@drawable/searchbar"
-        android:title="Group"
-
-        />
-    <item
-        android:id="@+id/classs"
-        android:icon="@drawable/courseicon"
-        android:title="courses"
 
         />
 
@@ -28,6 +17,21 @@
         android:title="individual"
 
         />
+    <item
+        android:id="@+id/classs"
+        android:icon="@drawable/courseicon"
+        android:title="courses"
+
+        />
+
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/searchbar"
+        android:title="Group"
+
+        />
+
     <item
         android:id="@+id/profile"
         android:icon="@drawable/newuser"

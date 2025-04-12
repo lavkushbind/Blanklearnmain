@@ -175,7 +175,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="96dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/edit_text_background"
             android:padding="10dp"
@@ -276,7 +276,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bio" />
+            app:layout_constraintTop_toBottomOf="@id/RV_demo" />
 
         <ImageView
             android:id="@+id/Share"
@@ -299,11 +299,12 @@
             android:layout_marginTop="100dp"
             android:layout_marginEnd="32dp"
             android:background="@drawable/signbg"
-            android:gravity="center"
             android:backgroundTint="#0B1863"
+            android:gravity="center"
             android:text="Apply for 1-1 teacher  "
             android:textColor="@color/white"
             android:textSize="18dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -312,19 +313,17 @@
         <TextView
             android:id="@+id/uploadbtn"
             android:layout_width="0dp"
-            android:gravity="center"
             android:layout_height="40dp"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="32dp"
-            app:backgroundTint="#042FF4"
-            android:background="@drawable/signbg"
-            android:backgroundTint="#2F4EEB"
-            android:textSize="18dp"
-            android:textColor="@color/white"
+            android:background="@drawable/edit_text_background"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:text="Apply for Teaching "
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_post" />
 
@@ -350,6 +349,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/profilepic"
             app:layout_constraintEnd_toStartOf="@+id/cha"
             diagonal:srcCompat="@drawable/verify" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/RV_demo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="1dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bio" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

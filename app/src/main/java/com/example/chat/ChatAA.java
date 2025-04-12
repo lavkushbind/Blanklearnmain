@@ -1,17 +1,28 @@
 package com.example.chat;
-
+import android.Manifest;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+import com.blank_learn.dark.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.blank_learn.dark.R;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.blank_learn.dark.databinding.ActivityGroupChatBinding;
 import com.example.home.MainActivity;
 import com.example.loginandsignup.Users;
@@ -24,15 +35,38 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import android.util.Log;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChatAA extends AppCompatActivity {
+    private final String CHANNEL_ID = "message_channel";
+    private final int NOTIFICATION_ID = 1;
+    private int lastMessageCount = 0;
     ActivityGroupChatBinding binding;
     FirebaseAuth auth;
     ArrayList<chatmodel> list;
@@ -64,32 +98,20 @@ public class ChatAA extends AppCompatActivity {
         Postid = intent.getStringExtra("Postid");
         chatAdapter = new chatAdapter(list, getApplicationContext());
         database.getReference().child("Users").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
-                    Users user= snapshot.getValue(Users.class);
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Users user = snapshot.getValue(Users.class);
                     binding.receiversName.setText(user.getName());
 
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        chatAdapter chatAdapter = new chatAdapter(list, getApplicationContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         binding.messageAdapter.setLayoutManager(layoutManager);
         binding.messageAdapter.setAdapter(chatAdapter);
@@ -118,6 +140,7 @@ public class ChatAA extends AppCompatActivity {
             }
         });
     }
+
     private void scrollToBottom() {
         if (binding.messageAdapter.getAdapter() != null) {
             int itemCount = binding.messageAdapter.getAdapter().getItemCount();
@@ -126,23 +149,45 @@ public class ChatAA extends AppCompatActivity {
             }
         }
     }
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*"); // Set MIME type to all file types
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Allow multiple file selection
+        startActivityForResult(intent, REQUEST_IMAGE_PICK);
+    }
 
 
     private void loadGroupMessages() {
         String senderId = auth.getUid();
         String chatId;
-        String userid1=  auth.getUid();
+        String userid1 = auth.getUid();
         intent = getIntent();
         String userid2;
-        auth= FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         userid2 = intent.getStringExtra("name");
         if (userid1.compareTo(userid2) < 0) {
             chatId = userid1 + "_" + userid2;
         } else {
             chatId = userid2 + "_" + userid1;
         }
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        return;
+                    }
+                    String token = task.getResult();
+                    String userId = FirebaseAuth.getInstance().getUid();
 
- database.getReference().child("Personal_chat").child(chatId)
+                    if (userId != null) {
+                        FirebaseDatabase.getInstance().getReference("Users")
+                                .child(userId)
+                                .child("fcmToken")
+                                .setValue(token);
+                    }
+                });
+
+        database.getReference().child("Personal_chat").child(chatId)
                 .child("mess")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -155,6 +200,9 @@ public class ChatAA extends AppCompatActivity {
                         updateChatAdapter();
                         scrollToBottom();
 
+                        if (list.size() > lastMessageCount) {
+                            lastMessageCount = list.size();
+                        }
                     }
 
                     @Override
@@ -172,21 +220,6 @@ public class ChatAA extends AppCompatActivity {
             }
         });
     }
-    private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*"); // Set MIME type to all file types
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Allow multiple file selection
-        startActivityForResult(intent, REQUEST_IMAGE_PICK);
-    }
-
-
-//    private void openImagePicker() {
-//        Intent intent = new Intent();
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//        intent.setType("*/*");
-//        startActivityForResult(intent, REQUEST_IMAGE_PICK);
-//    }
 
     private void sendMessage() {
         String message = binding.edtMessage.getText().toString().trim();
@@ -212,8 +245,11 @@ public class ChatAA extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void unused) {
-                            // Message sent successfully
+                            sendNotificationToUser(userid2, "New Message", message);
+
                         }
+
+                      
                     });
         } else {
             Toast.makeText(ChatAA.this, "Type a message", Toast.LENGTH_SHORT).show();
@@ -223,24 +259,90 @@ public class ChatAA extends AppCompatActivity {
         binding.edtMessage.setText("");
     }
 
+    private void sendNotificationToUser(String recipientUserId, String title, String message) {
+        // Retrieve the recipient's OneSignal Player ID from Firebase
+        FirebaseDatabase.getInstance().getReference("Users")
+                .child(recipientUserId)
+                .child("oneSignalPlayerId")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String recipientPlayerId = dataSnapshot.getValue(String.class);
+
+                        if (recipientPlayerId != null) {
+                            // OneSignal API URL
+                            String oneSignalApiUrl = "https://onesignal.com/api/v1/notifications";
+
+                            // OneSignal App ID
+                            String oneSignalAppId = "YOUR_ONESIGNAL_APP_ID";
+
+                            // Create the JSON payload for the OneSignal API
+                            JSONObject notificationContent = new JSONObject();
+                            try {
+                                notificationContent.put("app_id", oneSignalAppId);
+                                notificationContent.put("include_player_ids", new JSONArray().put(recipientPlayerId));
+                                notificationContent.put("contents", new JSONObject().put("en", message));
+                                notificationContent.put("headings", new JSONObject().put("en", title));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.e("ChatAA", "Error creating JSON payload: " + e.getMessage());
+                                return;
+                            }
+
+                            // Create a Volley request queue
+                            RequestQueue requestQueue = Volley.newRequestQueue(ChatAA.this);
+
+                            // Create a JSON object request
+                            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, oneSignalApiUrl, notificationContent,
+                                    new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                            Log.d("ChatAA", "Notification sent successfully: " + response.toString());
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Log.e("ChatAA", "Error sending notification: " + error.getMessage());
+                                        }
+                                    }) {
+                                @Override
+                                public Map<String, String> getHeaders() throws AuthFailureError {
+                                    // Add headers for OneSignal API
+                                    Map<String, String> headers = new HashMap<>();
+                                    headers.put("Authorization", "Basic YOUR_ONESIGNAL_REST_API_KEY");
+                                    headers.put("Content-Type", "application/json; charset=utf-8");
+                                    return headers;
+                                }
+                            };
+
+                            // Add the request to the queue
+                            requestQueue.add(jsonObjectRequest);
+                        } else {
+                            Log.e("ChatAA", "Recipient has no OneSignal Player ID");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("ChatAA", "Error retrieving OneSignal Player ID: " + databaseError.getMessage());
+                    }
+                });
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-//        if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
-//            Uri imageUri = data.getData();
-//            uploadImageToStorage(imageUri);
-//        }
+
         if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
             if (data.getClipData() != null) {
-                // Multiple images selected
                 int count = data.getClipData().getItemCount();
                 for (int i = 0; i < count; i++) {
                     Uri imageUri = data.getClipData().getItemAt(i).getUri();
                     uploadImageToStorage(imageUri);
                 }
             } else if (data.getData() != null) {
-                // Single image selected
                 Uri imageUri = data.getData();
                 uploadImageToStorage(imageUri);
             }
@@ -288,7 +390,6 @@ public class ChatAA extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void unused) {
-                                                // Image uploaded and URL added to messages
                                             }
                                         });
                             }

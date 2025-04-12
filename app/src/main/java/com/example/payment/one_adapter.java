@@ -33,6 +33,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class one_adapter extends RecyclerView.Adapter<com.example.payment.one_adapter.viewholder> {
+
+
+
     ArrayList<Users> list;
     Context context;
     public one_adapter(ArrayList<Users> list, Context context) {
@@ -67,6 +70,12 @@ public class one_adapter extends RecyclerView.Adapter<com.example.payment.one_ad
         }
 
 
+        holder.binding.textView81.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         holder.binding.imageView28.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

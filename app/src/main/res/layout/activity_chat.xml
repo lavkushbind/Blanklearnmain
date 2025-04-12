@@ -2,98 +2,139 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/white"
-    android:padding="4dp">
-    <View
-        android:id="@+id/view3"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:background="@color/blackk"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
-    <TextView
-        android:id="@+id/receiversName"
+    android:background="@color/black"
+   >
+
+    <!-- Back Arrow Icon -->
+    <ImageView
+        android:id="@+id/back_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Akash"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/profileImage"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profileImage"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+    <!-- Wi-Fi and Signal Icons -->
+    <LinearLayout
+        android:id="@+id/signal_icons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/wifi_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <ImageView
+            android:id="@+id/signal_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+    <!-- Curriculum Text -->
+    <TextView
+        android:id="@+id/curriculum_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Curriculum"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp" />
+
+    <!-- Course Info -->
+    <TextView
+        android:id="@+id/course_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="8 sections • 33 lectures • 3h 23m total length"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/curriculum_text"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toEndOf="@+id/back_btn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/profileuser" />
+        android:layout_marginTop="8dp" />
 
-    <ImageView
-        android:id="@+id/back_btn"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:backgroundTint="@color/white"
-        android:clickable="true"
-        android:clipToOutline="true"
+    <!-- Section 1 Title -->
+    <TextView
+        android:id="@+id/section_1_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Section 1 - Beginning Your Project and Making Web Graphics"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/course_info"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back"
-        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        android:layout_marginStart="16dp" />
 
+    <!-- Video List (use a RecyclerView or ListView for better scalability) -->
+    <LinearLayout
+        android:id="@+id/video_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/section_1_title"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/messageAdapter"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="2dp"
-        android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/edtMessage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        <!-- Each Video Item -->
+        <TextView
+            android:id="@+id/video_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1. Course Introduction - 04:53 mins"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_margin="8dp" />
+
+        <TextView
+            android:id="@+id/video_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2. Tools you need for this course - 01:12 mins"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_margin="8dp" />
+
+        <!-- Add more video entries here similarly -->
+
+    </LinearLayout>
+
+    <!-- Price Section -->
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₹399.00"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+        android:layout_marginBottom="16dp" />
 
-    <ImageView
-        android:id="@+id/sendBtn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-
+    <Button
+        android:id="@+id/buy_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buy Now"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@color/white"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/messageAdapter"
-        app:srcCompat="@android:drawable/ic_menu_send" />
+        android:layout_marginBottom="16dp" />
 
-    <ImageView
-        android:id="@+id/attachment"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_gravity="right"
-        android:foregroundGravity="center"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/sendBtn"
-        app:srcCompat="@android:drawable/ic_menu_gallery"
-        tools:ignore="MissingConstraints" />
-    <EditText
-        android:id="@+id/edtMessage"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:background="@drawable/signbg"
-        android:hint="message..."
-        android:paddingLeft="30dp"
-        app:backgroundTint="@color/white"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/attachment"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -38,8 +38,16 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.FAQViewHolder> {
         boolean isExpanded = faq.isExpanded();
         holder.tvAnswer.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
         holder.ivIndicator.setImageResource(isExpanded ? R.drawable.ic_collapse : R.drawable.ic_expand);
+        holder.ivIndicator.setOnClickListener(v -> {
+            faq.setExpanded(!faq.isExpanded());
+            notifyItemChanged(position);
+        });
 
         holder.tvQuestion.setOnClickListener(v -> {
+            faq.setExpanded(!faq.isExpanded());
+            notifyItemChanged(position);
+        });
+        holder.itemView.setOnClickListener(v -> {
             faq.setExpanded(!faq.isExpanded());
             notifyItemChanged(position);
         });

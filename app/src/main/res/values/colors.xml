@@ -10,14 +10,43 @@
     <color name="red">#EE0018</color>
     <color name="blackk">#262626</color>
     <color name="gray">#3E292929</color>
-
+    <color name="green">#05B50C</color>
     <color name="background">#F9F9F9</color>
     <color name="hint_color">#070707</color>
-    <color name="button_bg_color">#2196F3</color> <!-- Blue color -->
+    <color name="button_bg_color">#2196F3</color>
+    <color name="card_blue">#4285F4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="light_gray">#CCCCCC</color>
+    <color name="lightPurple">#F3E8FF</color>
+    <color name="darkPurple">#7B61FF</color>
 
-    <color name="card_blue">#4285F4</color> <!-- Blue color -->
-    <color name="white">#FFFFFF</color> <!-- White color -->
-    <color name="light_gray">#CCCCCC</color> <!-- Light Gray color -->
+
+
+
+
+
+
+        <color name="colorPrimaryDark">#000000</color> <!-- Status bar color -->
+        <color name="colorBackground">#121212</color> <!-- Main background -->
+        <color name="colorTextPrimary">#FFFFFF</color> <!-- White text -->
+        <color name="colorTextSecondary">#A0A0A0</color> <!-- Grey text -->
+        <color name="colorTextHighlight">#E4B857</color> <!-- Gold/Yellow text -->
+        <color name="colorPremiumCardBg">#4A3B1E</color> <!-- Premium card background -->
+        <color name="colorPlanSelectedBg">#6F5C35</color> <!-- Selected plan background -->
+        <color name="colorPlanUnselectedBg">#332A16</color> <!-- Unselected plan background -->
+        <color name="colorButtonText">#000000</color> <!-- Black text for button -->
+        <color name="colorWhite">#FFFFFF</color>
+        <color name="colorTransparent">#00000000</color>
+
+
+
+
+
+
+
+
+
+
 
 
     <color name="button_unselected_bg">#2196F3</color> <!-- Blue color for unselected -->

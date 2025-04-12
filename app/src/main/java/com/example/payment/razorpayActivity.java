@@ -20,7 +20,6 @@ import androidx.core.app.ActivityCompat;
 
 //import com.blank_learn.dark.Manifest;
 import com.blank_learn.dark.R;
-import com.bumptech.glide.Glide;
 import com.example.dark.clasmodel;
 import com.example.loginandsignup.Users;
 import com.example.notification.NotificationModel;
@@ -54,7 +53,7 @@ public class razorpayActivity extends AppCompatActivity implements PaymentResult
     String randomKey;
     String stand;
     String postid;
-    String price;
+//    String price;
     String name;
     String country;
     FirebaseStorage storage;
@@ -63,34 +62,31 @@ public class razorpayActivity extends AppCompatActivity implements PaymentResult
     private Button payBtn;
     TextView textView;
 
-
+long price;
     String uri;
     String topic;
     String email;
     String phone_num;
     Intent intent;
     String postpic;
+
     ImageView imageView;
-    String currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_razorpay);
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-//        getUserLocation();
         intent = getIntent();
         postid = intent.getStringExtra("Postid");
         topic = intent.getStringExtra("Topic");
-        price= intent.getStringExtra("Price");
+
         postpic= intent.getStringExtra("postpic");
 
         imageView = findViewById(R.id.imageView13);
         textView = findViewById(R.id.textView6);
         amountEdt = findViewById(R.id.idEdtAmount);
-        amountEdt.setText(price) ;
 
         auth = FirebaseAuth.getInstance();
         storage=FirebaseStorage.getInstance();
@@ -122,11 +118,71 @@ public class razorpayActivity extends AppCompatActivity implements PaymentResult
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+        if (postid != null) {
+            database.getReference().child("posts").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.hasChild(postid)) {
+                        // Only proceed if postid exists in the database
+                        database.getReference().child("posts").child(postid).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                postmodel postmodel = snapshot.getValue(postmodel.class);
+                                if (postmodel != null) {
+
+
+                                 price = ((postmodel.getPrice()));
+
+                                } else {
+                                    Log.e("post2Activity", "postmodel is null");
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                    } else {
+                        // Handle the case where postid doesn't exist
+                        Log.e("post2Activity", "postid does not exist in the database");
+                        // You may want to show a toast or handle this situation appropriately
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        } else {
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String samount = price.toString();
+//                String samount = price.toString();
 
+                String samount = Long.toString(price);
 
                 int amount = Math.round(Float.parseFloat(samount) * 100);
 
@@ -135,24 +191,18 @@ public class razorpayActivity extends AppCompatActivity implements PaymentResult
 
                 checkout.setKeyID("rzp_live_6vd9RApruseTAi");
 
-                checkout.setImage(R.drawable.lop);
+                checkout.setImage(R.drawable.lastlogo);
 
                 JSONObject object = new JSONObject();
                 try {
                     object.put("name", topic);
-
                     object.put("description", "");
-
                     object.put("theme.color", "#0A2FF8" );
-
                     object.put("currency","INR");
-
                     object.put("amount", amount);
-
-                    object.put("prefill.contact", phone_num);
-
+                    object.put("contact", "7589899929");
+                    object.put("prefill.contact", "");
                     object.put("prefill.email", email);
-
                     checkout.open(razorpayActivity.this, object);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -163,31 +213,13 @@ public class razorpayActivity extends AppCompatActivity implements PaymentResult
 
     }
 
-    private String getCurrencyCode() {
-        Locale locale = Locale.getDefault();
-        Currency currency = Currency.getInstance(locale);
-        return currency.getCurrencyCode();
-    }
-    private void setCurrencyBasedOnCountry(String country) {
-        switch (country) {
-            case "IN":
-                currency = "USD";
-                break;
-            case "US":
-                currency = "INR";
-                break;
-            default:
-                currency = "USD";
-                break;
-        }
-    }
 
 
 
     @Override
     public void onPaymentSuccess(String s) {
 
-        database.getReference().child("New payments").child("name").child(auth.getUid())
+        database.getReference().child("New payments").child("name").child(String.valueOf(price)).child(auth.getUid())
                 .setValue(ServerValue.TIMESTAMP)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -208,7 +240,7 @@ public class razorpayActivity extends AppCompatActivity implements PaymentResult
                                 .setValue(clasmodel).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void unused) {
-                                        Toast.makeText(razorpayActivity.this, " class done", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(razorpayActivity.this, "  done", Toast.LENGTH_SHORT).show();
                                         FirebaseDatabase.getInstance().getReference()
                                                 .child("Group")
                                                 .child(postid)
@@ -231,7 +263,6 @@ public class razorpayActivity extends AppCompatActivity implements PaymentResult
                     }
                 });
 
-        //Toast.makeText(context this, "done", Toast.LENGTH_SHORT).show();
         randomKey = FirebaseDatabase.getInstance().getReference().push().getKey();
         NotificationModel notificationModel = new NotificationModel();
         intent.putExtra("price", price);

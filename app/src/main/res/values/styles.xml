@@ -1,6 +1,37 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme.FullScreenDialog" parent="Theme.AppCompat.Light.Dialog">
-        <!-- Other style attributes -->
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
+        <style name="Theme.App.White" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+            <!-- Background Colors -->
+            <item name="android:colorBackground">#FFFFFF</item>  <!-- White background -->
+            <item name="android:windowBackground">#FFFFFF</item> <!-- Window background -->
+            <item name="android:navigationBarColor">#FFFFFF</item> <!-- White navigation bar -->
+            <item name="android:statusBarColor">#FFFFFF</item> <!-- White status bar -->
+            <item name="android:colorPrimary">#FFFFFF</item> <!-- Primary color white -->
+            <item name="android:colorPrimaryDark">#FFFFFF</item> <!-- Darker primary color -->
+            <item name="android:colorAccent">#000000</item> <!-- Black accent color -->
+
+            <!-- Text Colors -->
+            <item name="android:textColorPrimary">#000000</item> <!-- Black primary text -->
+            <item name="android:textColorSecondary">#000000</item> <!-- Black secondary text -->
+            <item name="android:textColorHint">#000000</item> <!-- Black hint text -->
+            <item name="android:textColorLink">#000000</item> <!-- Black hyperlink text -->
+
+            <!-- Button Colors -->
+<!--            <item name="android:buttonStyle">@style/CustomButton</item>-->
+
+            <!-- Toolbar and Icons -->
+            <item name="android:colorControlNormal">#000000</item> <!-- Black icons -->
+            <item name="android:colorControlActivated">#000000</item> <!-- Active icon color -->
+            <item name="android:colorControlHighlight">#000000</item>  </style>
+
+
+
 </resources>

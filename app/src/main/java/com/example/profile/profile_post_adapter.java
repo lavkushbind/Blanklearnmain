@@ -61,7 +61,7 @@ public class profile_post_adapter extends RecyclerView.Adapter<profile_post_adap
 
 
             holder.binding.price2.setText(formatPriceAccordingToLocale(postmodel.getPrice2()));
-            holder.binding.priceFirst.setText(formatPriceAccordingToLocale(Double.parseDouble(postmodel.getPrice())));
+            holder.binding.priceFirst.setText(formatPriceAccordingToLocale(postmodel.getPrice()));
 
 //            holder.binding.price2.setText(String.valueOf(postmodel.getPrice2()));
 //

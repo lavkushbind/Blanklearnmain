@@ -1,14 +1,17 @@
 package com.example.profile;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +26,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.blank_learn.dark.R;
 import com.blank_learn.dark.databinding.FragmentProfileBinding;
+import com.example.demo.AllocationAdapter;
+import com.example.demo.AllocationData;
 import com.example.home.Story_model;
+import com.example.loginandsignup.Teacher_form_Activity;
 import com.example.payment.PostFragment;
 import com.example.payment.postmodel;
 import com.example.loginandsignup.Users;
@@ -46,6 +52,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
     FragmentProfileBinding binding;
@@ -60,6 +67,16 @@ public class ProfileFragment extends Fragment {
     FirebaseDatabase database;
     ArrayList<postmodel> list;
     Users users;
+    private AllocationAdapter allocationAdapter;
+    private List<AllocationData> allocationList = new ArrayList<>();
+    private String currentUserId;
+    private Context mContext;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
+
     private static final int PICK_VIDEO_REQUEST = 1;
 
     private StorageReference storageReference;
@@ -79,7 +96,17 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         storageReference = FirebaseStorage.getInstance().getReference().child("story");
+        binding.RVDemo.setLayoutManager(new LinearLayoutManager(mContext));
 
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if (user != null) {
+            currentUserId = user.getUid();
+            loadAllocations();
+        } else
+        {
+        }
 
 
         binding.Share.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +132,6 @@ public class ProfileFragment extends Fragment {
                 Uri imageUri = FileProvider.getUriForFile(requireContext(), requireContext().getPackageName() + ".provider", screenshotFile); // Use screenshotFile
                 shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
 
-                // Add link to the text of the sharing intent
                 String shareText = "Experience the future of live learning by downloading the Blanklearn App! Explore a revolutionary approach that redefines the way you learn in real-time: " + link;
                 shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
 
@@ -133,6 +159,7 @@ public class ProfileFragment extends Fragment {
         profile_post_adapter homeadapter = new profile_post_adapter(list, getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true);
         binding.profilePost.setLayoutManager(layoutManager);
+
         binding.profilePost.setAdapter(homeadapter);
         binding.profilePost.scrollToPosition(homeadapter.getItemCount() - 1);
         layoutManager.setStackFromEnd(true);
@@ -182,11 +209,8 @@ binding.uploadvid.setOnClickListener(new View.OnClickListener() {
 binding.uploadbtn.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, new PostFragment());
-
-        transaction.addToBackStack(null); // Optional: Adds the transaction to the back stack
-        transaction.commit();
+        Intent intent = new Intent(getActivity(), Teacher_form_Activity.class);
+        startActivity(intent);
 
     }
 });
@@ -253,15 +277,6 @@ database.getReference()
                     alertDialog.show();
                 }
             });
-//            binding.messageBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    FirebaseAuth.getInstance().signOut();
-//                    Intent intent = new Intent(getActivity(), login.class);
-//                    startActivity(intent);
-//                }
-//            });
-
 
             binding.editpro.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -332,8 +347,48 @@ database.getReference()
                     startActivityForResult(intent, 22);
                 }
             });
+
+
+
             return binding.getRoot();
         }
+
+    private void loadAllocations() {
+        DatabaseReference allocationsRef = FirebaseDatabase.getInstance().getReference("allocated_classes");
+        allocationsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                allocationList.clear();
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    AllocationData allocation = snapshot.getValue(AllocationData.class);
+                    if (allocation != null) {
+                        // Teachers see only their own allocations.
+                        if (allocation.getTeacherID() != null && allocation.getTeacherID().equals(currentUserId)) {
+                            allocationList.add(allocation);
+                        }
+                    }
+                }
+
+                if (mContext != null) {
+                    allocationAdapter = new AllocationAdapter(allocationList, mContext, true);  // isTeacher = true
+                    binding.RVDemo.setAdapter(allocationAdapter);
+                    allocationAdapter.notifyDataSetChanged(); // Refresh the adapter
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("TeacherAllocationFragment", "Database error: " + databaseError.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mContext = null;
+    }
 
     private void openVideoPicker() {
         Intent intent = new Intent();
@@ -348,7 +403,7 @@ database.getReference()
     }
 
 
-    @Override
+       @Override
         public boolean
         onOptionsItemSelected(@NonNull MenuItem item)
         {
@@ -370,8 +425,8 @@ database.getReference()
 ////                uploadVideoToFirebase(videoUri);
             }
 
-            if (requestCode == 22) {
-                if (data.getData() != null) {
+            if (requestCode == 22 ) {
+                if (data.getData() != null ) {
                     Uri uri = data.getData();
                     binding.coverpic.setImageURI(uri);
                     final StorageReference reference = storage.getReference().child("coverpic").child(FirebaseAuth.getInstance().getUid());
@@ -436,10 +491,6 @@ database.getReference()
                             });
                 }
             }
-
-
-
-
 
             else {
                 if (data.getData() != null)

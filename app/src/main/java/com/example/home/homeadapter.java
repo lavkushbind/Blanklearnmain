@@ -70,7 +70,7 @@ public class homeadapter extends RecyclerView.Adapter<homeadapter.viewHolder>  {
 //            holder.binding.priceFirst.setText(postmodel.getPrice());
 
             holder.binding.price2.setText(formatPriceAccordingToLocale(postmodel.getPrice2()));
-            holder.binding.priceFirst.setText(formatPriceAccordingToLocale(Double.parseDouble(postmodel.getPrice())));
+            holder.binding.priceFirst.setText(formatPriceAccordingToLocale(postmodel.getPrice()));
 
 
 
@@ -156,32 +156,14 @@ public class homeadapter extends RecyclerView.Adapter<homeadapter.viewHolder>  {
 
 
 
-            holder.binding.button2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=  new Intent(context,post2Activity.class);
-                    intent.putExtra("price",postmodel.getPrice());
 
-                    intent.putExtra("price2",postmodel.getPrice2());
-                    intent.putExtra("seats",postmodel.getSeats());
-                    intent.putExtra("title",postmodel.getPostdescription());
-                    intent.putExtra("postid",postmodel .getPostid());
-                    intent.putExtra("postPic",postmodel.getPostImage());
-                    intent.putExtra("postedBy",postmodel.getPostedBy());
-                    intent.putExtra("video",postmodel.getPostVideo());
-
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-
-                }
-            });
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent=  new Intent(context,post2Activity.class);
                     intent.putExtra("price",postmodel.getPrice());
-//                    intent.putExtra("price2",postmodel.getPrice2());
-//                    intent.putExtra("seats",postmodel.getSeats());
+                    intent.putExtra("price2",postmodel.getPrice2());
+                    intent.putExtra("seats",postmodel.getSeats());
 
                     intent.putExtra("title",postmodel.getPostdescription());
                     intent.putExtra("postid",postmodel .getPostid());

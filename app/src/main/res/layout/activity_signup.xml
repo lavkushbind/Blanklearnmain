@@ -31,13 +31,72 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/profilimg"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/signl" />
+        <!--        <ImageView-->
+<!--            android:id="@+id/profilimg"-->
+<!--            android:layout_width="300dp"-->
+<!--            android:layout_height="300dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            app:srcCompat="@drawable/signl" />-->
 
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:id="@+id/imageView16"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/background_logo" />
+
+            <TextView
+                android:id="@+id/textView129"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="Blanklearn"
+                android:textColor="#045391"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/profilimg"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.616"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_rawRes="@raw/animation2" />
+
+        <TextView
+            android:id="@+id/textView133"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Sign up"
+            android:textColor="#045391"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView134"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="Get Started — Limited Seats Available! "
+            android:textColor="#636363" />
 
         <EditText
             android:id="@+id/namebtn"
@@ -45,15 +104,14 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:background="@drawable/edit_text_background"
             android:hint="Enter your name"
             android:paddingLeft="20sp"
-            android:textColor="@color/black"
+            android:textColor="@color/blackk"
             android:textColorHint="@color/black"
             android:textSize="16sp" />
-
 
 
         <EditText
@@ -64,17 +122,13 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:inputType="number"
             android:background="@drawable/edit_text_background"
             android:hint="Enter your phone number"
+            android:inputType="number"
             android:paddingLeft="20sp"
-            android:textColor="@color/black"
+            android:textColor="@color/blackk"
             android:textColorHint="@color/black"
             android:textSize="16sp" />
-
-
-
-
 
 
         <EditText
@@ -88,7 +142,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="Enter your email"
             android:paddingLeft="20sp"
-            android:textColor="@color/black"
+            android:textColor="@color/blackk"
             android:textColorHint="@color/black"
             android:textSize="16dp" />
 
@@ -104,7 +158,7 @@
             android:background="@drawable/edit_text_background"
             android:hint="Create password"
             android:paddingLeft="20sp"
-            android:textColor="@color/black"
+            android:textColor="@color/blackk"
             android:textColorHint="@color/black"
             android:textSize="16dp" />
 
@@ -128,12 +182,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_marginRight="10dp"
-            android:fontFamily="@font/abril_fatface"
             android:gravity="center"
             android:text="Already have an acount    "
-            android:textColor="#071EA1" />
+            android:textColor="#071EA1"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

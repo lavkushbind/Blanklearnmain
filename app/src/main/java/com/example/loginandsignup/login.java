@@ -2,6 +2,7 @@ package com.example.loginandsignup;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.blank_learn.dark.R;
 import com.example.home.MainActivity;
 import com.example.home.MainActivity2;
@@ -25,12 +28,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 
 public class login extends AppCompatActivity {
     EditText passsbtn, emaillbtn;
     Button loginbtn, Creatbtn;
     ImageView imageView;
     TextView textView;
+    private LottieAnimationView animationView;
+
     FirebaseAuth auth;
     FirebaseUser currentUser;
     private FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -40,6 +47,9 @@ public class login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        animationView = findViewById(R.id.profilimg);
+        animationView.playAnimation();
+        animationView.pauseAnimation();
         auth = FirebaseAuth.getInstance();
         currentUser=auth.getCurrentUser();
         imageView=findViewById(R.id.profilimg);
@@ -48,6 +58,21 @@ public class login extends AppCompatActivity {
         emaillbtn = findViewById(R.id.emaillbnt);
         Creatbtn = findViewById(R.id.Creattbtn);
         loginbtn = findViewById(R.id.loginnbtn);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         if(currentUser!= null)
         {
             Intent intent= new Intent(login.this, MainActivity.class);
@@ -60,6 +85,17 @@ public class login extends AppCompatActivity {
              String email, pas;
              email=emaillbtn.getText().toString();
              pas=passsbtn.getText().toString();
+                if (email.isEmpty()) {
+                    emaillbtn.setError("Email is required");
+                    emaillbtn.requestFocus();
+                    return;
+                }
+
+                if (pas.isEmpty()) {
+                    passsbtn.setError("Password is required");
+                    passsbtn.requestFocus();
+                    return;
+                }
              auth.signInWithEmailAndPassword(email, pas)
                      .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                  @Override
@@ -87,5 +123,19 @@ public class login extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        animationView.playAnimation();
+        animationView.setRepeatCount(LottieDrawable.INFINITE); // Loop indefinitely
 
+//        binding.profilimg.playAnimation(); // Ensure it's playing when the activity resumes
+
+    }
+
+    @Override
+    protected void onPause() {
+//        animationView.pauseAnimation(); // Pause when the activity is paused
+        super.onPause();
+    }
 }

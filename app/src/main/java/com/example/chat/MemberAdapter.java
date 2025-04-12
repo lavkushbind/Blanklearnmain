@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blank_learn.dark.R;
 import com.blank_learn.dark.databinding.MemberBinding;
 
+import com.blank_learn.dark.databinding.StorySampleBinding;
 import com.example.home.post2Activity;
 import com.example.loginandsignup.Users;
 import com.example.payment.postmodel;
@@ -20,7 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.auth.User;
+//import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.viewholder
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.member,parent,false);
+        View view= LayoutInflater.from(context).inflate(R.layout.story_sample,parent,false);
         return new viewholder(view);
     }
     @Override
@@ -44,9 +45,9 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.viewholder
         Users users = list.get(position);
         Picasso.get().load(users.getProfilepic())
                 .placeholder(R.drawable.userprofile)
-                        .into(holder.binding.Member);
-        holder.binding.textView32.setText(users.getName());
-       holder.binding.textView27.setText(users.getEmail());
+                        .into(holder.binding.profilepic2);
+        holder.binding.textView61.setText(users.getName());
+//       holder.binding.textView27.setText(users.getEmail());
        holder.itemView.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -63,10 +64,10 @@ public class MemberAdapter extends RecyclerView.Adapter<MemberAdapter.viewholder
     }
     public  class viewholder extends RecyclerView.ViewHolder{
         @NonNull
-        MemberBinding binding;
+        StorySampleBinding binding;
         public viewholder(@NonNull View itemView) {
             super(itemView);
-            binding= MemberBinding.bind(itemView);
+            binding= StorySampleBinding.bind(itemView);
         }
     }
 }

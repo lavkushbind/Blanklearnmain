@@ -3,7 +3,6 @@ package com.example.chat;
 import com.google.android.exoplayer2.Renderer;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class chatmodel {
     String Muid,masseg;

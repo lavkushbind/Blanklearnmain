@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blank_learn.dark.R;
+import com.blank_learn.dark.databinding.MemberBinding;
+import com.blank_learn.dark.databinding.SearchSampleBinding;
 import com.blank_learn.dark.databinding.StorySampleBinding;
 import com.blank_learn.dark.databinding.VideoBinding;
 import com.example.loginandsignup.Users;

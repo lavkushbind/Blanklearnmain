@@ -66,8 +66,7 @@ public class OneFragment extends Fragment {
                 allPosts.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Users post = postSnapshot.getValue(Users.class);
-                    if (post.getStoryid() != null) {
-
+                    if (post.getStoryid() != null && post.getBio()!= null && post.getCharge()!= 0  ) {
 
                         if (post != null) {
                             post.setUserID(postSnapshot.getKey());

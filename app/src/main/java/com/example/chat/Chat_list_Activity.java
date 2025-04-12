@@ -1,11 +1,11 @@
 package com.example.chat;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import com.blank_learn.dark.R;
 
 import com.blank_learn.dark.databinding.ActivityChatListBinding;
 import com.example.loginandsignup.Users;
@@ -14,9 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.ActivityChatBinding;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 

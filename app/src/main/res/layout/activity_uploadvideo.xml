@@ -24,6 +24,17 @@
         android:visibility="gone" />
 
     <TextView
+        android:id="@+id/textView84"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/upload_btn"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="23dp"
+        android:layout_toEndOf="@+id/textView83"
+        android:text="Ensure your profile is complete with a charge, bio, profile picture, and other details"
+        android:textColor="@color/white" />
+
+    <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,5 +58,19 @@
         android:text="select video"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView83"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/upload_btn"
+        android:layout_alignStart="@+id/progress_bar"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="30dp"
+        android:text="Note :"
+        android:textColor="#F91818"
+        android:textColorHighlight="#F41515"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

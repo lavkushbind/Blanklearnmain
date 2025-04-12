@@ -15,6 +15,7 @@ import com.blank_learn.dark.databinding.ActivityProBinding;
 import com.example.chat.ChatAA;
 import com.example.home.MainActivity;
 import com.example.home.homeadapter;
+import com.example.home.homeadapter2;
 import com.example.home.post2Activity;
 import com.example.loginandsignup.Users;
 import com.example.loginandsignup.signup;
@@ -54,10 +55,12 @@ public class ProActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         database  = FirebaseDatabase.getInstance();
         storage=FirebaseStorage.getInstance();
-        homeadapter homeadapter = new homeadapter(list, getApplicationContext());
+//        homeadapter2
+        homeadapter2 homeadapter = new homeadapter2(list, getApplicationContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, true);
-        binding.  ProRV.setLayoutManager(layoutManager);
-        binding. ProRV.setAdapter(homeadapter);
+
+        binding.ProRV.setLayoutManager(layoutManager);
+        binding.ProRV.setAdapter(homeadapter);
         binding.ProRV.scrollToPosition(homeadapter.getItemCount() - 1);
         layoutManager.setStackFromEnd(true);
         database.getReference().child("posts").addValueEventListener(new ValueEventListener() {

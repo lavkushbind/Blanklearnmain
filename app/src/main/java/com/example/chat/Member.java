@@ -41,7 +41,6 @@ public class Member extends AppCompatActivity {
         intent = getIntent();
         name = intent.getStringExtra("idd");
 
-        //Toast.makeText(this, name+"show", Toast.LENGTH_SHORT).show();
         database.getReference().child("Group")
                 .child(name)
                 .child("member")

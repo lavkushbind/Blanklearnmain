@@ -204,7 +204,7 @@ public class GroupChat extends AppCompatActivity {
     ArrayList<chatmodel> list;
     FirebaseDatabase database;
     FirebaseStorage storage;
-    String name;
+//    String name;
     Intent intent;
     String Postid;
     private chatAdapter chatAdapter;
@@ -223,7 +223,7 @@ public class GroupChat extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         intent = getIntent();
-        name = intent.getStringExtra("name");
+//        name = intent.getStringExtra("name");
         Postid = intent.getStringExtra("Postid");
         chatAdapter = new chatAdapter(list, getApplicationContext());
 

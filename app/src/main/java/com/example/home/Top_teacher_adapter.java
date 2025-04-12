@@ -38,6 +38,14 @@ public class Top_teacher_adapter extends RecyclerView.Adapter<Top_teacher_adapte
                 .into(holder.binding.profilepic);
         holder.binding.tname.setText(teacher_model.getName());
 
+
+        holder.binding.textView77.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

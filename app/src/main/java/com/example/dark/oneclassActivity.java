@@ -17,6 +17,7 @@ import com.blank_learn.dark.databinding.ActivityOneclassBinding;
 import com.blank_learn.dark.databinding.ActivityStoryBinding;
 import com.example.chat.ChatAA;
 import com.example.home.Story_model;
+import com.example.home.demoActivity;
 import com.example.loginandsignup.Users;
 import com.example.profile.ProActivity;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -29,7 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.rpc.Help;
+//import com.google.rpc.Help;
 import com.squareup.picasso.Picasso;
 
 
@@ -70,7 +71,7 @@ public class oneclassActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (name != null) {
-                    Intent intent = new Intent(com.example.dark.oneclassActivity.this, ChatAA.class);
+                    Intent intent = new Intent(com.example.dark.oneclassActivity.this, demoActivity.class);
                     intent.putExtra("name", name);
                     startActivity(intent);
                 }
@@ -134,10 +135,9 @@ public class oneclassActivity extends AppCompatActivity {
             String shareText = "Check out this video: " + videoUri.toString();
 
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("video/*");  // Set MIME type to video/*
+            shareIntent.setType("video/*");
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);  // Add the text with the video link
 
-            // Check if the video file type is supported before attaching
             if (isVideoFileSupported(videoUri)) {
                 shareIntent.putExtra(Intent.EXTRA_STREAM, videoUri);  // Attach the video file
             } else {
@@ -173,19 +173,6 @@ public class oneclassActivity extends AppCompatActivity {
 
 
 
-    //    private void initializePlayer(String videoUrl) {
-//        if (exoPlayer == null) {
-//            exoPlayer = new SimpleExoPlayer.Builder(this).build();
-//            isPlayerInitialized = true;
-//        }
-//
-//        MediaItem mediaItem = MediaItem.fromUri(videoUrl);
-//        exoPlayer.setMediaItem(mediaItem);
-//        exoPlayer.prepare();
-//        exoPlayer.setPlayWhenReady(true);
-//
-//        binding.exoplayerimage.setPlayer(exoPlayer);
-//    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -207,6 +194,8 @@ public class oneclassActivity extends AppCompatActivity {
         super.onDestroy();
         if (exoPlayer != null) {
             exoPlayer.release();
+            exoPlayer = null;
+            isPlayerInitialized = false;
         }
     }
 }

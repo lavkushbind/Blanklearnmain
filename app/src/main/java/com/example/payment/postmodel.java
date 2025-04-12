@@ -1,7 +1,17 @@
 package com.example.payment;
 public class postmodel {
     private String Postid;
+    private String demo_video;
     private String paylink;
+
+    public String getDemo_video() {
+        return demo_video;
+    }
+
+    public void setDemo_video(String demo_video) {
+        this.demo_video = demo_video;
+    }
+
     public String getPaylink() {
         return paylink;
     }
@@ -32,7 +42,7 @@ public class postmodel {
     private String postedAt;
     private String Standred;
     private String phone;
-    private  String price;
+    private  long price;
 private long price2;
 private long seats;
 
@@ -60,7 +70,7 @@ private long seats;
         this.phone = phone;
     }
     public postmodel(String postid, String postImage, String exoplyer, String time, String about, String language,
-                     String postdescription, String postedBy, String postedAt, String standred, String price, String duration, String s) {
+                     String postdescription, String postedBy, String postedAt, String standred, long price, String duration, String s) {
         Postid = postid;
         PostImage = postImage;
         this.exoplyer = exoplyer;
@@ -147,11 +157,11 @@ private long seats;
         Standred = standred;
     }
 
-    public  String getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(long price) {
         this.price = price;
     }
     public String getDuration() {

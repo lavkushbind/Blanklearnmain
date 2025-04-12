@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@drawable/edit_text_background"
+    android:backgroundTintMode="screen"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_bg"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/class_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Class: "
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="visible" />  <!--Initially Gone-->
+
+        <TextView
+            android:id="@+id/date_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: "
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/time_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time: "
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/teacher_id_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Teacher ID: "
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/payment_status_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact Number:"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/contact_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contact Number:"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/countdown_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Remaining Time: Loading..."
+            android:textColor="#FF9800"
+            android:textSize="14sp"
+            android:visibility="visible" /> <!--Initially Gone-->
+
+
+        <TextView
+            android:id="@+id/demo_complete_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Your demo is complete! Pay to join your child."
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="visible" /> <!--Initially Gone-->
+
+        <TextView
+            android:id="@+id/demo_options_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Would you like to proceed with enrollment for ₹1000 per month, or would you prefer to book another demo for ₹100?"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:visibility="visible" /> <!--Initially Gone-->
+
+        <LinearLayout
+            android:id="@+id/button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible"> <!--Initially Gone-->
+
+            <Button
+                android:id="@+id/enroll_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/button_bg2"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Enroll Now" />
+
+            <Button
+                android:id="@+id/book_another_demo_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/button_bg2"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Book Another Demo" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/demo_complete_message_teacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Your demo is complete!"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/button_container2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible"> <!--Initially Gone-->
+
+            <Button
+                android:id="@+id/demo_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/button_bg2"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Yes Completed" />
+
+            <Button
+                android:id="@+id/demo_no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/button_bg2"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="demo not completed"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/payment_reminder_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="Your month has completed. Please pay for the next month."
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="visible" /> <!--Initially Gone-->
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

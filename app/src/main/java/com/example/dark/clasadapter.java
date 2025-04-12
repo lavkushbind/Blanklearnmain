@@ -12,6 +12,7 @@ import com.blank_learn.dark.R;
 import com.blank_learn.dark.databinding.ClassSampleBinding;
 import com.example.chat.GroupChat;
 import com.example.chat.Member;
+import com.example.payment.class_Activity;
 import com.example.payment.postmodel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -72,9 +73,11 @@ Context context;
         holder.binding.postpic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(context, GroupChat.class);
+                Intent intent= new Intent(context, class_Activity.class);
                 intent.putExtra("Postid",clasmodel.getLink());
-                intent.putExtra("name",clasmodel.getType());
+                intent.putExtra("name",clasmodel.getLink());
+                intent.putExtra("topic", clasmodel.getPosttitle());
+                intent.putExtra("postpic",clasmodel.getPostpic());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

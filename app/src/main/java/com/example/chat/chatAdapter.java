@@ -13,6 +13,7 @@ import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -119,7 +120,7 @@ public class chatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public boolean onLongClick(View v) {
                         if (chatmodel.isImageUrl()) {
                             downloadImage(chatmodel.getMasseg());
-                            Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Image downloaded", Toast.LENGTH_SHORT).show();
                         }
                         return true;
 
@@ -159,7 +160,7 @@ public class chatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public boolean onLongClick(View v) {
                         if (chatmodel.isImageUrl()) {
                             downloadImage(chatmodel.getMasseg());
-                            Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Image downloaded", Toast.LENGTH_SHORT).show();
                         }
                         return true;
 
@@ -328,68 +329,141 @@ public class chatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
 
-    private void downloadImage(String imageUrl) {
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(imageUrl));
-        request.setTitle("File Download");
-        request.setDescription("Downloading...");
+//    private void downloadImage(String imageUrl) {
+//        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(imageUrl));
+//        request.setTitle("File Download");
+//        request.setDescription("Downloading...");
+//
+//        // Set the destination file path
+//        String fileName = "Blanklearn";
+//        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+//
+//        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+//        if (downloadManager != null) {
+//            // Enqueue the download
+//            long downloadId = downloadManager.enqueue(request);
+//
+//            // Monitor the download status
+//            BroadcastReceiver receiver = new BroadcastReceiver() {
+//                @Override
+//                public void onReceive(Context context, Intent intent) {
+//                    DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+//
+//                    // Create a new Query
+//                    DownloadManager.Query query = new DownloadManager.Query();
+//                    query.setFilterById(downloadId);
+//
+//                    Cursor cursor = manager.query(query);
+//                    if (cursor != null && cursor.moveToFirst()) {
+//                        int statusColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
+//                        int localUriColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
+//
+//                        // Check if the column indexes are valid
+//                        if (statusColumnIndex >= 0 && localUriColumnIndex >= 0) {
+//                            int status = cursor.getInt(statusColumnIndex);
+//                            if (status == DownloadManager.STATUS_SUCCESSFUL) {
+//                                // Download completed successfully
+//                                String filePath = cursor.getString(localUriColumnIndex);
+//                                // Show a Toast indicating the file path
+//                                Toast.makeText(context, "File downloaded: " + filePath, Toast.LENGTH_SHORT).show();
+////                                openDownloadedFile(context, filePath);
+//
+//                            } else {
+//                                // Download failed or in progress
+//                                Toast.makeText(context, "Image download failed or in progress", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    }
+//
+//                    // Close the cursor to avoid resource leaks
+//                    if (cursor != null && !cursor.isClosed()) {
+//                        cursor.close();
+//                    }
+//
+//                    // Unregister the receiver to avoid memory leaks
+//                    context.unregisterReceiver(this);
+//                }
+//            };
+//
+//            context.registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+//        } else {
+//            // Handle the case where DownloadManager is not available
+//            Toast.makeText(context, "DownloadManager not available", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+private void downloadImage(String imageUrl) {
+    // Create a DownloadManager request
+    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(imageUrl));
+    request.setTitle("Image Download");
+    request.setDescription("Downloading image...");
 
-        // Set the destination file path
-        String fileName = "Blanklearn";
-        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+    // Allow the download to be visible in the notification bar
+    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 
-        DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-        if (downloadManager != null) {
-            // Enqueue the download
-            long downloadId = downloadManager.enqueue(request);
+    // Set the destination path to the public Downloads directory
+    String fileName = "DownloadedImage_" + System.currentTimeMillis() + ".jpg"; // Unique file name based on timestamp
+    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
 
-            // Monitor the download status
-            BroadcastReceiver receiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+    // Allow scanning by media scanner after download (makes it available to the gallery apps)
+    request.allowScanningByMediaScanner();
+    request.setMimeType("image/jpeg");
 
-                    // Create a new Query
-                    DownloadManager.Query query = new DownloadManager.Query();
-                    query.setFilterById(downloadId);
+    // Get the system DownloadManager service
+    DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+    if (downloadManager != null) {
+        // Enqueue the download and get the download ID
+        long downloadId = downloadManager.enqueue(request);
 
-                    Cursor cursor = manager.query(query);
-                    if (cursor != null && cursor.moveToFirst()) {
-                        int statusColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
-                        int localUriColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
+        // Monitor the download status using a BroadcastReceiver
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
 
-                        // Check if the column indexes are valid
-                        if (statusColumnIndex >= 0 && localUriColumnIndex >= 0) {
-                            int status = cursor.getInt(statusColumnIndex);
-                            if (status == DownloadManager.STATUS_SUCCESSFUL) {
-                                // Download completed successfully
-                                String filePath = cursor.getString(localUriColumnIndex);
-                                // Show a Toast indicating the file path
-                                Toast.makeText(context, "File downloaded: " + filePath, Toast.LENGTH_SHORT).show();
-//                                openDownloadedFile(context, filePath);
+                // Query the DownloadManager for the current status
+                DownloadManager.Query query = new DownloadManager.Query();
+                query.setFilterById(downloadId);
+                Cursor cursor = manager.query(query);
 
-                            } else {
-                                // Download failed or in progress
-                                Toast.makeText(context, "Image download failed or in progress", Toast.LENGTH_SHORT).show();
-                            }
+                if (cursor != null && cursor.moveToFirst()) {
+                    int statusColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS);
+                    int localUriColumnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI);
+
+                    // Check if the column indexes are valid
+                    if (statusColumnIndex >= 0 && localUriColumnIndex >= 0) {
+                        int status = cursor.getInt(statusColumnIndex);
+                        if (status == DownloadManager.STATUS_SUCCESSFUL) {
+                            // Download completed successfully
+                            String filePath = cursor.getString(localUriColumnIndex);
+                            Toast.makeText(context, "Image downloaded: " + filePath, Toast.LENGTH_LONG).show();
+
+                        } else if (status == DownloadManager.STATUS_FAILED) {
+                            // Download failed
+                            Toast.makeText(context, "Image download failed", Toast.LENGTH_SHORT).show();
                         }
                     }
-
-                    // Close the cursor to avoid resource leaks
-                    if (cursor != null && !cursor.isClosed()) {
-                        cursor.close();
-                    }
-
-                    // Unregister the receiver to avoid memory leaks
-                    context.unregisterReceiver(this);
                 }
-            };
 
-            context.registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-        } else {
-            // Handle the case where DownloadManager is not available
-            Toast.makeText(context, "DownloadManager not available", Toast.LENGTH_SHORT).show();
+                // Close the cursor to avoid resource leaks
+                if (cursor != null) {
+                    cursor.close();
+                }
+
+                // Unregister the BroadcastReceiver to avoid memory leaks
+                context.unregisterReceiver(this);
+            }
+        };
+
+        // Register the receiver to listen for download completion
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.registerReceiver(receiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE), Context.RECEIVER_NOT_EXPORTED);
         }
+    } else {
+        // Handle the case where DownloadManager is not available
+        Toast.makeText(context, "DownloadManager is not available", Toast.LENGTH_SHORT).show();
     }
+}
+
 
 
 

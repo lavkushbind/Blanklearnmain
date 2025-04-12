@@ -16,7 +16,6 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/white"
         android:backgroundTint="#050925"
         android:queryHint=""
         app:layout_constraintEnd_toEndOf="parent"

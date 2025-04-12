@@ -4,6 +4,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.Window;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.blank_learn.dark.R;
 import com.example.dark.ClasFragment;
 import com.example.dark.aboutFragment;
+import com.example.demo.AllocationListFragment;
+import com.example.demo.TeacherAllocationFragment;
 import com.example.notification.Notification2Fragment;
 import com.example.payment.OneFragment;
 import com.example.payment.PostFragment;
@@ -26,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Window window = getWindow();
+        window.setNavigationBarColor(getResources().getColor(android.R.color.white));
+
 
         if (isConnected()) {
             setupUI();
@@ -44,22 +51,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                switch (item.getItemId()) {
-                    case R.id.home:
-                        fragmentTransaction.replace(R.id.container, new HomFragment());
-                        break;
-                    case R.id.notificationid:
-                        fragmentTransaction.replace(R.id.container, new OneFragment());
-                        break;
-                    case R.id.search:
-                        fragmentTransaction.replace(R.id.container, new YourSearchActivity());
-                        break;
-                    case R.id.profile:
-                        fragmentTransaction.replace(R.id.container, new ProfileFragment());
-                        break;
-                    case R.id.classs:
-                        fragmentTransaction.replace(R.id.container, new ClasFragment());
-                        break;
+
+                int itemId = item.getItemId(); // Get the item ID
+
+                if (itemId == R.id.home) {
+                    fragmentTransaction.replace(R.id.container, new HomFragment());
+                } else if (itemId == R.id.notificationid) {
+                    fragmentTransaction.replace(R.id.container, new OneFragment());
+                } else if (itemId == R.id.search) {
+                    fragmentTransaction.replace(R.id.container, new YourSearchActivity());
+                } else if (itemId == R.id.profile) {
+                    fragmentTransaction.replace(R.id.container, new ProfileFragment());
+                } else if (itemId == R.id.classs) {
+                    fragmentTransaction.replace(R.id.container, new AllocationListFragment());
                 }
                 fragmentTransaction.commit();
                 return true;

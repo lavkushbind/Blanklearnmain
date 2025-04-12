@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -74,6 +75,7 @@ public class post2Activity extends AppCompatActivity {
    String uri;
 
    String postpic;
+   long  priceLong;
 
    String topic;
     @Override
@@ -84,7 +86,8 @@ public class post2Activity extends AppCompatActivity {
         intent = getIntent();
         postpic= intent.getStringExtra("postPic");
         stand= intent.getStringExtra("stand");
-        price= intent.getStringExtra("price");
+
+
         postid = intent.getStringExtra("postid");
 
         seats= intent.getStringExtra("seats");
@@ -104,9 +107,28 @@ public class post2Activity extends AppCompatActivity {
         exoPlayer.prepare();
         exoPlayer.play();
 
-//        if (mediaItem != null) {
-//            exoPlayer.stop();
-//        }
+        binding.videoView.setUseController(false);
+        binding.videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (exoPlayer.isPlaying()) {
+                    exoPlayer.pause();
+                } else {
+                    exoPlayer.play();
+                }
+            }
+        });
+        ProgressBar progressBar = findViewById(R.id.progressBar2);
+        exoPlayer.addListener(new Player.Listener() {
+            @Override
+            public void onPlaybackStateChanged(int playbackState) {
+                if (playbackState == Player.STATE_BUFFERING) {
+                    progressBar.setVisibility(View.VISIBLE);
+                } else if (playbackState == Player.STATE_READY) {
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        });
 
 
         Users currentUser = new Users();
@@ -129,6 +151,11 @@ public class post2Activity extends AppCompatActivity {
                                     .placeholder(R.drawable.profileuser)
                                     .into(binding.profilepic);
                             binding.usernm.setText(user.getName());
+                            if (user.isVerify()) {
+                                binding.imageView24.setVisibility(View.VISIBLE);
+                            } else {
+                                binding.imageView24.setVisibility(View.GONE);
+                            }
                         }
                     }
                     @Override
@@ -166,7 +193,7 @@ public class post2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(post2Activity.this, razorpayActivity.class);
-                intent.putExtra("Price", price);
+                intent.putExtra("Price", priceLong);
                 intent.putExtra("Topic", topic);
                 intent.putExtra("postpic",postpic);
                 intent.putExtra("Postid", postid);
@@ -174,7 +201,6 @@ public class post2Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
 
 
@@ -195,8 +221,9 @@ public class post2Activity extends AppCompatActivity {
 //                                    binding.textView68.setText(String.valueOf(postmodel.getPrice2()));
 
 
+                                    binding.PriceID.setText(String.valueOf(postmodel.getPrice()));
 
-                                    binding.PriceID.setText(formatPriceAccordingToLocale(Double.parseDouble(postmodel.getPrice())));
+//                                    binding.PriceID.setText(formatPriceAccordingToLocale(Double.parseDouble((postmodel.getPrice()));
                                     binding.textView68.setText(formatPriceAccordingToLocale(postmodel.getPrice2()));
                                     binding.textview73.setText(String.valueOf(postmodel.getSeats()));
 
@@ -233,6 +260,7 @@ public class post2Activity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -263,7 +291,6 @@ public class post2Activity extends AppCompatActivity {
     }
 
     private String formatPriceAccordingToLocale(double price) {
-        // Explicitly set the locale to India
         Locale indianLocale = new Locale("en", "IN");
         NumberFormat format = NumberFormat.getCurrencyInstance(indianLocale);
         return format.format(price);

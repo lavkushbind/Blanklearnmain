@@ -23,6 +23,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/demoRV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/StoryRV" />
+
             <ImageView
                 android:id="@+id/poster"
                 android:layout_width="match_parent"
@@ -75,7 +87,7 @@
                 android:layout_marginEnd="8dp"
                 android:fontFamily="serif"
                 android:padding="10dp"
-                android:text=" The benefits of one-on-one or small group classes"
+                android:text="The benefits for students"
                 android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -100,23 +112,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView52">
 
-                <com.smarteist.autoimageslider.SliderView
+                <ImageView
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_centerInParent="true"
-                    app:sliderAnimationDuration="600"
-                    app:sliderAutoCycleDirection="back_and_forth"
-                    app:sliderIndicatorAnimationDuration="600"
-                    app:sliderIndicatorEnabled="true"
-                    app:sliderIndicatorGravity="center_horizontal|bottom"
-                    app:sliderIndicatorMargin="15dp"
-                    app:sliderIndicatorOrientation="horizontal"
-                    app:sliderIndicatorPadding="3dp"
-                    app:sliderIndicatorRadius="2dp"
-                    app:sliderIndicatorSelectedColor="#5A5A5A"
-                    app:sliderIndicatorUnselectedColor="#FFF"
-                    app:sliderScrollTimeInSec="1" />
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/newslider" />
             </androidx.cardview.widget.CardView>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -160,7 +162,7 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                app:layout_constraintTop_toBottomOf="@+id/demoRV" />
 
             <TextView
                 android:id="@+id/textView18"
@@ -171,6 +173,7 @@
                 android:layout_marginBottom="400dp"
                 android:text="See all"
                 android:textColor="@color/blackk"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/postRV" />
@@ -288,7 +291,7 @@
                 android:gravity="center"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="How does it work  "
+                android:text="Book your free demo"
                 android:textColor="#FF9800"
                 android:textSize="18dp"
                 android:textStyle="bold"
@@ -334,7 +337,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:padding="10dp"
-                android:text="One to one personal teacher"
+                android:text="Personal teacher"
                 android:textColor="@color/white"
                 android:textSize="18dp"
                 android:textStyle="bold"
@@ -371,11 +374,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:layout_marginTop="195dp"
                 android:background="@drawable/folded_corner"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="4dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/faqRV">
+                app:layout_constraintTop_toBottomOf="@+id/textView49">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -388,6 +392,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -522,17 +527,15 @@
             </androidx.cardview.widget.CardView>
 
 
-
-
             <androidx.recyclerview.widget.RecyclerView
 
                 android:id="@+id/faqRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="1dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView49" />
+                app:layout_constraintTop_toBottomOf="@id/cardView4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
