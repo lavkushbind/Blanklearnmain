@@ -25,7 +25,7 @@ import java.util.List;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

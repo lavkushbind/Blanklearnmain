@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;

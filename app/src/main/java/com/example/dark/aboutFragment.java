@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 /**
  * A simple {@link Fragment} subclass.

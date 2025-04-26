@@ -17,8 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.VideoBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.VideoBinding;
 import com.example.loginandsignup.Users;
 import com.example.payment.postmodel;
 import com.google.firebase.auth.FirebaseAuth;

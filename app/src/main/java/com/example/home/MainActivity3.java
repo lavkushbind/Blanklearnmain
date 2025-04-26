@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.airbnb.lottie.LottieDrawable;
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,9 +14,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.blank_learn.dark.databinding.About2Binding;
-import com.blank_learn.dark.databinding.ActivityAboutBinding;
-import com.blank_learn.dark.databinding.ActivityMain3Binding;
+import com.example.dark.databinding.About2Binding;
+import com.example.dark.databinding.ActivityAboutBinding;
+import com.example.dark.databinding.ActivityMain3Binding;
 import com.example.loginandsignup.login;
 import com.example.loginandsignup.signup;
 import com.google.firebase.auth.FirebaseAuth;

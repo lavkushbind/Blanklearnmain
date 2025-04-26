@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 public class PDFViewerActivity extends AppCompatActivity {
 

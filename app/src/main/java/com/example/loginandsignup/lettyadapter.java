@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.airbnb.lottie.LottieAnimationView;
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import java.util.List;
 
 public class lettyadapter extends RecyclerView.Adapter<lettyadapter.SliderViewHolder> {

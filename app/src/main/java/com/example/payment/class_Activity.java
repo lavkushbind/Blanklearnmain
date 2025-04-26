@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.ActivityClassBinding;
-import com.blank_learn.dark.databinding.ActivityGroupChatBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.ActivityClassBinding;
+import com.example.dark.databinding.ActivityGroupChatBinding;
 import com.example.chat.GroupChat;
 import com.example.chat.MemberAdapter;
 import com.example.chat.chatAdapter;

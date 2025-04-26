@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.example.home.HomFragment;
 
 import java.util.ArrayList;

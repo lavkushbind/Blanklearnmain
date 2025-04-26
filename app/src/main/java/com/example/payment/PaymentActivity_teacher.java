@@ -8,12 +8,12 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.blank_learn.dark.databinding.About2Binding;
-import com.blank_learn.dark.databinding.ActivityMain3Binding;
+import com.example.dark.databinding.About2Binding;
+import com.example.dark.databinding.ActivityMain3Binding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

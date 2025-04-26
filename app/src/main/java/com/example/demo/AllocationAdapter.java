@@ -1,9 +1,11 @@
 package com.example.demo;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,8 +18,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.example.chat.ChatAA;
+import com.example.loginandsignup.Users;
 import com.example.payment.PaymentActivity;
 import com.example.payment.razorpayActivity;
 import com.google.firebase.database.DataSnapshot;
@@ -31,12 +34,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.auth.User;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
@@ -46,6 +51,8 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
 
     private List<AllocationData> allocationList;
     private Context context;
+    private Map<String, Users> userMap; // BEST PRACTICE: Pre-load user data (ID -> User object with phone)
+
     private boolean isTeacher;
 
     public AllocationAdapter(List<AllocationData> allocationList, Context context, boolean isTeacher) {
@@ -70,11 +77,17 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
         holder.timeTextView.setText("Time: " + allocation.getTimeSlot());
 
         String otherUserId;
+        String otherUserRole;
+
         if (isTeacher) {
-            otherUserId = allocation.getStudentID(); // Get the student's ID
+            otherUserId = allocation.getStudentID();
+            otherUserRole = "Student";
         } else {
-            otherUserId = allocation.getTeacherID(); // Get the teacher's ID
+            otherUserId = allocation.getTeacherID();
+            otherUserRole = "Teacher";
+
         }
+        final String finalOtherUserRole = otherUserRole;
 
         String finalOtherUserId = otherUserId;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +118,73 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
             }
         }
         String allocationId = allocation.getDemoID();
+
+
+        holder.call.setEnabled(false);
+        holder.call.setAlpha(0.5f);
+
+        if (finalOtherUserId != null && !finalOtherUserId.isEmpty()) {
+            DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("Users");
+
+            usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Users targetUser = dataSnapshot.child(finalOtherUserId).getValue(Users.class);
+
+                    if (targetUser != null && targetUser.getPhone() != null && !targetUser.getPhone().trim().isEmpty()) {
+                        final String phoneNumber = targetUser.getPhone().trim();
+
+                        holder.call.setEnabled(true);
+                        holder.call.setAlpha(1.0f);
+
+                        holder.call.setOnClickListener(v -> {
+                            Toast.makeText(context, "calling...", Toast.LENGTH_SHORT).show();
+                            initiatePhoneCall(context, phoneNumber);
+                        });
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(context, "Failed to fetch user data", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+
+
+        holder.whatsapp.setEnabled(false); // Disable initially
+        holder.whatsapp.setAlpha(0.5f);
+
+        if (finalOtherUserId != null && !finalOtherUserId.isEmpty()) {
+            DatabaseReference usersRef1 = FirebaseDatabase.getInstance().getReference("Users");
+
+            usersRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Users targetUser = dataSnapshot.child(finalOtherUserId).getValue(Users.class);
+
+                    if (targetUser != null && targetUser.getPhone() != null && !targetUser.getPhone().trim().isEmpty()) {
+                        final String phoneNumber = targetUser.getPhone().trim();
+
+                        holder.whatsapp.setEnabled(true);
+                        holder.whatsapp.setAlpha(1.0f);
+
+                        holder.whatsapp.setOnClickListener(v -> {
+                            Toast.makeText(context, "whatsapp...", Toast.LENGTH_SHORT).show();
+                            openWhatsAppChat(context, phoneNumber);
+                        });
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(context, "Failed to fetch user data", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+
+
 
         holder.enrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,6 +260,44 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
 
         handlePaymentStatus(holder, allocation);
     }
+
+    private void initiatePhoneCall(Context context, String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL); // Opens Dialer (safer)
+
+        intent.setData(Uri.parse("tel:" + phoneNumber));
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+
+        } catch (SecurityException e) {
+        }
+    }
+
+    private void openWhatsAppChat(Context context, String phoneNumber) {
+       String number = phoneNumber.replace("+", "").replace(" ", "");
+        Uri uri = Uri.parse("https://wa.me/" + number);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+
+        try {
+            Log.i("Adapter", "Attempting to open WhatsApp chat with: " + number);
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.e("Adapter", "WhatsApp not installed or cannot handle intent.", e);
+            // Try the older 'smsto:' URI method as a fallback or just show error
+            try {
+                Uri smsUri = Uri.parse("smsto:" + number);
+                Intent waIntent = new Intent(Intent.ACTION_SENDTO, smsUri);
+                waIntent.setPackage("com.whatsapp");
+                context.startActivity(waIntent);
+            } catch (ActivityNotFoundException e2) {
+                Toast.makeText(context, "WhatsApp not installed.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
+
     private void fetchTeacherDetails(AllocationViewHolder holder, String teacherID) {
         if (teacherID == null) {
             holder.teacherIdTextView.setText("Teacher: ID not found");
@@ -448,7 +566,7 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
 
     public static class AllocationViewHolder extends RecyclerView.ViewHolder {
         TextView  teachermsg,classNameTextView, dateTextView, timeTextView, teacherIdTextView, countdownTextView, demoCompleteMessage, demoOptionsMessage, paymentReminderTextView, paymentStatusTextView, contactNumberTextView;
-        Button no_demo,enrollButton, bookAnotherDemoButton, demo_yes;
+        Button no_demo,enrollButton, bookAnotherDemoButton, call,whatsapp, demo_yes;
         LinearLayout buttonContainer;
 
         public AllocationViewHolder(@NonNull View itemView) {
@@ -469,6 +587,8 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
             paymentStatusTextView = itemView.findViewById(R.id.payment_status_text_view);
             contactNumberTextView = itemView.findViewById(R.id.contact_number);
             buttonContainer = itemView.findViewById(R.id.button_container);
+            call=itemView.findViewById(R.id.call);
+            whatsapp=itemView.findViewById(R.id.whatsapp);
         }
     }
 }

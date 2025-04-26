@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

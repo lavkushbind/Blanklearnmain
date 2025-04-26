@@ -9,10 +9,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import com.airbnb.lottie.LottieDrawable;
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.ActivitySignupBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.ActivitySignupBinding;
 import com.example.home.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,8 +21,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.Constants;
+
 public class signup extends AppCompatActivity {
     FirebaseAuth auth;
+    private FirebaseAnalytics mFirebaseAnalytics;
     ActivitySignupBinding binding;
     EditText passbtn, emailbtn,namebtn,phonebtn;
     Button signupbtn;
@@ -46,6 +50,8 @@ public class signup extends AppCompatActivity {
         phonebtn = findViewById(R.id.phonebtn);
         signupbtn = findViewById(R.id.signupbtn);
         currentUser=auth.getCurrentUser();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         if(currentUser!= null)
         {
             Intent intent= new Intent(signup.this, MainActivity.class);
@@ -107,9 +113,12 @@ public class signup extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task)
                     {if(task.isSuccessful())  {
                     modelfast users = new modelfast(name,phone,email,pass);
-                 String id = task.getResult().getUser().getUid();
+                    String id = task.getResult().getUser().getUid();
                     database.getReference().child("Users").child(id).setValue(users);
-                                    startActivity(new Intent(signup.this, MainActivity.class));
+                        Bundle bundle = new Bundle();
+                        bundle.putString(FirebaseAnalytics.Param.METHOD, "email");
+                        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
+                        startActivity(new Intent(signup.this, MainActivity.class));
                     }
                         else{
                             Toast.makeText(signup.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();

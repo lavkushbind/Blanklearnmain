@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.example.home.MainActivity;
 
 public class ClassReminderWorker extends Worker {

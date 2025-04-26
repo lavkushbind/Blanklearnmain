@@ -12,8 +12,8 @@ import android.webkit.MimeTypeMap;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.ActivityStoryBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.ActivityStoryBinding;
 import com.example.loginandsignup.Users;
 import com.example.profile.ProActivity;
 import com.google.android.exoplayer2.ExoPlayer;

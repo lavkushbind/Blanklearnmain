@@ -6,7 +6,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 import java.util.ArrayList;
 import java.util.List;

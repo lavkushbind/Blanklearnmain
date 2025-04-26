@@ -4,8 +4,10 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.8.10'
 }
 android {
-    namespace 'com.blank_learn.dark'
-    compileSdk 34
+        namespace 'com.example.dark'
+    compileSdk 35
+
+//    namespace 'com.blank_learn.dark'
     buildFeatures {
         viewBinding true
     }
@@ -17,11 +19,14 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.blank_learn.dark"
+//        com.example.dark
+//        applicationId "com.blank_learn.dark
+                applicationId "com.example.dark"
+
         minSdk 22
         targetSdk 34
-        versionCode  1021
-        versionName "10.0.0.21"
+        versionCode  1022
+        versionName "10.0.0.22"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -49,6 +54,11 @@ dependencies {
 
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.gms:play-services-measurement-api:22.4.0'
+    implementation 'androidx.credentials:credentials:1.5.0'
+    implementation 'androidx.credentials:credentials-play-services-auth:1.5.0'
+    implementation 'com.google.android.libraries.identity.googleid:googleid:1.1.1'
+    implementation 'com.google.firebase:firebase-functions:21.2.1'
 //    implementation 'com.google.firebase:firebase-messaging:24.1.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.22'

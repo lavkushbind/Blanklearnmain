@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import android.widget.Toast;
 
 import com.example.notification.NotificationModel;

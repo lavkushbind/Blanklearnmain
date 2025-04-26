@@ -16,8 +16,8 @@ import androidx.annotation.StringRes;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.TopteaBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.TopteaBinding;
 import com.example.chat.ChatAA;
 import com.example.dark.oneclassActivity;
 import com.example.loginandsignup.Users;
@@ -42,7 +42,7 @@ public class useradapter extends RecyclerView.Adapter<useradapter.viewholder> {
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(com.blank_learn.dark.R.layout.toptea,parent,false);
+        View view= LayoutInflater.from(context).inflate(com.example.dark.R.layout.toptea,parent,false);
         return  new viewholder(view);
     }
 

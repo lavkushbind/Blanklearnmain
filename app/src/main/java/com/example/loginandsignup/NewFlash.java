@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.example.home.MainActivity;
 
 public class NewFlash extends AppCompatActivity {

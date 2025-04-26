@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.FragmentFeedBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.FragmentFeedBinding;
 
 
 public class FeedFragment extends Fragment {

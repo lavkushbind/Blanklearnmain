@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 public class FcmActivity extends AppCompatActivity {
 

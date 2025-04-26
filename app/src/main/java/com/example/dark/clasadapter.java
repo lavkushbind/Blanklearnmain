@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.ClassSampleBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.ClassSampleBinding;
 import com.example.chat.GroupChat;
 import com.example.chat.Member;
 import com.example.payment.class_Activity;

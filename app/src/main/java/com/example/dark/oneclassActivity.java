@@ -12,9 +12,9 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.ActivityOneclassBinding;
-import com.blank_learn.dark.databinding.ActivityStoryBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.ActivityOneclassBinding;
+import com.example.dark.databinding.ActivityStoryBinding;
 import com.example.chat.ChatAA;
 import com.example.home.Story_model;
 import com.example.home.demoActivity;

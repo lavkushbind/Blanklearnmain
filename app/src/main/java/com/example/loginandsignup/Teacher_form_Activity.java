@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.example.home.MainActivity;
 import com.example.payment.PaymentActivity_teacher;
 import com.google.firebase.auth.FirebaseAuth;

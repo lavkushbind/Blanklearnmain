@@ -14,8 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.FragmentEditBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.FragmentEditBinding;
 import com.example.home.HomFragment;
 import com.example.loginandsignup.Users;
 import com.google.android.gms.tasks.OnCompleteListener;

@@ -180,7 +180,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.blank_learn.dark.databinding.ActivityGroupChatBinding;
+import com.example.dark.databinding.ActivityGroupChatBinding;
 import com.example.home.MainActivity;
 import com.example.payment.postmodel;
 import com.google.android.gms.tasks.OnFailureListener;

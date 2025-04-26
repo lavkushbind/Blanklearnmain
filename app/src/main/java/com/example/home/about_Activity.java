@@ -16,7 +16,7 @@ import androidx.palette.graphics.Palette;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
-import com.blank_learn.dark.databinding.ActivityAboutBinding;
+import com.example.dark.databinding.ActivityAboutBinding;
 import com.example.loginandsignup.login;
 import com.example.loginandsignup.signup;
 import com.google.android.exoplayer2.ExoPlayer;

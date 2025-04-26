@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.TopteaBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.TopteaBinding;
 import com.example.dark.oneclassActivity;
 import com.example.profile.ProActivity;
 import com.squareup.picasso.Picasso;

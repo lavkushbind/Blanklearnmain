@@ -11,7 +11,7 @@ import android.os.Bundle;
         import androidx.annotation.NonNull;
         import androidx.appcompat.app.AppCompatActivity;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.google.firebase.FirebaseException;
         import com.google.firebase.auth.AuthResult;
         import com.google.firebase.auth.FirebaseAuth;

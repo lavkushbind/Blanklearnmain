@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.example.home.MainActivity;
 import com.example.home.MainActivity2;
 import com.example.home.MainActivity3;

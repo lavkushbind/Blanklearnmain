@@ -20,9 +20,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.ActivityCoursedetailBinding;
-import com.blank_learn.dark.databinding.ActivityPost2Binding;
+import com.example.dark.R;
+import com.example.dark.databinding.ActivityCoursedetailBinding;
+import com.example.dark.databinding.ActivityPost2Binding;
 import com.example.dark.clasmodel;
 import com.example.home.about_Activity;
 import com.example.loginandsignup.Users;

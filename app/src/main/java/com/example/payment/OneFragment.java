@@ -15,7 +15,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.blank_learn.dark.databinding.FragmentOneBinding;
+import com.example.dark.databinding.FragmentOneBinding;
 import com.example.loginandsignup.Users;
 import com.example.notification.NotificationAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 public class OneFragment extends Fragment {
     private FragmentOneBinding binding;

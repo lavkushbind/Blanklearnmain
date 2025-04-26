@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.blank_learn.dark.databinding.ActivityPaymentBinding;
+import com.example.dark.databinding.ActivityPaymentBinding;
 import com.example.dark.clasmodel;
 import com.example.home.MainActivity;
 import com.example.home.appmodel;

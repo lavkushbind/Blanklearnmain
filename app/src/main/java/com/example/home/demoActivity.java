@@ -1,6 +1,6 @@
 package com.example.home;
 
-import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -10,16 +10,14 @@ import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
-import android.util.Log;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,62 +25,33 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.example.One_Signal.NotificationWorker;
 import com.example.demo.AllocationListFragment;
-import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import android.graphics.Color;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.onesignal.OneSignal;
 
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.util.Log;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 public class demoActivity extends AppCompatActivity {
     private CalendarView calendarView;
     String randomKey;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     FirebaseDatabase database;
 
     private LinearLayout timeSlotContainer, classContainer;
@@ -104,6 +73,8 @@ public class demoActivity extends AppCompatActivity {
         payButton = findViewById(R.id.next_button);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         currentUserID = mAuth.getCurrentUser().getUid();
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) ->
                 selectedDate = dayOfMonth + "-" + (month + 1) + "-" + year
@@ -317,8 +288,17 @@ public class demoActivity extends AppCompatActivity {
 
         allocationRef.setValue(allocationData)
                 .addOnSuccessListener(aVoid -> {
+
+
                     Toast.makeText(demoActivity.this, "Allocation saved!", Toast.LENGTH_SHORT).show();
 
+                    Bundle bundle = new Bundle();
+                    bundle.putString("demo_id", randomKey);
+                    bundle.putString("class_name", selectedClass);
+                    bundle.putString("time_slot", selectedTimeSlot);
+                    bundle.putString("date", selectedDate);
+                    bundle.putString("teacher_id", teacherID);
+                    mFirebaseAnalytics.logEvent("demo_booked", bundle);
                     // Get teacher's OneSignal Player ID
                     databaseReference.child("users").child(teacherID).child("oneSignalPlayerId")
                             .addListenerForSingleValueEvent(new ValueEventListener() {

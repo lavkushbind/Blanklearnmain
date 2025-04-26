@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.example.chat.GroupChat;
 import com.example.loginandsignup.Users;
 import com.example.notification.NotificationModel;

@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 class ImageAdapter extends PagerAdapter {
 

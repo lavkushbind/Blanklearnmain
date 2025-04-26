@@ -26,8 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.SearchFragmentBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.SearchFragmentBinding;
 
 public class YourSearchActivity extends Fragment {
     private SearchFragmentBinding binding;

@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 //import com.blank_learn.dark.Manifest;
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.example.dark.clasmodel;
 import com.example.loginandsignup.Users;
 import com.example.notification.NotificationModel;

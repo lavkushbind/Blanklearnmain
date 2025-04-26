@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.viewpager.widget.PagerAdapter;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 public class ImageSliderAdapter extends PagerAdapter {
 

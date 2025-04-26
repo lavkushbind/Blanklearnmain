@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -17,8 +17,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.FragmentPostBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.FragmentPostBinding;
 import com.example.dark.clasmodel;
 import com.example.notification.NotificationModel;
 import com.google.android.gms.tasks.OnSuccessListener;

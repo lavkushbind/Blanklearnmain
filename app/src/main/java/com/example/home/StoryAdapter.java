@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.MemberBinding;
-import com.blank_learn.dark.databinding.SearchSampleBinding;
-import com.blank_learn.dark.databinding.StorySampleBinding;
-import com.blank_learn.dark.databinding.VideoBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.MemberBinding;
+import com.example.dark.databinding.SearchSampleBinding;
+import com.example.dark.databinding.StorySampleBinding;
+import com.example.dark.databinding.VideoBinding;
 import com.example.loginandsignup.Users;
 import com.example.payment.postmodel;
 import com.google.android.exoplayer2.DefaultLoadControl;

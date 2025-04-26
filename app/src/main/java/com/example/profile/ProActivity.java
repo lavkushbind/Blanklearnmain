@@ -10,8 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.ActivityProBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.ActivityProBinding;
 import com.example.chat.ChatAA;
 import com.example.home.MainActivity;
 import com.example.home.homeadapter;

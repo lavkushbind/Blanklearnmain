@@ -12,8 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blank_learn.dark.databinding.FragmentClasBinding;
-import com.blank_learn.dark.databinding.NoCourseBinding;
+import com.example.dark.databinding.FragmentClasBinding;
+import com.example.dark.databinding.NoCourseBinding;
 import com.example.home.HomFragment;
 import com.example.profile.EditFragment;
 import com.google.firebase.auth.FirebaseAuth;

@@ -18,6 +18,8 @@ public class Users {
     private String phone;
     private String video;
     private  String storyid;
+    public Users() {
+    }
 
     public String getVideo() {
         return video;
@@ -135,8 +137,6 @@ public class Users {
 
     public String uid;
 
-    public Users() {
-    }
 
 
     public Users(String name,String phone, String email, String userID, String pass, String coverpic, String profilepic, String bio, String profesion, int followercount, String uid) {

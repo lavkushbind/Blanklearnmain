@@ -17,8 +17,8 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
-import com.blank_learn.dark.R;
-import com.blank_learn.dark.databinding.ActivityFeedPostBinding;
+import com.example.dark.R;
+import com.example.dark.databinding.ActivityFeedPostBinding;
 import com.example.home.Story_model;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;

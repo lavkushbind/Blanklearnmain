@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 
 public class  notifyActivity extends AppCompatActivity {
 

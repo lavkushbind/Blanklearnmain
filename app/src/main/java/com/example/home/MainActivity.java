@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.example.dark.ClasFragment;
 import com.example.dark.aboutFragment;
 import com.example.demo.AllocationListFragment;

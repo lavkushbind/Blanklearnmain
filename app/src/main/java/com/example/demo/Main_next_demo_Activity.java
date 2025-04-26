@@ -1,7 +1,7 @@
 package com.example.demo;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.home.MainActivity;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.razorpay.Checkout;
@@ -19,6 +20,8 @@ public class Main_next_demo_Activity extends AppCompatActivity implements Paymen
 
     private String allocationId;
     private String amount;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     Intent intent;
 
 
@@ -28,7 +31,7 @@ public class Main_next_demo_Activity extends AppCompatActivity implements Paymen
         setContentView(R.layout.activity_main_next_demo);
 
         allocationId = getIntent().getStringExtra("allocationId");
-//        amount = getIntent().getStringExtra("price");
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         intent = getIntent();
         amount = intent.getStringExtra("price");
@@ -75,6 +78,15 @@ public class Main_next_demo_Activity extends AppCompatActivity implements Paymen
     public void onPaymentSuccess(String razorpayPaymentId) {
         Log.d("PaymentActivity", "Payment Successful: " + razorpayPaymentId);
         Toast.makeText(this, "Payment Successful: " + razorpayPaymentId, Toast.LENGTH_SHORT).show();
+
+        Bundle purchaseBundle = new Bundle();
+        purchaseBundle.putDouble(FirebaseAnalytics.Param.VALUE, 1000.0); // ₹1000
+        purchaseBundle.putString(FirebaseAnalytics.Param.CURRENCY, "INR");
+        purchaseBundle.putString(FirebaseAnalytics.Param.TRANSACTION_ID, razorpayPaymentId);
+        purchaseBundle.putString(FirebaseAnalytics.Param.ITEM_ID, "class_access");
+        purchaseBundle.putString(FirebaseAnalytics.Param.PAYMENT_TYPE, "razorpay");
+
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.PURCHASE, purchaseBundle);
 
         updatePaymentStatusInDatabase(allocationId, "paid");
 

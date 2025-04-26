@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 public class ShimmerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

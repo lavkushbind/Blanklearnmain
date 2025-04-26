@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.blank_learn.dark.databinding.FragmentMemberBinding;
+import com.example.dark.databinding.FragmentMemberBinding;
 import com.example.loginandsignup.Users;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

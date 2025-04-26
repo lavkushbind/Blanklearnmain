@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.blank_learn.dark.R;
+import com.example.dark.R;
 import com.squareup.picasso.Picasso;
 
 public class FullScreenImageActivity extends AppCompatActivity {
