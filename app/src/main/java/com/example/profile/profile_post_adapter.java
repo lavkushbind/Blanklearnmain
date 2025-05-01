@@ -1,6 +1,5 @@
 package com.example.profile;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,13 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dark.R;
 import com.example.dark.databinding.VideoBinding;
-import com.example.chat.ChatAA;
-import com.example.chat.GroupChat;
 import com.example.home.post2Activity;
 import com.example.loginandsignup.Users;
-import com.example.payment.CurrencyUtils;
 import com.example.payment.postmodel;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,7 +29,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class profile_post_adapter extends RecyclerView.Adapter<profile_post_adapter.viewHolder>  {

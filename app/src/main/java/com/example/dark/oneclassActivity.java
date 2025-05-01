@@ -10,17 +10,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.Toast;
 
-import com.example.dark.R;
 import com.example.dark.databinding.ActivityOneclassBinding;
-import com.example.dark.databinding.ActivityStoryBinding;
-import com.example.chat.ChatAA;
-import com.example.home.Story_model;
 import com.example.home.demoActivity;
 import com.example.loginandsignup.Users;
 import com.example.profile.ProActivity;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.firebase.auth.FirebaseAuth;

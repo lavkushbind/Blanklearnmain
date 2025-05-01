@@ -1,7 +1,6 @@
 package com.example.profile;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -10,15 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.chat.ChatAA;
 import com.example.dark.R;
 import com.example.dark.databinding.ActivityProBinding;
-import com.example.chat.ChatAA;
-import com.example.home.MainActivity;
-import com.example.home.homeadapter;
 import com.example.home.homeadapter2;
-import com.example.home.post2Activity;
 import com.example.loginandsignup.Users;
-import com.example.loginandsignup.signup;
 import com.example.payment.postmodel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;

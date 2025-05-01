@@ -307,8 +307,6 @@ public class demoActivity extends AppCompatActivity {
                                     String teacherPlayerId = dataSnapshot.getValue(String.class);
 
                                     if (teacherPlayerId != null) {
-                                        // Send OneSignal Notification
-                                        sendNotificationToTeacher(teacherPlayerId, selectedDate, selectedTimeSlot, selectedClass);
                                     } else {
                                         Log.w("DemoActivity", "Teacher has no OneSignal Player ID");
                                     }
@@ -324,112 +322,7 @@ public class demoActivity extends AppCompatActivity {
                         Toast.makeText(demoActivity.this, "Failed to save allocation", Toast.LENGTH_SHORT).show()
                 );
     }
-    private void scheduleNotification(String teacherID, String studentID, String selectedDate, String selectedTimeSlot, String selectedClass) {
-        databaseReference.child("users").child(teacherID).child("oneSignalPlayerId")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String teacherPlayerId = dataSnapshot.getValue(String.class);
 
-                        databaseReference.child("users").child(studentID).child("oneSignalPlayerId")
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        String studentPlayerId = dataSnapshot.getValue(String.class);
-
-                                        if (teacherPlayerId != null && studentPlayerId != null) {
-                                            Calendar demoTime = Calendar.getInstance();
-                                            Calendar notificationTime = (Calendar) demoTime.clone();
-                                            notificationTime.add(Calendar.HOUR_OF_DAY, -3); // Subtract 3 hours
-
-                                            long delayInMillis = notificationTime.getTimeInMillis() - System.currentTimeMillis();
-                                            Data inputData = new Data.Builder()
-                                                    .putString("teacherPlayerId", teacherPlayerId)
-                                                    .putString("studentPlayerId", studentPlayerId)
-                                                    .putString("selectedDate", selectedDate)
-                                                    .putString("selectedTimeSlot", selectedTimeSlot)
-                                                    .putString("selectedClass", selectedClass)
-                                                    .build();
-                                            OneTimeWorkRequest notificationWork = new OneTimeWorkRequest.Builder(NotificationWorker.class)
-                                                    .setInputData(inputData)
-                                                    .setInitialDelay(delayInMillis, TimeUnit.MILLISECONDS)
-                                                    .build();
-
-                                            WorkManager.getInstance(demoActivity.this).enqueue(notificationWork);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        Log.e("DemoActivity", "Error retrieving student OneSignal ID: " + databaseError.getMessage());
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("DemoActivity", "Error retrieving teacher OneSignal ID: " + databaseError.getMessage());
-                    }
-                });
-    }
-
-
-
-
-    private void sendNotificationToTeacher(String teacherPlayerId, String selectedDate, String selectedTimeSlot, String selectedClass) {
-        // OneSignal API URL
-        String oneSignalApiUrl = "https://onesignal.com/api/v1/notifications";
-
-        // OneSignal App ID
-        String oneSignalAppId = "102b9dc4-8938-43bf-88b1-4df4b52d136d";
-
-        // Notification content
-        String notificationMessage = "You have a new demo class scheduled on " + selectedDate + " at " + selectedTimeSlot + " for " + selectedClass;
-
-        // Create the JSON payload for the OneSignal API
-        JSONObject notificationContent = new JSONObject();
-        try {
-            notificationContent.put("app_id", oneSignalAppId);
-            notificationContent.put("include_player_ids", new JSONArray().put(teacherPlayerId));
-            notificationContent.put("contents", new JSONObject().put("en", notificationMessage));
-            notificationContent.put("headings", new JSONObject().put("en", "New Demo Class Booked"));
-            notificationContent.put("data", new JSONObject().put("date", selectedDate).put("timeSlot", selectedTimeSlot).put("className", selectedClass));
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("DemoActivity", "Error creating JSON payload: " + e.getMessage());
-            return;
-        }
-
-        // Create a Volley request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        // Create a JSON object request
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, oneSignalApiUrl, notificationContent,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("DemoActivity", "Notification sent successfully: " + response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("DemoActivity", "Error sending notification: " + error.getMessage());
-                    }
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                // Add headers for OneSignal API
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Basic YOUR_ONESIGNAL_REST_API_KEY");
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                return headers;
-            }
-        };
-
-        // Add the request to the queue
-        requestQueue.add(jsonObjectRequest);
-    }
 }
 
 

@@ -1,5 +1,6 @@
 package com.example.chat;
 
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,17 +9,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.dark.databinding.ActivityGroupChatBinding;
 import com.example.home.MainActivity;
 import com.example.loginandsignup.Users;
@@ -27,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -34,29 +29,307 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
+import io.reactivex.rxjava3.annotations.Nullable;
+//
+//public class ChatAA extends AppCompatActivity {
+//    private final String CHANNEL_ID = "message_channel";
+//    private final int NOTIFICATION_ID = 1;
+//    private int lastMessageCount = 0;
+//    ActivityGroupChatBinding
+//     binding;
+//    FirebaseAuth auth;
+//    ArrayList<chatmodel> list;
+//    FirebaseDatabase database;
+//    FirebaseStorage storage;
+//    String name;
+//    Intent intent;
+//
+//    String Postid;
+//    private chatAdapter chatAdapter;
+//
+//    private static final int REQUEST_IMAGE_PICK = 1;
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        binding = ActivityGroupChatBinding.inflate(getLayoutInflater());
+//        setContentView(binding.getRoot());
+//        intent = getIntent();
+//
+//        name = intent.getStringExtra("name");
+//
+//
+//        list = new ArrayList<>();
+//        database = FirebaseDatabase.getInstance();
+//        storage = FirebaseStorage.getInstance();
+//        auth = FirebaseAuth.getInstance();
+//
+//        Postid = intent.getStringExtra("Postid");
+//        chatAdapter = new chatAdapter(list, getApplicationContext());
+//        database.getReference().child("Users").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    Users user = snapshot.getValue(Users.class);
+//                    binding.receiversName.setText(user.getName());
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+//
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        binding.messageAdapter.setLayoutManager(layoutManager);
+//        binding.messageAdapter.setAdapter(chatAdapter);
+//
+//        // Load group messages from Firebase
+//        loadGroupMessages();
+//
+//        binding.backBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(ChatAA.this, MainActivity.class));
+//            }
+//        });
+//
+//        binding.sendimgBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                openImagePicker();
+//            }
+//        });
+//
+//        binding.sendBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sendMessage();
+//            }
+//        });
+//    }
+//
+//    private void scrollToBottom() {
+//        if (binding.messageAdapter.getAdapter() != null) {
+//            int itemCount = binding.messageAdapter.getAdapter().getItemCount();
+//            if (itemCount > 0) {
+//                binding.messageAdapter.smoothScrollToPosition(itemCount - 1);
+//            }
+//        }
+//    }
+//    private void openImagePicker() {
+//        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+//        intent.addCategory(Intent.CATEGORY_OPENABLE);
+//        intent.setType("*/*"); // Set MIME type to all file types
+//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Allow multiple file selection
+//        startActivityForResult(intent, REQUEST_IMAGE_PICK);
+//    }
+//
+//
+//    private void loadGroupMessages() {
+//        String senderId = auth.getUid();
+//        String chatId;
+//        String userid1 = auth.getUid();
+//        intent = getIntent();
+//        String userid2;
+//        auth = FirebaseAuth.getInstance();
+//        userid2 = intent.getStringExtra("name");
+//        if (userid1.compareTo(userid2) < 0) {
+//            chatId = userid1 + "_" + userid2;
+//        } else {
+//            chatId = userid2 + "_" + userid1;
+//        }
+//        FirebaseMessaging.getInstance().getToken()
+//                .addOnCompleteListener(task -> {
+//                    if (!task.isSuccessful()) {
+//                        return;
+//                    }
+//                    String token = task.getResult();
+//                    String userId = FirebaseAuth.getInstance().getUid();
+//
+//                    if (userId != null) {
+//                        FirebaseDatabase.getInstance().getReference("Users")
+//                                .child(userId)
+//                                .child("fcmToken")
+//                                .setValue(token);
+//                    }
+//                });
+//
+//        database.getReference().child("Personal_chat").child(chatId)
+//                .child("mess")
+//                .addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        list.clear();
+//                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+//                            chatmodel model = snapshot1.getValue(chatmodel.class);
+//                            list.add(model);
+//                        }
+//                        updateChatAdapter();
+//                        scrollToBottom();
+//
+//                        if (list.size() > lastMessageCount) {
+//                            lastMessageCount = list.size();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//                        Toast.makeText(ChatAA.this, "Failed to load messages", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
+//
+//    private void updateChatAdapter() {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                chatAdapter.notifyDataSetChanged();
+//            }
+//        });
+//    }
+//
+//    private void sendMessage() {
+//        String message = binding.edtMessage.getText().toString().trim();
+//        Date date = new Date();
+//        String senderId = auth.getUid();
+//        String chatId;
+//        String userid1=  auth.getUid();
+//        intent = getIntent();
+//        String userid2;
+//        auth= FirebaseAuth.getInstance();
+//        userid2 = intent.getStringExtra("name");
+//        if (userid1.compareTo(userid2) < 0) {
+//            chatId = userid1 + "_" + userid2;
+//        } else {
+//            chatId = userid2 + "_" + userid1;
+//        }
+//
+//        if (!message.isEmpty()) {
+//            chatmodel messages = new chatmodel(senderId, message, date.getTime());
+//            database.getReference().child("Personal_chat").child(chatId)
+//                    .child("mess").push()
+//                    .setValue(messages)
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void unused) {
+//                        }
+//
+//
+//                    });
+//        } else {
+//            Toast.makeText(ChatAA.this, "Type a message", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        // Clear the message input field
+//        binding.edtMessage.setText("");
+//    }
+//
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//
+//        if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
+//            if (data.getClipData() != null) {
+//                int count = data.getClipData().getItemCount();
+//                for (int i = 0; i < count; i++) {
+//                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
+//                    uploadImageToStorage(imageUri);
+//                }
+//            } else if (data.getData() != null) {
+//                Uri imageUri = data.getData();
+//                uploadImageToStorage(imageUri);
+//            }
+//        }
+//
+//    }
+//
+//    private void uploadImageToStorage(Uri imageUri) {
+//
+//        StorageReference storageRef = storage.getReference().child("images");
+//        StorageReference imageRef = storageRef.child("image_" + System.currentTimeMillis());
+//        imageRef.putFile(imageUri)
+//                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                    @Override
+//                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                            @Override
+//                            public void onSuccess(Uri uri) {
+//
+//
+//
+//                                Date date = new Date();
+//                                String senderId = auth.getUid();
+//                                String chatId;
+//                                String userid1=  auth.getUid();
+//                                intent = getIntent();
+//                                String userid2;
+//                                auth= FirebaseAuth.getInstance();
+//                                userid2 = intent.getStringExtra("name");
+//                                if (userid1.compareTo(userid2) < 0) {
+//                                    chatId = userid1 + "_" + userid2;
+//                                } else {
+//                                    chatId = userid2 + "_" + userid1;
+//                                }
+//
+//
+//
+//                                String imageUrl = uri.toString();
+////                                final String senderId = auth.getUid();
+////                                Date date = new Date();
+//                                chatmodel message = new chatmodel(senderId, imageUrl, date.getTime());
+//                                database.getReference().child("Personal_chat").child(chatId)
+//                                        .child("mess").push()
+//                                        .setValue(message)
+//                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                                            @Override
+//                                            public void onSuccess(Void unused) {
+//                                            }
+//                                        });
+//                            }
+//                        });
+//                    }
+//                })
+//                .addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(ChatAA.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//    }
+//}
+
+
+
+
 
 public class ChatAA extends AppCompatActivity {
-    private final String CHANNEL_ID = "message_channel";
-    private final int NOTIFICATION_ID = 1;
-    private int lastMessageCount = 0;
-    ActivityGroupChatBinding
-     binding;
+
+    // Remove local notification constants
+    // private final String CHANNEL_ID = "message_channel";
+    // private final int NOTIFICATION_ID = 1;
+    // private int lastMessageCount = 0; // Remove usage
+
+    private static final String TAG = "ChatAA"; // Add Log TAG
+
+    ActivityGroupChatBinding binding;
     FirebaseAuth auth;
     ArrayList<chatmodel> list;
     FirebaseDatabase database;
     FirebaseStorage storage;
-    String name;
-    Intent intent;
 
-    String Postid;
+    // Variables to store chat partner info
+    String chatPartnerId;
+    String chatPartnerName;
+    String currentUserId;
+    String calculatedChatId; // Store the generated chat ID
+
     private chatAdapter chatAdapter;
 
     private static final int REQUEST_IMAGE_PICK = 1;
@@ -66,322 +339,369 @@ public class ChatAA extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityGroupChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        intent = getIntent();
 
-        name = intent.getStringExtra("name");
-
-
-        list = new ArrayList<>();
+        auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         storage = FirebaseStorage.getInstance();
-        auth = FirebaseAuth.getInstance();
+        list = new ArrayList<>();
 
-        Postid = intent.getStringExtra("Postid");
+        currentUserId = auth.getUid();
+        if (currentUserId == null) {
+            Log.e(TAG, "User not logged in!");
+            Toast.makeText(this, "Error: Not logged in.", Toast.LENGTH_SHORT).show();
+            // Redirect to login or finish
+            finish();
+            return;
+        }
+
+        // --- Handle Intent Extras (from Notification or direct navigation) ---
+        handleIntent(getIntent());
+
+
+        // --- Initial Setup ---
+        if (chatPartnerId != null) {
+            setupChatUI();
+            loadUserInfo(chatPartnerId); // Load partner info
+            loadGroupMessages(); // Load messages for the determined chatId
+            updateFcmTokenIfNeeded(); // Update token (might move elsewhere later)
+        } else {
+            Log.e(TAG, "chatPartnerId is null after handleIntent. Cannot proceed.");
+            Toast.makeText(this, "Error opening chat.", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    // Handle potential relaunch when activity is already open
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d(TAG, "onNewIntent called");
+        setIntent(intent); // Update the activity's intent
+        handleIntent(intent); // Re-process intent extras
+        // Optional: Reload messages if chatId changed (shouldn't in this model)
+        // if (calculatedChatId != null) loadGroupMessages();
+    }
+
+    // --- Centralized method to process Intent Extras ---
+    private void handleIntent(Intent intent) {
+        Log.d(TAG, "Handling Intent");
+        if (intent == null) {
+            Log.e(TAG, "Intent is null in handleIntent");
+            return;
+        }
+
+        // Check how ChatAA was opened
+        // Option 1: Opened directly, passing partner's ID as "name" (original way)
+        String partnerIdFromName = intent.getStringExtra("name");
+
+        // Option 2: Opened from notification, passing "senderId" (who sent the message)
+        String senderIdFromNotification = intent.getStringExtra("senderId");
+
+        // Option 3: Opened from notification, passing "chatId" directly (if function adds it)
+        String chatIdFromNotification = intent.getStringExtra("chatId"); // Less likely based on current function
+
+
+        if (senderIdFromNotification != null) {
+            // Opened from notification: 'senderId' is the chat partner
+            Log.d(TAG, "Opened from Notification: Partner ID (senderId) = " + senderIdFromNotification);
+            chatPartnerId = senderIdFromNotification;
+            // You might also get senderName from intent extra directly
+            chatPartnerName = intent.getStringExtra("senderName");
+
+        } else if (partnerIdFromName != null) {
+            // Opened directly: 'name' contains the partner ID
+            Log.d(TAG, "Opened Directly: Partner ID (name) = " + partnerIdFromName);
+            chatPartnerId = partnerIdFromName;
+            // Need to fetch partner name later in loadUserInfo
+        } else {
+            Log.e(TAG, "Could not determine chat partner ID from intent extras.");
+            // Handle error - maybe finish activity
+            Toast.makeText(this, "Error: Cannot identify chat partner.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+
+        // --- Calculate chatId consistently ---
+        if (chatPartnerId != null && currentUserId != null) {
+            if (currentUserId.compareTo(chatPartnerId) < 0) {
+                calculatedChatId = currentUserId + "_" + chatPartnerId;
+            } else {
+                calculatedChatId = chatPartnerId + "_" + currentUserId;
+            }
+            Log.d(TAG, "Calculated Chat ID: " + calculatedChatId);
+        } else {
+            Log.e(TAG, "Cannot calculate chatId: currentUserId or chatPartnerId is null.");
+            // This should ideally not happen if checks above are correct
+            finish();
+        }
+    }
+
+
+    private void setupChatUI() {
         chatAdapter = new chatAdapter(list, getApplicationContext());
-        database.getReference().child("Users").child(name).addListenerForSingleValueEvent(new ValueEventListener() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setStackFromEnd(true); // Start scrolled at the bottom
+        binding.messageAdapter.setLayoutManager(layoutManager);
+        binding.messageAdapter.setAdapter(chatAdapter);
+
+        binding.backBtn.setOnClickListener(view -> {
+            // Consider finishing instead of starting MainActivity if it clears stack
+            // startActivity(new Intent(ChatAA.this, MainActivity.class));
+            finish();
+        });
+
+        binding.sendimgBtn.setOnClickListener(view -> openImagePicker());
+
+        binding.sendBtn.setOnClickListener(v -> sendMessage());
+
+        // Add listener to scroll to bottom when keyboard appears/disappears or content size changes
+        binding.messageAdapter.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            if (bottom < oldBottom) { // Keyboard likely shown or content added
+                scrollToBottom();
+            }
+        });
+        binding.messageAdapter.getAdapter().registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                scrollToBottom();
+            }
+        });
+    }
+
+
+    // Load user info for the chat partner
+    private void loadUserInfo(String userId) {
+        Log.d(TAG, "Loading user info for: " + userId);
+        database.getReference().child("Users").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     Users user = snapshot.getValue(Users.class);
-                    binding.receiversName.setText(user.getName());
-
+                    if (user != null) {
+                        chatPartnerName = user.getName(); // Update partner name
+                        binding.receiversName.setText(chatPartnerName != null ? chatPartnerName : "Chat User"); // Set name in toolbar
+                        Log.d(TAG, "Partner Name: " + chatPartnerName);
+                    } else {
+                        Log.w(TAG, "User data structure invalid for ID: " + userId);
+                        binding.receiversName.setText("Chat User");
+                    }
+                } else {
+                    Log.w(TAG, "User not found in DB: " + userId);
+                    binding.receiversName.setText("Chat User"); // Fallback name
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        binding.messageAdapter.setLayoutManager(layoutManager);
-        binding.messageAdapter.setAdapter(chatAdapter);
-
-        // Load group messages from Firebase
-        loadGroupMessages();
-
-        binding.backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ChatAA.this, MainActivity.class));
-            }
-        });
-
-        binding.sendimgBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openImagePicker();
-            }
-        });
-
-        binding.sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sendMessage();
+                Log.e(TAG, "Error loading user info: " + error.getMessage());
+                binding.receiversName.setText("Chat User"); // Fallback name
             }
         });
     }
 
-    private void scrollToBottom() {
-        if (binding.messageAdapter.getAdapter() != null) {
-            int itemCount = binding.messageAdapter.getAdapter().getItemCount();
-            if (itemCount > 0) {
-                binding.messageAdapter.smoothScrollToPosition(itemCount - 1);
-            }
-        }
-    }
-    private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("*/*"); // Set MIME type to all file types
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Allow multiple file selection
-        startActivityForResult(intent, REQUEST_IMAGE_PICK);
+    private void updateFcmTokenIfNeeded() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                        return;
+                    }
+                    String token = task.getResult();
+                    Log.d(TAG, "Current FCM Token: " + token);
+                    // Update in DB (could be done more globally)
+                    if (currentUserId != null && token != null) {
+                        database.getReference("Users")
+                                .child(currentUserId)
+                                .child("fcmToken")
+                                .setValue(token)
+                                .addOnSuccessListener(aVoid -> Log.d(TAG, "FCM Token updated in DB (if needed)."))
+                                .addOnFailureListener(e -> Log.e(TAG, "Failed to update token in DB", e));
+                    }
+                });
     }
 
 
     private void loadGroupMessages() {
-        String senderId = auth.getUid();
-        String chatId;
-        String userid1 = auth.getUid();
-        intent = getIntent();
-        String userid2;
-        auth = FirebaseAuth.getInstance();
-        userid2 = intent.getStringExtra("name");
-        if (userid1.compareTo(userid2) < 0) {
-            chatId = userid1 + "_" + userid2;
-        } else {
-            chatId = userid2 + "_" + userid1;
+        if (calculatedChatId == null) {
+            Log.e(TAG, "Cannot load messages, chatId is null.");
+            return;
         }
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        return;
-                    }
-                    String token = task.getResult();
-                    String userId = FirebaseAuth.getInstance().getUid();
+        Log.d(TAG, "Loading messages for chatId: " + calculatedChatId);
 
-                    if (userId != null) {
-                        FirebaseDatabase.getInstance().getReference("Users")
-                                .child(userId)
-                                .child("fcmToken")
-                                .setValue(token);
-                    }
-                });
+        DatabaseReference messagesRef = database.getReference().child("Personal_chat").child(calculatedChatId).child("mess");
 
-        database.getReference().child("Personal_chat").child(chatId)
-                .child("mess")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        list.clear();
-                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                            chatmodel model = snapshot1.getValue(chatmodel.class);
-                            list.add(model);
-                        }
-                        updateChatAdapter();
-                        scrollToBottom();
-
-                        if (list.size() > lastMessageCount) {
-                            lastMessageCount = list.size();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(ChatAA.this, "Failed to load messages", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    private void updateChatAdapter() {
-        runOnUiThread(new Runnable() {
+        messagesRef.addValueEventListener(new ValueEventListener() { // Use addValueEventListener for real-time updates
             @Override
-            public void run() {
-                chatAdapter.notifyDataSetChanged();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int previousSize = list.size(); // Store previous size
+                list.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    chatmodel model = snapshot1.getValue(chatmodel.class);
+                    if (model != null) { // Add null check
+                        list.add(model);
+                    } else {
+                        Log.w(TAG, "Null chatmodel encountered for key: " + snapshot1.getKey());
+                    }
+                }
+                Log.d(TAG, "Messages loaded: " + list.size());
+                updateChatAdapter(); // Update adapter on UI thread
+
+                // Scroll to bottom only if new messages were added at the end
+                if (list.size() > previousSize) {
+                    scrollToBottom();
+                }
+                // Remove local notification logic based on lastMessageCount
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Failed to load messages: " + error.getMessage());
+                Toast.makeText(ChatAA.this, "Failed to load messages", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void updateChatAdapter() {
+        if (chatAdapter != null) {
+            chatAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void scrollToBottom() {
+        if (binding.messageAdapter.getAdapter() != null && binding.messageAdapter.getAdapter().getItemCount() > 0) {
+            // Use smooth scroll for better UX
+            binding.messageAdapter.smoothScrollToPosition(binding.messageAdapter.getAdapter().getItemCount() - 1);
+            // Or use immediate scroll if smooth scroll causes issues:
+            // binding.messageAdapter.scrollToPosition(binding.messageAdapter.getAdapter().getItemCount() - 1);
+        }
+    }
+
     private void sendMessage() {
         String message = binding.edtMessage.getText().toString().trim();
-        Date date = new Date();
-        String senderId = auth.getUid();
-        String chatId;
-        String userid1=  auth.getUid();
-        intent = getIntent();
-        String userid2;
-        auth= FirebaseAuth.getInstance();
-        userid2 = intent.getStringExtra("name");
-        if (userid1.compareTo(userid2) < 0) {
-            chatId = userid1 + "_" + userid2;
-        } else {
-            chatId = userid2 + "_" + userid1;
+        if (calculatedChatId == null || currentUserId == null) {
+            Log.e(TAG, "Cannot send message: chatId or senderId is null.");
+            Toast.makeText(this, "Error sending message.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         if (!message.isEmpty()) {
-            chatmodel messages = new chatmodel(senderId, message, date.getTime());
-            database.getReference().child("Personal_chat").child(chatId)
-                    .child("mess").push()
-                    .setValue(messages)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            sendNotificationToUser(userid2, "New Message", message);
+            binding.edtMessage.setText(""); // Clear input field immediately
+            Date date = new Date();
+            chatmodel messageModel = new chatmodel(currentUserId, message, date.getTime());
 
-                        }
+            DatabaseReference messageRef = database.getReference().child("Personal_chat").child(calculatedChatId)
+                    .child("mess").push(); // Get ref before setting value
 
-                      
+            messageRef.setValue(messageModel)
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d(TAG, "Message sent successfully: " + messageRef.getKey());
+                        // Message will appear via ValueEventListener, no need to add locally
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to send message: " + e.getMessage());
+                        Toast.makeText(ChatAA.this, "Failed to send message", Toast.LENGTH_SHORT).show();
+                        // Optional: Add message back to input field on failure?
+                        // binding.edtMessage.setText(message);
                     });
         } else {
             Toast.makeText(ChatAA.this, "Type a message", Toast.LENGTH_SHORT).show();
         }
-
-        // Clear the message input field
-        binding.edtMessage.setText("");
     }
 
-    private void sendNotificationToUser(String recipientUserId, String title, String message) {
-        // Retrieve the recipient's OneSignal Player ID from Firebase
-        FirebaseDatabase.getInstance().getReference("Users")
-                .child(recipientUserId)
-                .child("oneSignalPlayerId")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String recipientPlayerId = dataSnapshot.getValue(String.class);
-
-                        if (recipientPlayerId != null) {
-                            // OneSignal API URL
-                            String oneSignalApiUrl = "https://onesignal.com/api/v1/notifications";
-
-                            // OneSignal App ID
-                            String oneSignalAppId = "YOUR_ONESIGNAL_APP_ID";
-
-                            // Create the JSON payload for the OneSignal API
-                            JSONObject notificationContent = new JSONObject();
-                            try {
-                                notificationContent.put("app_id", oneSignalAppId);
-                                notificationContent.put("include_player_ids", new JSONArray().put(recipientPlayerId));
-                                notificationContent.put("contents", new JSONObject().put("en", message));
-                                notificationContent.put("headings", new JSONObject().put("en", title));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.e("ChatAA", "Error creating JSON payload: " + e.getMessage());
-                                return;
-                            }
-
-                            // Create a Volley request queue
-                            RequestQueue requestQueue = Volley.newRequestQueue(ChatAA.this);
-
-                            // Create a JSON object request
-                            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, oneSignalApiUrl, notificationContent,
-                                    new Response.Listener<JSONObject>() {
-                                        @Override
-                                        public void onResponse(JSONObject response) {
-                                            Log.d("ChatAA", "Notification sent successfully: " + response.toString());
-                                        }
-                                    },
-                                    new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            Log.e("ChatAA", "Error sending notification: " + error.getMessage());
-                                        }
-                                    }) {
-                                @Override
-                                public Map<String, String> getHeaders() throws AuthFailureError {
-                                    // Add headers for OneSignal API
-                                    Map<String, String> headers = new HashMap<>();
-                                    headers.put("Authorization", "Basic YOUR_ONESIGNAL_REST_API_KEY");
-                                    headers.put("Content-Type", "application/json; charset=utf-8");
-                                    return headers;
-                                }
-                            };
-
-                            // Add the request to the queue
-                            requestQueue.add(jsonObjectRequest);
-                        } else {
-                            Log.e("ChatAA", "Recipient has no OneSignal Player ID");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Log.e("ChatAA", "Error retrieving OneSignal Player ID: " + databaseError.getMessage());
-                    }
-                });
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*"); // Only allow images if it's an image button
+        // intent.setType("*/*"); // Use this for any file type
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Change to false if sending one image at a time is better UX
+        startActivityForResult(intent, REQUEST_IMAGE_PICK);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
+//Intent intent;
         if (requestCode == REQUEST_IMAGE_PICK && resultCode == RESULT_OK && data != null) {
-            if (data.getClipData() != null) {
+            Log.d(TAG, "Image selected for upload.");
+            if (data.getClipData() != null ) {
+                // Multiple images selected (if EXTRA_ALLOW_MULTIPLE was true)
                 int count = data.getClipData().getItemCount();
+                Log.d(TAG, count + " images selected.");
                 for (int i = 0; i < count; i++) {
                     Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                    Log.d(TAG, "Uploading image URI: " + imageUri.toString());
                     uploadImageToStorage(imageUri);
                 }
             } else if (data.getData() != null) {
+                // Single image selected
                 Uri imageUri = data.getData();
+                Log.d(TAG, "Uploading single image URI: " + imageUri.toString());
                 uploadImageToStorage(imageUri);
+            } else {
+                Log.w(TAG, "Image selection result data is malformed.");
             }
+        } else {
+            Log.d(TAG, "Image selection cancelled or failed. ResultCode: " + resultCode);
         }
-
     }
 
     private void uploadImageToStorage(Uri imageUri) {
+        if (calculatedChatId == null || currentUserId == null) {
+            Log.e(TAG, "Cannot upload image: chatId or senderId is null.");
+            Toast.makeText(this, "Error uploading image.", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        StorageReference storageRef = storage.getReference().child("images");
-        StorageReference imageRef = storageRef.child("image_" + System.currentTimeMillis());
+        // Show progress indicator?
+        Toast.makeText(this, "Uploading image...", Toast.LENGTH_SHORT).show();
+
+        // Create a unique file name
+        String fileName = "image_" + System.currentTimeMillis() + "_" + currentUserId;
+        // Store images specific to chat? e.g., "chat_images/{chatId}/..."
+        StorageReference imageRef = storage.getReference().child("chat_images").child(calculatedChatId).child(fileName);
+
         imageRef.putFile(imageUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-
-
-
-                                Date date = new Date();
-                                String senderId = auth.getUid();
-                                String chatId;
-                                String userid1=  auth.getUid();
-                                intent = getIntent();
-                                String userid2;
-                                auth= FirebaseAuth.getInstance();
-                                userid2 = intent.getStringExtra("name");
-                                if (userid1.compareTo(userid2) < 0) {
-                                    chatId = userid1 + "_" + userid2;
-                                } else {
-                                    chatId = userid2 + "_" + userid1;
-                                }
-
-
-
-                                String imageUrl = uri.toString();
-//                                final String senderId = auth.getUid();
-//                                Date date = new Date();
-                                chatmodel message = new chatmodel(senderId, imageUrl, date.getTime());
-                                database.getReference().child("Personal_chat").child(chatId)
-                                        .child("mess").push()
-                                        .setValue(message)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void unused) {
-                                            }
-                                        });
-                            }
-                        });
-                    }
+                .addOnSuccessListener(taskSnapshot -> {
+                    Log.d(TAG, "Image uploaded successfully to Storage.");
+                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        String imageUrl = uri.toString();
+                        Log.d(TAG, "Image Download URL: " + imageUrl);
+                        // Send the URL as a message
+                        sendImageUrlMessage(imageUrl);
+                    }).addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to get download URL: " + e.getMessage());
+                        Toast.makeText(ChatAA.this, "Failed to get image URL", Toast.LENGTH_SHORT).show();
+                    });
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ChatAA.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to upload image to Storage: " + e.getMessage());
+                    Toast.makeText(ChatAA.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                })
+                .addOnProgressListener(snapshot -> {
+                    // Optional: Update progress UI
+                    // double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                    // Log.d(TAG, "Upload Progress: " + progress + "%");
                 });
     }
+
+    // Helper method to send the image URL as a message
+    private void sendImageUrlMessage(String imageUrl) {
+        if (calculatedChatId == null || currentUserId == null) {
+            Log.e(TAG, "Cannot send image URL message: chatId or senderId is null.");
+            return;
+        }
+        Date date = new Date();
+        // Message content IS the image URL
+        chatmodel messageModel = new chatmodel(currentUserId, imageUrl, date.getTime());
+        DatabaseReference messageRef = database.getReference().child("Personal_chat").child(calculatedChatId)
+                .child("mess").push();
+        messageRef.setValue(messageModel)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "Image URL message sent successfully: " + messageRef.getKey()))
+                .addOnFailureListener(e -> Log.e(TAG, "Failed to send image URL message: " + e.getMessage()));
+
+    }
+
 }

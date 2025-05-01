@@ -1,5 +1,4 @@
 package com.example.dark;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,15 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dark.R;
 import com.example.dark.databinding.SearchSampleBinding;
-import com.example.dark.databinding.VideoBinding;
-import com.example.chat.ChatAA;
-import com.example.chat.GroupChat;
 import com.example.home.post2Activity;
 import com.example.loginandsignup.Users;
 import com.example.payment.postmodel;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,7 +19,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Search_course_adapter extends RecyclerView.Adapter<Search_course_adapter.viewHolder>  {
     ArrayList<postmodel> list;

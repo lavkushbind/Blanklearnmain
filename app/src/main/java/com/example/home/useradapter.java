@@ -1,7 +1,5 @@
 package com.example.home;
 
-import static android.os.Build.VERSION_CODES.R;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,16 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dark.R;
-import com.example.dark.databinding.TopteaBinding;
 import com.example.chat.ChatAA;
+import com.example.dark.databinding.TopteaBinding;
 import com.example.dark.oneclassActivity;
 import com.example.loginandsignup.Users;
-import com.example.profile.ProActivity;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;

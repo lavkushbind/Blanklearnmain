@@ -189,7 +189,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.example.loginandsignup.SignupActivity"
+            android:name="com.example.home.MainActivity3"
 
             android:exported="true"
             android:screenOrientation="portrait">

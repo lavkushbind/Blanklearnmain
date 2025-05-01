@@ -1,10 +1,8 @@
 package com.example.demo;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -18,11 +16,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.dark.R;
 import com.example.chat.ChatAA;
+import com.example.dark.R;
 import com.example.loginandsignup.Users;
-import com.example.payment.PaymentActivity;
-import com.example.payment.razorpayActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,15 +33,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
-import android.app.Activity;
-import android.util.Log;
+
 import android.widget.Toast;
 
-import com.google.firebase.firestore.auth.User;
-import com.razorpay.Checkout;
-import com.razorpay.PaymentResultListener;
-
-import org.json.JSONObject;
 public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.AllocationViewHolder>
 {
 

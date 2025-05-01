@@ -1,6 +1,5 @@
 package com.example.home;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,7 +8,6 @@ import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
@@ -17,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dark.R;
 import com.example.dark.databinding.VideoBinding;
-import com.example.chat.ChatAA;
-import com.example.chat.GroupChat;
 import com.example.loginandsignup.Users;
 import com.example.payment.postmodel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,7 +30,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class homeadapter extends RecyclerView.Adapter<homeadapter.viewHolder>  {
