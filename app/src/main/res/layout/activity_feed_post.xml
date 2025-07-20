@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#030B3C"
-    tools:context="com.example.Feed.Feed_Post_Activity">
+    tools:context="com.blank_learn.Feed.Feed_Post_Activity">
 
     <TextView
         android:id="@+id/textView112"

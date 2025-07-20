@@ -18,23 +18,23 @@
         android:id="@+id/tvDialogTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello 👋"
+        android:paddingBottom="10dp"
+        android:text="Book a demo class and experience how we teach."
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingBottom="10dp" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvDialogMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Would you like to book a one-day free class ! "
-        android:textSize="16sp"
-        android:paddingBottom="20dp" />
+        android:paddingBottom="20dp"
+        android:text="1,000+ happy parents—try a demo!"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/btnDismiss"
-        android:background="@color/card_blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Yes" />
+        android:background="@color/card_blue"
+        android:text="Book Now" />
 </LinearLayout>

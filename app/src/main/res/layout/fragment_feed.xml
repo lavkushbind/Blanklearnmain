@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#020A36"
-    tools:context="com.example.Feed.FeedFragment">
+    tools:context="com.blank_learn.Feed.FeedFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/FeedRV"

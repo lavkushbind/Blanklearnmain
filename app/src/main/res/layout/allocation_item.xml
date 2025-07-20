@@ -15,99 +15,64 @@
         android:background="@drawable/card_bg"
         android:orientation="vertical"
         android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textViewHeadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:text="Get Ready for Your Demo Class"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- This container correctly aligns the class name to the left and buttons to the right -->
         <LinearLayout
             android:id="@+id/button_container4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:orientation="horizontal"
             android:gravity="center_vertical"
-        android:visibility="visible">
-
-        <TextView
-            android:id="@+id/class_name_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Class:"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:visibility="visible" />
-
-        <!-- Spacer View: Takes up all available space -->
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <!-- Container for right-aligned buttons (optional but good practice) -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/whatsapp"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/whatsapp"
-                />
-            <!-- Removed margin/padding unless specifically needed for touch area -->
+            <TextView
+                android:id="@+id/class_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class:"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/call"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/phone_call" />
-            <!-- Removed gravity/padding unless specifically needed for touch area -->
+            <!-- Spacer View: Takes up all available horizontal space, pushing the buttons to the right -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Container for right-aligned buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/whatsapp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/whatsapp" />
+
+                <Button
+                    android:id="@+id/call"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/phone_call" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/button_container4"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:layout_gravity="left"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:visibility="visible"> &lt;!&ndash;Initially Gone&ndash;&gt;-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/class_name_text_view"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Class:"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textSize="16sp"-->
-<!--                android:textStyle="bold"-->
-<!--                android:visibility="visible" />  &lt;!&ndash;Initially Gone&ndash;&gt;-->
-
-<!--            <Button-->
-<!--                android:id="@+id/whatsapp"-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:layout_marginLeft="100dp"-->
-<!--                android:layout_gravity="right"-->
-<!--                android:background="@drawable/whatsapp"-->
-<!--                android:paddingLeft="20dp"-->
-<!--                android:paddingRight="20dp"/>-->
-
-<!--            <Button-->
-<!--                android:id="@+id/call"-->
-<!--                android:layout_width="30dp"-->
-<!--                android:layout_height="30dp"-->
-<!--                android:layout_marginStart="8dp"-->
-<!--                android:background="@drawable/call"-->
-<!--                android:gravity="right"-->
-<!--                android:paddingLeft="20dp"-->
-<!--                android:paddingRight="20dp" />-->
-
-<!--        </LinearLayout>-->
-
-
 
         <TextView
             android:id="@+id/date_text_view"
@@ -147,7 +112,6 @@
             android:text="Contact Number:"
             android:textColor="@color/white" />
 
-
         <TextView
             android:id="@+id/countdown_text_view"
             android:layout_width="wrap_content"
@@ -155,9 +119,7 @@
             android:layout_marginTop="8dp"
             android:text="Remaining Time: Loading..."
             android:textColor="#FF9800"
-            android:textSize="14sp"
-            android:visibility="visible" /> <!--Initially Gone-->
-
+            android:textSize="14sp" /> <!-- Initially controlled by code -->
 
         <TextView
             android:id="@+id/demo_complete_message"
@@ -168,8 +130,7 @@
             android:text="Your demo is complete! Pay to join your child."
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:visibility="visible" /> <!--Initially Gone-->
+            android:textStyle="bold" /> <!-- Initially controlled by code -->
 
         <TextView
             android:id="@+id/demo_options_message"
@@ -179,8 +140,7 @@
             android:gravity="center"
             android:text="Would you like to proceed with enrollment for ₹1000 per month, or would you prefer to book another demo for ₹100?"
             android:textColor="@color/white"
-            android:textSize="14sp"
-            android:visibility="visible" /> <!--Initially Gone-->
+            android:textSize="14sp" /> <!-- Initially controlled by code -->
 
         <LinearLayout
             android:id="@+id/button_container"
@@ -188,8 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="visible"> <!--Initially Gone-->
+            android:orientation="horizontal"> <!-- Initially controlled by code -->
 
             <Button
                 android:id="@+id/enroll_button"
@@ -210,9 +169,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:text="Book Another Demo" />
-
         </LinearLayout>
-
 
         <TextView
             android:id="@+id/demo_complete_message_teacher"
@@ -223,8 +180,7 @@
             android:text="Your demo is complete!"
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:visibility="visible" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/button_container2"
@@ -232,8 +188,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="visible"> <!--Initially Gone-->
+            android:orientation="horizontal"> <!-- Initially controlled by code -->
 
             <Button
                 android:id="@+id/demo_yes"
@@ -253,11 +208,8 @@
                 android:background="@drawable/button_bg2"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:text="demo not completed"
-                android:visibility="visible" />
-
+                android:text="demo not completed" />
         </LinearLayout>
-
 
         <TextView
             android:id="@+id/payment_reminder_text_view"
@@ -268,9 +220,17 @@
             android:text="Your month has completed. Please pay for the next month."
             android:textColor="@color/white"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:visibility="visible" /> <!--Initially Gone-->
+            android:textStyle="bold" /> <!-- Initially controlled by code -->
 
+        <TextView
+            android:id="@+id/textViewInformation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="6dp"
+            android:text="@string/demo_class_info"
+            android:textColor="#E0E0E0"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

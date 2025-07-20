@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F4F7" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorTextSecondary"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:text="Educator Registration Form 2.0"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Basic Details (Same as before) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Teacher's Full Name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_teacher_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName|textCapWords" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="WhatsApp Number">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_whatsapp_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:maxLength="10" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- UPDATED: Classes you teach -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Classes you teach (Select all that apply)"
+                    android:textStyle="bold" />
+
+                <CheckBox
+                    android:id="@+id/cb_lkg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LKG / UKG" />
+
+                <CheckBox
+                    android:id="@+id/cb_class1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 1" />
+
+                <CheckBox
+                    android:id="@+id/cb_class2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 2" />
+
+                <CheckBox
+                    android:id="@+id/cb_class3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 3" />
+
+                <CheckBox
+                    android:id="@+id/cb_class4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 4" />
+
+                <CheckBox
+                    android:id="@+id/cb_class5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 5" />
+
+                <CheckBox
+                    android:id="@+id/cb_class6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 6" />
+
+                <CheckBox
+                    android:id="@+id/cb_class7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 7" />
+
+                <CheckBox
+                    android:id="@+id/cb_class8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 8" />
+
+                <CheckBox
+                    android:id="@+id/cb_class9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 9" />
+
+                <CheckBox
+                    android:id="@+id/cb_class10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 10" />
+
+                <CheckBox
+                    android:id="@+id/cb_class11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 11" />
+
+                <CheckBox
+                    android:id="@+id/cb_class12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Class 12" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- UPDATED: Subject Selection -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Subjects you teach (Class-wise)"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_selected_subjects_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Please select classes first, then click the button below." />
+
+                <Button
+                    android:id="@+id/btn_select_subjects"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Select Subjects for Classes" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Boards (Same as before) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Boards you teach"
+                    android:textStyle="bold" />
+
+                <CheckBox
+                    android:id="@+id/cb_cbse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CBSE" />
+
+                <CheckBox
+                    android:id="@+id/cb_icse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ICSE / ISC" />
+
+                <CheckBox
+                    android:id="@+id/cb_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="State Board" />
+
+                <CheckBox
+                    android:id="@+id/cb_ib"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IB" />
+
+                <CheckBox
+                    android:id="@+id/cb_igcse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IGCSE" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Experience (Same as before) -->
+        <!-- ... Paste the Experience CardView from previous answer here ... -->
+
+        <!-- NEW: Availability (Day-wise) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+             <ScrollView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:text="Select all time slots you are available"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <!-- Monday -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Monday"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <GridLayout
+                        android:id="@+id/gl_monday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:columnCount="4">
+
+                        <CheckBox android:id="@+id/cb_monday_6_7" android:text="6-7 AM" />
+                        <CheckBox android:id="@+id/cb_monday_7_8" android:text="7-8 AM" />
+                        <CheckBox android:id="@+id/cb_monday_8_9" android:text="8-9 AM" />
+                        <CheckBox android:id="@+id/cb_monday_9_10" android:text="9-10 AM" />
+                        <CheckBox android:id="@+id/cb_monday_10_11" android:text="10-11 AM" />
+                        <CheckBox android:id="@+id/cb_monday_11_12" android:text="11AM-12PM" />
+                        <CheckBox android:id="@+id/cb_monday_12_13" android:text="12-1 PM" />
+                        <CheckBox android:id="@+id/cb_monday_13_14" android:text="1-2 PM" />
+                        <CheckBox android:id="@+id/cb_monday_14_15" android:text="2-3 PM" />
+                        <CheckBox android:id="@+id/cb_monday_15_16" android:text="3-4 PM" />
+                        <CheckBox android:id="@+id/cb_monday_16_17" android:text="4-5 PM" />
+                        <CheckBox android:id="@+id/cb_monday_17_18" android:text="5-6 PM" />
+                        <CheckBox android:id="@+id/cb_monday_18_19" android:text="6-7 PM" />
+                        <CheckBox android:id="@+id/cb_monday_19_20" android:text="7-8 PM" />
+                        <CheckBox android:id="@+id/cb_monday_20_21" android:text="8-9 PM" />
+                        <CheckBox android:id="@+id/cb_monday_21_22" android:text="9-10 PM" />
+                    </GridLayout>
+
+                    <!-- Tuesday -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tuesday"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <GridLayout
+                        android:id="@+id/gl_tuesday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:columnCount="4">
+
+                        <CheckBox android:id="@+id/cb_tuesday_6_7" android:text="6-7 AM" />
+                        <CheckBox android:id="@+id/cb_tuesday_7_8" android:text="7-8 AM" />
+                        <CheckBox android:id="@+id/cb_tuesday_8_9" android:text="8-9 AM" />
+                        <CheckBox android:id="@+id/cb_tuesday_9_10" android:text="9-10 AM" />
+                        <CheckBox android:id="@+id/cb_tuesday_10_11" android:text="10-11 AM" />
+                        <CheckBox android:id="@+id/cb_tuesday_11_12" android:text="11AM-12PM" />
+                        <CheckBox android:id="@+id/cb_tuesday_12_13" android:text="12-1 PM" />
+                        <CheckBox android:id="@+id/cb_tuesday_13_14" android:text="1-2 PM" />
+                        <CheckBox android:id="@+id/cb_tuesday_14_15" android:text="2-3 PM" />
+                        <CheckBox android:id="@+id/cb_tuesday_15_16" android:text="3-4 PM" />
+                        <CheckBox android:id="@+id/cb_tuesday_16_17" android:text="4-5 PM" />
+                        <CheckBox android:id="@+id/cb_tuesday_17_18" android:text="5-6 PM" />
+                        <CheckBox android:id="@+id/cb_tuesday_18_19" android:text="6-7 PM" />
+                        <CheckBox android:id="@+id/cb_tuesday_19_20" android:text="7-8 PM" />
+                        <CheckBox android:id="@+id/cb_tuesday_20_21" android:text="8-9 PM" />
+                        <CheckBox android:id="@+id/cb_tuesday_21_22" android:text="9-10 PM" />
+                    </GridLayout>
+
+                    <!-- Wednesday -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wednesday"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <GridLayout
+                        android:id="@+id/gl_wednesday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:columnCount="4">
+
+                        <CheckBox android:id="@+id/cb_wednesday_6_7" android:text="6-7 AM" />
+                        <CheckBox android:id="@+id/cb_wednesday_7_8" android:text="7-8 AM" />
+                        <CheckBox android:id="@+id/cb_wednesday_8_9" android:text="8-9 AM" />
+                        <CheckBox android:id="@+id/cb_wednesday_9_10" android:text="9-10 AM" />
+                        <CheckBox android:id="@+id/cb_wednesday_10_11" android:text="10-11 AM" />
+                        <CheckBox android:id="@+id/cb_wednesday_11_12" android:text="11AM-12PM" />
+                        <CheckBox android:id="@+id/cb_wednesday_12_13" android:text="12-1 PM" />
+                        <CheckBox android:id="@+id/cb_wednesday_13_14" android:text="1-2 PM" />
+                        <CheckBox android:id="@+id/cb_wednesday_14_15" android:text="2-3 PM" />
+                        <CheckBox android:id="@+id/cb_wednesday_15_16" android:text="3-4 PM" />
+                        <CheckBox android:id="@+id/cb_wednesday_16_17" android:text="4-5 PM" />
+                        <CheckBox android:id="@+id/cb_wednesday_17_18" android:text="5-6 PM" />
+                        <CheckBox android:id="@+id/cb_wednesday_18_19" android:text="6-7 PM" />
+                        <CheckBox android:id="@+id/cb_wednesday_19_20" android:text="7-8 PM" />
+                        <CheckBox android:id="@+id/cb_wednesday_20_21" android:text="8-9 PM" />
+                        <CheckBox android:id="@+id/cb_wednesday_21_22" android:text="9-10 PM" />
+                    </GridLayout>
+
+                    <!-- Thursday -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Thursday"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <GridLayout
+                        android:id="@+id/gl_thursday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:columnCount="4">
+
+                        <CheckBox android:id="@+id/cb_thursday_6_7" android:text="6-7 AM" />
+                        <CheckBox android:id="@+id/cb_thursday_7_8" android:text="7-8 AM" />
+                        <CheckBox android:id="@+id/cb_thursday_8_9" android:text="8-9 AM" />
+                        <CheckBox android:id="@+id/cb_thursday_9_10" android:text="9-10 AM" />
+                        <CheckBox android:id="@+id/cb_thursday_10_11" android:text="10-11 AM" />
+                        <CheckBox android:id="@+id/cb_thursday_11_12" android:text="11AM-12PM" />
+                        <CheckBox android:id="@+id/cb_thursday_12_13" android:text="12-1 PM" />
+                        <CheckBox android:id="@+id/cb_thursday_13_14" android:text="1-2 PM" />
+                        <CheckBox android:id="@+id/cb_thursday_14_15" android:text="2-3 PM" />
+                        <CheckBox android:id="@+id/cb_thursday_15_16" android:text="3-4 PM" />
+                        <CheckBox android:id="@+id/cb_thursday_16_17" android:text="4-5 PM" />
+                        <CheckBox android:id="@+id/cb_thursday_17_18" android:text="5-6 PM" />
+                        <CheckBox android:id="@+id/cb_thursday_18_19" android:text="6-7 PM" />
+                        <CheckBox android:id="@+id/cb_thursday_19_20" android:text="7-8 PM" />
+                        <CheckBox android:id="@+id/cb_thursday_20_21" android:text="8-9 PM" />
+                        <CheckBox android:id="@+id/cb_thursday_21_22" android:text="9-10 PM" />
+                    </GridLayout>
+
+                    <!-- Friday -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Friday"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <GridLayout
+                        android:id="@+id/gl_friday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:columnCount="4">
+
+                        <CheckBox android:id="@+id/cb_friday_6_7" android:text="6-7 AM" />
+                        <CheckBox android:id="@+id/cb_friday_7_8" android:text="7-8 AM" />
+                        <CheckBox android:id="@+id/cb_friday_8_9" android:text="8-9 AM" />
+                        <CheckBox android:id="@+id/cb_friday_9_10" android:text="9-10 AM" />
+                        <CheckBox android:id="@+id/cb_friday_10_11" android:text="10-11 AM" />
+                        <CheckBox android:id="@+id/cb_friday_11_12" android:text="11AM-12PM" />
+                        <CheckBox android:id="@+id/cb_friday_12_13" android:text="12-1 PM" />
+                        <CheckBox android:id="@+id/cb_friday_13_14" android:text="1-2 PM" />
+                        <CheckBox android:id="@+id/cb_friday_14_15" android:text="2-3 PM" />
+                        <CheckBox android:id="@+id/cb_friday_15_16" android:text="3-4 PM" />
+                        <CheckBox android:id="@+id/cb_friday_16_17" android:text="4-5 PM" />
+                        <CheckBox android:id="@+id/cb_friday_17_18" android:text="5-6 PM" />
+                        <CheckBox android:id="@+id/cb_friday_18_19" android:text="6-7 PM" />
+                        <CheckBox android:id="@+id/cb_friday_19_20" android:text="7-8 PM" />
+                        <CheckBox android:id="@+id/cb_friday_20_21" android:text="8-9 PM" />
+                        <CheckBox android:id="@+id/cb_friday_21_22" android:text="9-10 PM" />
+                    </GridLayout>
+
+                    <!-- Saturday -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Saturday"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <GridLayout
+                        android:id="@+id/gl_saturday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:columnCount="4">
+
+                        <CheckBox android:id="@+id/cb_saturday_6_7" android:text="6-7 AM" />
+                        <CheckBox android:id="@+id/cb_saturday_7_8" android:text="7-8 AM" />
+                        <CheckBox android:id="@+id/cb_saturday_8_9" android:text="8-9 AM" />
+                        <CheckBox android:id="@+id/cb_saturday_9_10" android:text="9-10 AM" />
+                        <CheckBox android:id="@+id/cb_saturday_10_11" android:text="10-11 AM" />
+                        <CheckBox android:id="@+id/cb_saturday_11_12" android:text="11AM-12PM" />
+                        <CheckBox android:id="@+id/cb_saturday_12_13" android:text="12-1 PM" />
+                        <CheckBox android:id="@+id/cb_saturday_13_14" android:text="1-2 PM" />
+                        <CheckBox android:id="@+id/cb_saturday_14_15" android:text="2-3 PM" />
+                        <CheckBox android:id="@+id/cb_saturday_15_16" android:text="3-4 PM" />
+                        <CheckBox android:id="@+id/cb_saturday_16_17" android:text="4-5 PM" />
+                        <CheckBox android:id="@+id/cb_saturday_17_18" android:text="5-6 PM" />
+                        <CheckBox android:id="@+id/cb_saturday_18_19" android:text="6-7 PM" />
+                        <CheckBox android:id="@+id/cb_saturday_19_20" android:text="7-8 PM" />
+                        <CheckBox android:id="@+id/cb_saturday_20_21" android:text="8-9 PM" />
+                        <CheckBox android:id="@+id/cb_saturday_21_22" android:text="9-10 PM" />
+                    </GridLayout>
+
+                    <!-- Sunday -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sunday"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <GridLayout
+                        android:id="@+id/gl_sunday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="4">
+
+                        <CheckBox android:id="@+id/cb_sunday_6_7" android:text="6-7 AM" />
+                        <CheckBox android:id="@+id/cb_sunday_7_8" android:text="7-8 AM" />
+                        <CheckBox android:id="@+id/cb_sunday_8_9" android:text="8-9 AM" />
+                        <CheckBox android:id="@+id/cb_sunday_9_10" android:text="9-10 AM" />
+                        <CheckBox android:id="@+id/cb_sunday_10_11" android:text="10-11 AM" />
+                        <CheckBox android:id="@+id/cb_sunday_11_12" android:text="11AM-12PM" />
+                        <CheckBox android:id="@+id/cb_sunday_12_13" android:text="12-1 PM" />
+                        <CheckBox android:id="@+id/cb_sunday_13_14" android:text="1-2 PM" />
+                        <CheckBox android:id="@+id/cb_sunday_14_15" android:text="2-3 PM" />
+                        <CheckBox android:id="@+id/cb_sunday_15_16" android:text="3-4 PM" />
+                        <CheckBox android:id="@+id/cb_sunday_16_17" android:text="4-5 PM" />
+                        <CheckBox android:id="@+id/cb_sunday_17_18" android:text="5-6 PM" />
+                        <CheckBox android:id="@+id/cb_sunday_18_19" android:text="6-7 PM" />
+                        <CheckBox android:id="@+id/cb_sunday_19_20" android:text="7-8 PM" />
+                        <CheckBox android:id="@+id/cb_sunday_20_21" android:text="8-9 PM" />
+                        <CheckBox android:id="@+id/cb_sunday_21_22" android:text="9-10 PM" />
+                    </GridLayout>
+
+                </LinearLayout>
+            </ScrollView>        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Equipment (Same as before) -->
+        <!-- ... Paste the Equipment CardView from previous answer here ... -->
+
+        <!-- Feedback (Same as before) -->
+        <!-- ... Paste the Feedback CardView from previous answer here ... -->
+
+        <!-- Submit Button (Same as before) -->
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="Submit Details"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</ScrollView>

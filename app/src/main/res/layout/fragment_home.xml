@@ -30,6 +30,7 @@
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="1dp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -42,6 +43,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="0dp"
                 android:scaleType="centerCrop"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +58,8 @@
                 android:layout_marginTop="32dp"
                 android:maxWidth="200dp"
                 android:maxLines="1"
-                android:textColor="@color/white"
+                android:text="khushboo"
+                android:textColor="#FF9800"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/imageView15"
@@ -93,7 +96,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView2" />
+                app:layout_constraintTop_toBottomOf="@id/postRV" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/linearLayout3"
@@ -105,7 +108,7 @@
                 android:layout_marginEnd="4dp"
                 android:background="@drawable/homelou"
                 android:backgroundTint="#0A0D1C"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -127,14 +130,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
 
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:background="#0A0D1C"
-                android:backgroundTint="#0A0D1C"
                 android:maxHeight="1200dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView49" />
+                app:layout_constraintTop_toBottomOf="@id/recyclerView2" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -159,7 +162,7 @@
                 android:background="#0A0D1C"
                 android:backgroundTint="#0A0D1C"
                 android:orientation="horizontal"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/demoRV" />
@@ -200,7 +203,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
                 android:text="Hello👋 , "
-                android:textColor="#EEEFF5"
+                android:textColor="@color/colorWhite"
                 android:textSize="20dp"
                 app:layout_constraintStart_toEndOf="@+id/profilepic2"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -226,11 +229,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="1dp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView71" />
+                app:layout_constraintTop_toBottomOf="@+id/textView138" />
 
             <TextView
                 android:id="@+id/textView52"
@@ -241,6 +246,7 @@
                 android:text=" Transform learning into an interactive adventure"
                 android:textColor="#FFC107"
 
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
@@ -295,6 +301,7 @@
                 android:textColor="#FF9800"
                 android:textSize="18dp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/poster"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/poster"
@@ -324,6 +331,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginBottom="2dp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/textView49"
                 app:layout_constraintStart_toEndOf="@+id/textView67"
                 app:layout_constraintTop_toTopOf="@+id/textView67"
@@ -536,6 +544,161 @@
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardView4" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardid"
+                android:layout_width="409dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="500dp"
+                android:layout_marginEnd="1dp"
+                android:background="@drawable/bg_rounded_premium_card"
+                android:visibility="gone"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/StoryRV">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_rounded_premium_card"
+                    android:orientation="vertical"
+
+                    android:padding="20dp">
+
+                    <!-- Option 1: Book a Demo -->
+                    <LinearLayout
+                        android:id="@+id/layout_book_demo"
+                        android:layout_width="0dp"
+                        android:layout_height="9dp"
+                        android:background="@drawable/bg_rounded_premium_card"
+
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="12dp"
+                            android:contentDescription="Book a Demo Icon"
+                            android:src="@drawable/ic_calendar_check_outline" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Book a Live Demo"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="16dp"
+                            android:gravity="center"
+                            android:text="Get a personalized session with a top-rated teacher, automatically assigned."
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            android:textColor="@color/white" />
+
+                        <Button
+                            android:id="@+id/button_book_demo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/pay_bg"
+                            android:text="Book Demo"
+                            app:icon="@drawable/ic_arrow_right_circle_outline"
+                            app:iconGravity="textEnd" />
+
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="?android:attr/listDivider" />
+
+                    <!-- Option 2: Make Your Own -->
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/textView137"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Find personalized 1-on-1 and small group classes with trusted educators, tailored to your learning style and goals."
+                android:textColor="#FF9800"
+                android:textSize="10dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView140" />
+
+            <TextView
+                android:id="@+id/textView138"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/button_bg"
+                android:padding="5dp"
+                android:text="Free demo now"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView139"
+                app:layout_constraintTop_toBottomOf="@+id/textView137" />
+
+            <TextView
+                android:id="@+id/textView139"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/edit_text_background"
+                android:padding="5dp"
+                android:text="Book"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView137" />
+
+            <TextView
+                android:id="@+id/textView140"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center"
+                android:text="Unlock Your Potential with Expert Tutors"
+
+                android:textColor="@color/white"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

@@ -84,7 +84,7 @@ app:lottie_loop="true"
 
         android:layout_marginTop="48dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/loginbg"
+        android:background="@drawable/signbg"
         android:backgroundTint="#4CAF50"
         android:padding="5dp"
         android:text="login to Blanklearn"

@@ -62,7 +62,7 @@
                 android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/profilepic"
-                app:layout_constraintTop_toBottomOf="@+id/videoView" />
+                app:layout_constraintTop_toBottomOf="parent" />
 
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -71,13 +71,15 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginBottom="572dp"
                 android:background="@drawable/linkedin"
                 android:padding="2sp"
                 android:visibility="gone"
                 app:civ_border_color="@color/white"
                 app:civ_border_width="1sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/videoView" />
+                app:layout_constraintTop_toBottomOf="parent" />
 
             <TextView
                 android:id="@+id/NameID"
@@ -346,9 +348,11 @@
                 android:id="@+id/textView95"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="36dp"
                 android:text="TextView"
-                app:layout_constraintTop_toBottomOf="@+id/AboutID"
-                tools:layout_editor_absoluteX="16dp" />
+                app:layout_constraintEnd_toStartOf="@+id/textView96"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/AboutID" />
 
             <TextView
                 android:id="@+id/textView96"

@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.YourAppName" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here -->
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
@@ -32,6 +32,17 @@
             <item name="android:colorControlActivated">#000000</item> <!-- Active icon color -->
             <item name="android:colorControlHighlight">#000000</item>  </style>
 
-
-
+    <style name="OtpEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/bg_otp_box</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">number</item>
+        <item name="android:maxLength">1</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.TitleLarge</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:focusable">false</item> <!-- The user interacts with the hidden EditText -->
+        <item name="android:focusableInTouchMode">false</item>
+    </style>
 </resources>

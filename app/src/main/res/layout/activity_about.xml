@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/constraint"
     android:background="#010517"
-    tools:context="com.example.home.about_Activity">
+    tools:context="com.blank_learn.home.about_Activity">
 
 
     <ScrollView

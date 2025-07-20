@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1E241C"
+    android:gravity="center"
+    android:padding="32dp" >
+
+    <LinearLayout
+        android:id="@+id/joinLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="48dp"
+            android:text="1-on-1 Focus Session"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="Enter a unique and secret session name. Share it with your partner."
+            android:textAlignment="center"
+            android:textColor="#A8B0A5"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/sessionNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/signbg"
+            android:hint="Enter Session Name (e.g., math-sprint-123)"
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#A8B0A5" />
+
+        <EditText
+            android:id="@+id/userNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/signbg"
+            android:hint="Your Name"
+            android:inputType="textPersonName"
+            android:paddingHorizontal="20dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#A8B0A5" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/joinSessionButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/signbg"
+            android:text="Start / Join Session"
+            android:textColor="#1E241C"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lobbyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/loadingIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
+        <TextView
+            android:id="@+id/lobbyStatusText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Asking to join meeting...\nYou'll join the meeting as soon as someone accepts your request"
+            android:textAlignment="center"
+            android:textColor="#A8B0A5"
+            android:textSize="16sp"
+            android:lineSpacingExtra="4dp"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

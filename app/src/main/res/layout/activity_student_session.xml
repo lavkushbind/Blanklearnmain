@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#212121">
+
+    <FrameLayout
+        android:id="@+id/jitsi_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Side panel for other students -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/participants_recyclerview"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:background="#80000000"
+        android:visibility="gone" /> <!-- Initially hidden -->
+
+    <!-- Control buttons at the bottom -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#B31A1A1A"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_mute"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mute" />
+
+        <Button
+            android:id="@+id/btn_camera"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cam Off" />
+
+        <Button
+            android:id="@+id/btn_end_class"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Leave" />
+
+    </LinearLayout>
+</RelativeLayout>

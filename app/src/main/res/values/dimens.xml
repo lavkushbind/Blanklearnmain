@@ -3,7 +3,12 @@
     <dimen name="_40sdp" />
     <dimen name="sp" />
     <dimen name="video_width">120dp</dimen>
-    <dimen name="video_height">230dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-
+    <dimen name="card_margin_small">4dp</dimen>
+    <dimen name="card_margin_medium">8dp</dimen>
+    <dimen name="card_margin_large">16dp</dimen>
+    <dimen name="card_corner_radius">12dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="profile_image_size">48dp</dimen>
+    <dimen name="video_height">220dp</dimen>
 </resources>

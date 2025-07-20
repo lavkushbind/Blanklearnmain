@@ -1,7 +1,8 @@
 <resources>
-
-
-    <string name="app_name">BlankLearn</string>
+    <string name="default_web_client_id" translatable="false">730022278030-mshkr0up0o888kqg9l29p3fr456f602q.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">9253931778042360</string>
+    <string name="facebook_client_token">7aa34b1052aa51f506954638b1090088</string>
+    <string name="app_name">Blanklearn</string>
     <string name="BlankLearn" />
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -11,9 +12,24 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="unlock_potential_title_mixed_all_bold">
+    </string>
 
+    <string name="demo_class_info"><![CDATA[
+         How to Join:
+        \n• When you click this card, a chat will open with the teacher.
+        \n• The teacher will send you all required materials, notes, and a  Google Meet or Zoom link  for the class.
+        \n\n After Your Free Demo:
+        \n• Once the demo is complete, a button to pay the fees will appear.
+        \n• If you like the class, you can choose one of the following plans to continue.
+        \n\n Pricing Plans:
+        \n•  1-on-1 Class: ₹4500 / month
+        \n•  Group Class (3 students):  ₹2500 / month
+        \n\n Contact:
+        \n• You can contact the teacher anytime via  WhatsApp  or a direct  Call using the buttons provided.
+    ]]></string>
+    <string-array name="class_levels">
 
-    <string-array name="classes">
         <item>LKG</item>
         <item>UKG</item>
         <item>1</item>
