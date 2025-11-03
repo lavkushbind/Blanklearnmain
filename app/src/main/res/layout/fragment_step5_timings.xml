@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp" >
+
+    <!-- घड़ी का आइकॉन -->
+    <ImageView
+        android:id="@+id/icon_clock"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="32dp"
+         android:src="@drawable/background_logo"
+         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- हेडिंग जो बच्चे का नाम दिखाएगी -->
+    <TextView
+        android:id="@+id/header_text_timings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/icon_clock"
+        tools:text="When is the best time for Aarav to learn?" />
+
+    <!-- जानकारी वाला छोटा टेक्स्ट -->
+    <TextView
+        android:id="@+id/body_text_timings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="This will help us recommend tutors with matching schedules."
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_text_timings" />
+
+    <!-- समय चुनने के लिए ChipGroup -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_timings"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:chipSpacingHorizontal="8dp"
+        app:singleSelection="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/body_text_timings">
+
+        <!-- style="@style/Widget.MaterialComponents.Chip.Choice" से सिलेक्ट होने पर चेक मार्क दिखेगा -->
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_morning"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Morning (8 AM - 12 PM)" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_afternoon"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Afternoon (12 PM - 4 PM)" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_evening"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Evening (4 PM - 8 PM)" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_flexible"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flexible" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <!-- आखिरी बटन -->
+    <Button
+        android:id="@+id/btn_finish_setup"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:enabled="false"
+        android:text="Finish Setup"
+        android:textSize="16sp"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

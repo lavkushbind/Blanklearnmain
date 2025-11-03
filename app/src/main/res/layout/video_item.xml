@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="300dp"
+    android:layout_height="178dp"
+    android:layout_margin="4sp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <!-- FrameLayout is the best choice for stacking views on top of each other.
+         It's cleaner than using a LinearLayout with negative margins. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black">
+
+        <!-- 1. The VideoView fills the entire CardView. It's the bottom layer. -->
+        <VideoView
+            android:id="@+id/videoViewItem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <!-- 2. The ProgressBar sits in the center, on top of the VideoView. -->
+        <!-- It is initially hidden and shown only when buffering. -->
+        <ProgressBar
+            android:id="@+id/progressBarItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <!-- 3. The Play Icon sits in the center, on top of everything. -->
+        <!-- It is shown when the video is paused or stopped. -->
+        <ImageView
+            android:id="@+id/videoPlayIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_media_play"
+            android:visibility="gone"
+            app:tint="@color/white" />
+
+    </FrameLayout>
+
+</androidx.cardview.widget.CardView>

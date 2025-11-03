@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#FF9800" /> <!-- Aap yahan koi bhi color de sakte hain -->
+    <corners android:radius="100dp" /> <!-- Isse tag ke corners gol ho jayenge -->
+</shape>

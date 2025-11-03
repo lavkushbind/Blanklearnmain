@@ -1,8 +1,11 @@
 package com.blank_learn.demo;
 
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -41,7 +45,6 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
 
     private List<AllocationData> allocationList;
     private Context context;
-    private Map<String, Users> userMap; // BEST PRACTICE: Pre-load user data (ID -> User object with phone)
 
     private boolean isTeacher;
 
@@ -179,21 +182,60 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
         holder.enrollButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, Main_next_demo_Activity.class);
-                intent.putExtra("allocationId", allocationId);
-                intent.putExtra("price", 450000);
+                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
+  LayoutInflater inflater = LayoutInflater.from(context);
+                View dialogView = inflater.inflate(R.layout.dialog_price_options, null);
+                builder.setView(dialogView);
 
-                context.startActivity(intent);
+                LinearLayout option1 = dialogView.findViewById(R.id.option1_layout);
+                LinearLayout option2 = dialogView.findViewById(R.id.option2_layout);
+                LinearLayout option3 = dialogView.findViewById(R.id.option3_layout);
+
+                TextView originalPrice1 = dialogView.findViewById(R.id.original_price_1);
+                TextView originalPrice2 = dialogView.findViewById(R.id.original_price_2);
+                TextView originalPrice3 = dialogView.findViewById(R.id.original_price_3);
+
+
+                // Apply strikethrough to the original prices
+                originalPrice1.setPaintFlags(originalPrice1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                originalPrice2.setPaintFlags(originalPrice2.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                originalPrice3.setPaintFlags(originalPrice3.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                // Add a cancel button
+                builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+                // Create the dialog
+                final AlertDialog dialog = builder.create();
+
+                // Set click listeners for each option
+                option1.setOnClickListener(view -> {
+                    startNextActivity(allocationId, 1200); // आपकी नई कीमत
+                    dialog.dismiss();
+                });
+
+                option2.setOnClickListener(view -> {
+                    startNextActivity(allocationId, 2000); // आपकी नई कीमत
+                    dialog.dismiss();
+                });
+
+                option3.setOnClickListener(view -> {
+                    startNextActivity(allocationId, 4000); // आपकी नई कीमत
+                    dialog.dismiss();
+                });
+
+                // Show the dialog
+                dialog.show();
             }
-
-
         });
+
+// **महत्वपूर्ण:** इस मेथड को अपने Adapter क्लास का सदस्य बनाएँ, onClick लिसनर के अंदर नहीं।
+
         holder.bookAnotherDemoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, PaymentActivity_demo.class);
                 intent.putExtra("allocationId", allocationId);
-                intent.putExtra("price", 10000);
+                intent.putExtra("price", 20);
 
                 context.startActivity(intent);
             }
@@ -250,6 +292,14 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
 
         handlePaymentStatus(holder, allocation);
     }
+
+    private void startNextActivity(String allocationId, int selectedPrice) {
+        Intent intent = new Intent(context, Main_next_demo_Activity.class);
+        intent.putExtra("allocationId", allocationId);
+        intent.putExtra("price", selectedPrice); // कीमत को int के रूप में भेजा जा रहा है
+        context.startActivity(intent);
+    }
+
 
     private void initiatePhoneCall(Context context, String phoneNumber) {
         Intent intent = new Intent(Intent.ACTION_DIAL); // Opens Dialer (safer)
@@ -451,7 +501,7 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
                     holder.demo_yes.setVisibility(View.GONE);
                     holder.no_demo.setVisibility(View.GONE);
                     holder.teachermsg.setVisibility(View.GONE);
-                    holder.bookAnotherDemoButton.setVisibility(View.VISIBLE);
+                    holder.bookAnotherDemoButton.setVisibility(View.GONE);
                     break;
                 case "unpaid":
                     holder.paymentStatusTextView.setText("Status: Payment Due. Please pay to continue.");
@@ -560,14 +610,18 @@ public class AllocationAdapter extends RecyclerView.Adapter<AllocationAdapter.Al
 
     public static class AllocationViewHolder extends RecyclerView.ViewHolder {
         TextView textViewInformation, teachermsg,classNameTextView, dateTextView, timeTextView, teacherIdTextView, countdownTextView, demoCompleteMessage, demoOptionsMessage, paymentReminderTextView, paymentStatusTextView, contactNumberTextView;
-        Button no_demo,enrollButton, bookAnotherDemoButton, call,whatsapp, demo_yes;
+        Button no_demo,enrollButton, bookAnotherDemoButton, call,whatsapp, demo_yes, class_button, link_button;
         LinearLayout buttonContainer;
+        EditText link_edit;
 
 
 
         public AllocationViewHolder(@NonNull View itemView) {
             super(itemView);
+            link_button=itemView.findViewById(R.id.link_button);
+            link_edit= itemView.findViewById(R.id.link_edt);
             textViewInformation=itemView.findViewById(R.id.textViewInformation);
+            class_button =  itemView.findViewById(R.id.class_button);
             classNameTextView = itemView.findViewById(R.id.class_name_text_view);
             dateTextView = itemView.findViewById(R.id.date_text_view);
             no_demo=itemView.findViewById(R.id.demo_no);

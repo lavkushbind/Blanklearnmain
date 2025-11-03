@@ -1,6 +1,8 @@
-package com.blank_learn.demo;public class AllocationData {
+package com.blank_learn.demo;
+public class AllocationData {
     private String className;
     private String date;
+    private  String classLink;
     private String demoID;
     private String paymentStatus;
     private String studentID;
@@ -19,6 +21,14 @@ package com.blank_learn.demo;public class AllocationData {
         this.studentID = studentID;
         this.teacherID = teacherID;
         this.timeSlot = timeSlot;
+    }
+
+    public String getClassLink() {
+        return classLink;
+    }
+
+    public void setClassLink(String classLink) {
+        this.classLink = classLink;
     }
 
     // Getters and setters

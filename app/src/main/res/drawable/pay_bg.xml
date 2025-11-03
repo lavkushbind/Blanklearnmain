@@ -1,32 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Layer 1: The Golden Border (Bottom Layer) -->
-    <item>
+     <item>
         <shape android:shape="rectangle">
-            <!-- Use the same radius for the outer border shape -->
-            <corners android:radius="15dp"/>
-            <!-- Set the solid color for the border -->
-            <solid android:color="@color/background"/> <!-- Example Golden Color - Adjust as needed -->
-            <!-- You could also use a gradient for the border if desired -->
-            <!-- <gradient android:startColor="#FFD700" android:endColor="#B8860B" android:angle="45"/> -->
+             <corners android:radius="15dp"/>
+             <solid android:color="@color/background"/>
         </shape>
     </item>
 
-    <!-- Layer 2: The Gradient Content (Top Layer, Inset) -->
-    <item
+     <item
         android:left="1dp"
         android:right="1dp"
         android:top="1dp"
         android:bottom="1dp">
         <shape android:shape="rectangle">
-            <!--
-            Important: For the corners to look perfectly round with the border,
-            the inner radius should technically be slightly smaller than the outer radius.
-            Inner Radius = Outer Radius - Border Width
-            So, 20dp - 5dp = 15dp
-            Adjust if 20dp still looks acceptable visually.
-            -->
+
             <corners android:radius="15dp"/>
             <gradient
                 android:startColor="#BA9560"

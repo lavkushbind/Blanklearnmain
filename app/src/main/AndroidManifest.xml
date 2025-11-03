@@ -2,20 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.blank_learn.dark">
-    <!-- package="com.blank_learn.dark"> -->
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-feature
-        android:glEsVersion="0x00020000"
-        android:required="true" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -25,7 +17,6 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
@@ -33,8 +24,7 @@
     <uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" /> <!-- <uses-permission android:name="android.permission.FOREGROUND_SERVICE" android:maxSdkVersion="34" /> -->
+
     <uses-feature android:name="android.hardware.camera.any" />
 
     <application
@@ -51,18 +41,28 @@
         tools:replace="android:label"
         tools:targetApi="31">
         <activity
-            android:name="com.blank_learn.session.Main_Call_Activity"
+            android:name="com.blank_learn.Onboarding.ProfileSetupActivity"
             android:exported="false" />
         <activity
-            android:name="com.blank_learn.session.CallActivity"
+            android:name="com.blank_learn.Onboarding.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name="com.blank_learn.session.FocusSessionActivity"
+            android:name="com.blank_learn.Booking.BookingWizardActivity"
             android:exported="false" />
         <activity
-            android:name="com.blank_learn.session.StudentSessionActivity"
+            android:name="com.blank_learn.Challenge.QuizActivity"
             android:exported="false" />
-
+        <activity
+            android:name="com.blank_learn.Challenge.SetupActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.blank_learn.Challenge.ChallengeSetupActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.blank_learn.demoActivity3"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name="com.blank_learn.DebugFirebaseActivity" -->
+        <!-- android:exported="false" /> -->
         <service
             android:name="com.blank_learn.FCM.MyFirebaseMessagingService"
             android:exported="false">
@@ -130,12 +130,6 @@
             android:name="com.blank_learn.loginandsignup.Teacher_form_Activity"
             android:exported="false" />
         <activity
-            android:name="com.blank_learn.home.demoActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.blank_learn.home.PaymentActivity_demo"
-            android:exported="false" />
-        <activity
             android:name="com.blank_learn.Feed.Feed_Post_Activity"
             android:exported="false" />
         <activity
@@ -149,6 +143,12 @@
             android:exported="false" />
         <activity
             android:name="com.blank_learn.profile.uploadvideo"
+            android:exported="false" />
+        <activity
+            android:name="com.blank_learn.demo.PaymentActivityDemo"
+            android:exported="false" />
+        <activity
+            android:name="com.blank_learn.home.demoActivity2"
             android:exported="false" />
         <activity
             android:name=".oneclassActivity"
@@ -167,6 +167,9 @@
                 android:value="" />
         </activity>
         <activity
+            android:name="com.blank_learn.home.demoActivity"
+            android:exported="false" />
+        <activity
             android:name="com.blank_learn.chat.DailogActivity"
             android:exported="false" />
         <activity
@@ -184,10 +187,6 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.blank_learn.payment.razorpayActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.blank_learn.home.StoryActivity"
             android:exported="false" />
 
@@ -199,6 +198,15 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_path" />
+        </provider>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
         </provider>
 
         <activity
@@ -214,15 +222,15 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.blank_learn.session.FocusVideoCallActivity"
+            android:name="com.blank_learn.home.MainActivity"
             android:exported="false"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
-            android:name="com.blank_learn.loginandsignup.signup"
+            android:name="com.blank_learn.PhoneAuthActivity2"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.blank_learn.Onboarding.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -235,11 +243,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name="com.blank_learn.home.MainActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.blank_learn.home.dialog_schedule" />
         <activity
             android:name="com.blank_learn.payment.PaymentActivity"
             android:exported="false"

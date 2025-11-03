@@ -15,8 +15,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.blank_learn.dark.R;
 import com.blank_learn.home.MainActivity;
-import com.blank_learn.session.FocusVideoCallActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
+ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -71,7 +70,7 @@ public class login extends AppCompatActivity {
 
         if(currentUser!= null)
         {
-            Intent intent= new Intent(login.this, FocusVideoCallActivity.class);
+            Intent intent= new Intent(login.this, MainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -102,7 +101,7 @@ public class login extends AppCompatActivity {
                          userMap.put("pass",pas);
                          userMap.put("email",email);
                          root.push().setValue(userMap);
-                         startActivity(new Intent(login.this, FocusVideoCallActivity.class));
+                         startActivity(new Intent(login.this, MainActivity.class));
                      }
                      else{
                        //  Toast.makeText(login.this,task.getException().getLocalizedMessage(),Toast.LENGTH_SHORT).show();

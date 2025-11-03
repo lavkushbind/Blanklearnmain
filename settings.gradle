@@ -15,6 +15,7 @@ dependencyResolutionManagement {
         mavenCentral()
 
         maven { url 'https://jitpack.io' }
+//        maven { url 'https://maven.zego.im' }
 
         maven { url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
         }

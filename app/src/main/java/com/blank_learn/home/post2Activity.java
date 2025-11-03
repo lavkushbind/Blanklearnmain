@@ -13,8 +13,7 @@ import com.blank_learn.dark.R;
 import com.blank_learn.dark.databinding.ActivityPost2Binding;
 import com.blank_learn.loginandsignup.Users;
 import com.blank_learn.payment.postmodel;
-import com.blank_learn.payment.razorpayActivity;
-import com.blank_learn.profile.ProActivity;
+ import com.blank_learn.profile.ProActivity;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
@@ -169,13 +168,13 @@ public class post2Activity extends AppCompatActivity {
         binding.paybtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(post2Activity.this, razorpayActivity.class);
-                intent.putExtra("Price", priceLong);
-                intent.putExtra("Topic", topic);
-                intent.putExtra("postpic",postpic);
-                intent.putExtra("Postid", postid);
-
-                startActivity(intent);
+//                Intent intent = new Intent(post2Activity.this, razorpayActivity.class);
+//                intent.putExtra("Price", priceLong);
+//                intent.putExtra("Topic", topic);
+//                intent.putExtra("postpic",postpic);
+//                intent.putExtra("Postid", postid);
+//
+//                startActivity(intent);
             }
         });
 

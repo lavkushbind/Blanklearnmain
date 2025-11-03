@@ -51,7 +51,8 @@ public class Teacher_form_Activity extends AppCompatActivity {
     private StorageReference storageReference;
 
     private final String[] classes = {"LKG", "UKG", "1", "2", "3", "4", "5", "6", "7", "8"};
-    private final String[] timeSlots = {
+    private final String[] timeSlots =
+            {
             "6-7 AM", "7-8 AM", "8-9 AM",
             "9-10 AM", "10-11 AM", "11-12 PM",
             "12-1 PM", "1-2 PM", "2-3 PM",
@@ -80,8 +81,6 @@ public class Teacher_form_Activity extends AppCompatActivity {
         UploadButton_video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                openVideoPicker();
-//                checkVerificationAndProceed();
 
 
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -102,58 +101,26 @@ public class Teacher_form_Activity extends AppCompatActivity {
                         Boolean isVerified = dataSnapshot.getValue(Boolean.class);
 
                         if (dataSnapshot.exists() && Boolean.TRUE.equals(isVerified)) {
-//                            uploadTeacherData();
-                            openVideoPicker();
+                             openVideoPicker();
 
                         } else {
 
                             Intent intent = new Intent(Teacher_form_Activity.this, PaymentActivity_teacher.class);
                             startActivity(intent);
-//                            Toast.makeText(v.getContext(), "Account not verified. Please verify your account to upload data.", Toast.LENGTH_LONG).show();
-                        }
+                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
-//            }
-//        });
 
 
             }
 
 
         });
-//        uploadButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-//                if (currentUser == null) {
-//                    return;
-//                }
-//                final String userId = currentUser.getUid();
-//                DatabaseReference userVerifyRef = databaseReference.child(userId).child("verify");
-//                userVerifyRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Boolean isVerified = dataSnapshot.getValue(Boolean.class);
-//
-//                        if (dataSnapshot.exists() && Boolean.TRUE.equals(isVerified)) {
-//                            uploadTeacherData();
-//
-//                        } else {
-//
-//                            Intent intent = new Intent(Teacher_form_Activity.this, PaymentActivity_teacher.class);
-//                            startActivity(intent);
-//                        }
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                    }
-//                });
-//            }
-//        });
+
 
 
         uploadButton.setOnClickListener(new View.OnClickListener() {

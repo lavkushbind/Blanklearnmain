@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,6 +23,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <Button
+                android:id="@+id/btnGoogleSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_margin="15dp"
+
+                android:layout_marginTop="168dp"
+                android:background="@drawable/button_bg2"
+                android:drawableStart="@drawable/common_google_signin_btn_icon_light"
+                android:drawablePadding="14dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="Sign In with Google"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+
             <ProgressBar
                 android:id="@+id/progressBar"
                 style="?android:attr/progressBarStyle"
@@ -40,17 +65,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
-                <!--        <ImageView-->
-                <!--            android:id="@+id/profilimg"-->
-                <!--            android:layout_width="300dp"-->
-                <!--            android:layout_height="300dp"-->
-                <!--            android:layout_gravity="center"-->
-                <!--            app:srcCompat="@drawable/signl" />-->
 
 
                 <LinearLayout
@@ -97,8 +115,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="60dp"
                     android:layout_marginRight="10dp"
-                    android:text="Sign Up Now for Free Demo"
+                    android:text="Sign Up Now for Demo Class"
                     android:textColor="#095EA2"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -118,39 +137,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="visible">
+                    android:visibility="visible"
+                    tools:visibility="visible">
 
-                    <!--                    <LinearLayout-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_height="wrap_content"-->
-                    <!--                        android:layout_marginLeft="10dp"-->
-                    <!--                        android:layout_marginRight="10dp"-->
-                    <!--                        android:background="@drawable/edit_text_background"-->
-                    <!--                        android:gravity="center_vertical"-->
-                    <!--                        android:orientation="horizontal"-->
-                    <!--                        android:padding="8dp">-->
-
-                    <!--                        <com.hbb20.CountryCodePicker-->
-                    <!--                            android:id="@+id/ccp"-->
-                    <!--                            android:layout_width="wrap_content"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            app:ccp_autoDetectCountry="true"-->
-                    <!--                            app:ccp_defaultNameCode="IN"-->
-                    <!--                            app:ccp_showFlag="true"-->
-                    <!--                            app:ccp_showFullName="false"-->
-                    <!--                            app:ccp_showNameCode="false" />-->
-
-                    <!--                        <EditText-->
-                    <!--                            android:id="@+id/etPhoneNumber"-->
-                    <!--                            android:layout_width="0dp"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:layout_weight="1"-->
-                    <!--                            android:background="@android:color/transparent"-->
-                    <!--                            android:hint="Phone Number"-->
-                    <!--                            android:inputType="phone"-->
-                    <!--                            android:padding="8dp"-->
-                    <!--                            android:singleLine="true" />-->
-                    <!--                    </LinearLayout>-->
 
                     <EditText
                         android:id="@+id/etPhoneNumber"
@@ -187,7 +176,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone"
+                    android:visibility="invisible"
                     tools:visibility="visible"> <!-- tools:visibility makes it visible in preview -->
 
                     <EditText
@@ -233,23 +222,6 @@
                     android:visibility="gone" />
 
                 <!-- Google Sign-In Button -->
-                <Button
-                    android:id="@+id/btnGoogleSignIn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-
-                    android:layout_margin="15dp"
-                    android:background="@drawable/button_bg2"
-                    android:drawableStart="@drawable/common_google_signin_btn_icon_light"
-
-                    android:drawablePadding="14dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:text="Sign In with Google"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:visibility="gone" />
 
 
             </LinearLayout>
@@ -257,4 +229,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

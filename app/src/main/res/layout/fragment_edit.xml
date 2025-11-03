@@ -6,23 +6,39 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0B0E1E">
 
-    android:background="#0B0E1E"
-    android:backgroundTint="#0B0E1E">
+    <!-- 1. Loading Indicator - Centered and always on top -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="10dp"/>
 
+    <!-- 2. Main Content inside a ScrollView -->
+    <!-- ID 'mainContentScrollView' added to control visibility from Java -->
     <ScrollView
+        android:id="@+id/mainContentScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="32dp">
+
+            <!-- Your existing layout content goes here -->
+            <!-- I've checked the IDs, they should work with the new Java code -->
 
             <TextView
                 android:id="@+id/Update"
@@ -34,9 +50,10 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:text="Update"
-
-                app:layout_constraintBottom_toTopOf="@+id/Username"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/biotext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/biotext" />
 
             <TextView
                 android:id="@+id/Updatepro"
@@ -44,12 +61,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="Update"
-
+                android:padding="8dp"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView24"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/profesiontext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/profesiontext" />
 
             <TextView
                 android:id="@+id/Updateemail"
@@ -57,11 +75,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="Update"
+                android:padding="8dp"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/emailtext"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/emailtex"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/emailtex" />
 
             <TextView
                 android:id="@+id/Updatename"
@@ -69,11 +89,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="Update"
+                android:padding="8dp"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/bio"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/nametext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/nametext" />
 
             <EditText
                 android:id="@+id/profesiontext"
@@ -218,57 +240,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/Username" />
 
-            <TextView
-                android:id="@+id/textView43"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="2dp"
-                android:text="Per hour charge for 1-1 class"
-                android:textColor="@color/white"
-                android:visibility="visible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/facebookurl" />
-
-
-            <TextView
-                android:id="@+id/updatet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Update"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/tweeterurlj"
-                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/updateL"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:padding="8dp"
                 android:text="Update"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/textView51"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@+id/linkdinurl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/linkdinurl" />
 
-            <TextView
-                android:id="@+id/updatef"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Update"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="visible"
-                app:layout_constraintBottom_toTopOf="@+id/textView43"
-                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/textView51"
@@ -281,98 +268,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linkdinurl" />
 
-            <EditText
-                android:id="@+id/facebookurl"
-                android:layout_width="0dp"
-                android:layout_height="60sp"
 
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/edit_text_background"
-                android:ems="10"
-                android:gravity="center_vertical"
-                android:inputType="textMultiLine"
-                android:paddingLeft="10dp"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:visibility="visible"
-                app:layout_constraintEnd_toStartOf="@+id/updatef"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linkdinurl" />
 
-            <TextView
-                android:id="@+id/updatei"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="Update"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/instagramurlh"
-                app:layout_constraintEnd_toEndOf="parent" />
 
-            <EditText
-                android:id="@+id/tweeterurl"
-                android:layout_width="0dp"
-                android:layout_height="60sp"
 
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/edit_text_background"
-                android:ems="10"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@+id/updatet"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView43" />
-
-            <EditText
-                android:id="@+id/instagramurl"
-                android:layout_width="0dp"
-                android:layout_height="60sp"
-
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/edit_text_background"
-                android:ems="10"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@+id/updatei"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tweeterurlj" />
-
-            <TextView
-                android:id="@+id/tweeterurlj"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="2dp"
-                android:text="tweeter Link"
-                android:textColor="@color/white"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tweeterurl" />
-
-            <TextView
-                android:id="@+id/instagramurlh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="instagram Link"
-                android:textColor="@color/white"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/instagramurl" />
 
             <TextView
                 android:id="@+id/cardView2"

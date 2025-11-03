@@ -11,6 +11,27 @@
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
+    <!-- Add the following strings for PhoneAuthActivity -->
+
+    <!-- Error Messages -->
+    <string name="error_google_sign_in_failed">Google Sign-In failed.</string>
+    <string name="error_authentication_failed">Authentication Failed.</string>
+    <string name="error_invalid_phone_number">Enter a valid 10-digit phone number</string>
+    <string name="error_invalid_phone_number_firebase">Invalid phone number.</string>
+    <string name="error_quota_exceeded">Quota exceeded. Try again later.</string>
+    <string name="error_verification_failed">Verification failed.</string>
+    <string name="error_invalid_otp">Enter a valid 6-digit OTP</string>
+    <string name="error_incorrect_otp">The OTP is incorrect.</string>
+    <string name="error_user_not_authenticated">User not authenticated.</string>
+    <string name="error_database_save_failed">Database error. Could not save user.</string>
+    <string name="error_failed_to_save_user_data">Failed to save user data.</string>
+
+    <!-- Toasts and Informational Messages -->
+    <string name="toast_requesting_otp_for">Requesting OTP for %1$s</string>
+    <string name="toast_verified_automatically">Verified Automatically!</string>
+    <string name="toast_otp_sent">OTP Sent. Please check your messages.</string>
+    <string name="toast_signing_in">Signing you in…</string>
+    <string name="toast_sign_in_successful">Sign-In Successful!</string>
     <string name="previous">Previous</string>
     <string name="unlock_potential_title_mixed_all_bold">
     </string>
@@ -19,12 +40,10 @@
          How to Join:
         \n• When you click this card, a chat will open with the teacher.
         \n• The teacher will send you all required materials, notes, and a  Google Meet or Zoom link  for the class.
-        \n\n After Your Free Demo:
         \n• Once the demo is complete, a button to pay the fees will appear.
-        \n• If you like the class, you can choose one of the following plans to continue.
-        \n\n Pricing Plans:
-        \n•  1-on-1 Class: ₹4500 / month
-        \n•  Group Class (3 students):  ₹2500 / month
+
+
+
         \n\n Contact:
         \n• You can contact the teacher anytime via  WhatsApp  or a direct  Call using the buttons provided.
     ]]></string>
@@ -78,4 +97,47 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+
+
+    <string-array name="hear_about_options">
+        <item>Social Media (Facebook, Instagram, etc.)</item>
+        <item>Friend or Family</item>
+        <item>Google Search</item>
+        <item>News Article or Blog</item>
+        <item>Podcast or Video</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="topic_options">
+        <item>Arts</item>
+        <item>Coding and Tech</item>
+        <item>English</item>
+        <item>Health and Wellness</item>
+        <item>Life Skills</item>
+        <item>Math</item>
+        <item>Music</item>
+        <item>Science and Nature</item>
+        <item>Social Studies</item>
+        <item>World Languages</item>
+    </string-array>
+
+    <string-array name="age_range_options">
+        <item>Ages 3-7 (Preschool - 2nd Grade)</item>
+        <item>Ages 8-12 (3rd Grade - 7th Grade)</item>
+        <item>Ages 13-18 (8th Grade - 12th Grade)</item>
+    </string-array>
+
+    <string-array name="experience_type_options">
+        <item>Professional Experience (I have worked in this field)</item>
+        <item>Academic Credentials (I have a degree or certification)</item>
+        <item>Personal Experience (I am a hobbyist or self-taught expert)</item>
+    </string-array>
+
+    <string-array name="years_of_experience_options">
+        <item>Less than 1 year</item>
+        <item>1-2 years</item>
+        <item>3-5 years</item>
+        <item>5-10 years</item>
+        <item>10+ years</item>
+    </string-array>
 </resources>

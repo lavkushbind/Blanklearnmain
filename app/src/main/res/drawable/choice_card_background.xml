@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- State when the card is selected -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#208A2BE2" /> <!-- Semi-transparent purple -->
+            <corners android:radius="12dp" />
+            <stroke android:width="2dp" android:color="#8A2BE2" /> <!-- Purple Border -->
+        </shape>
+    </item>
+    <!-- Default state -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#010312" /> <!-- Dark background -->
+            <corners android:radius="12dp" />
+            <stroke android:width="1dp" android:color="#3A3F5C" /> <!-- Subtle border -->
+        </shape>
+    </item>
+</selector>

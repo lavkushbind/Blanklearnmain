@@ -1,20 +1,18 @@
-package com.blank_learn.loginandsignup;
+package com.blank_learn.loginandsignup ;
 
 import com.google.firebase.database.PropertyName;
 
-// Renamed from Users to User (singular) for standard Java convention
-public class Users {
-
-    // --- Fields ---
-    // All fields are private to enforce encapsulation.
-    // Use @PropertyName to link the Java field to the exact key in the Firebase database.
-    // This prevents issues if you use ProGuard/R8 to shrink your app.
+ public class Users {
 
     @PropertyName("name")
     private String name;
 
     @PropertyName("email")
     private String email;
+
+
+    @PropertyName("country")
+    private String country;
 
     @PropertyName("userID")
     private String userID;
@@ -95,6 +93,14 @@ public class Users {
 
     // --- Getters and Setters ---
     // Organized for readability
+
+    public String getCountry() {
+       return country;
+    }
+
+    public void setCountry(String country) {
+       this.country = country;
+    }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

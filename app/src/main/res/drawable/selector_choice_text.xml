@@ -1,0 +1,7 @@
+<!-- res/drawable/selector_choice_text.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Jab item SELECT hoga -->
+    <item android:state_selected="true" android:color="@color/white" />
+    <!-- Default state -->
+    <item android:color="@color/white" />
+</selector>

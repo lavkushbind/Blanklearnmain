@@ -1,5 +1,11 @@
 package com.blank_learn.home;
 
+// NEW: Add these imports for the new logic
+import android.content.Context;
+import android.content.SharedPreferences;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -22,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.blank_learn.dark.R;
 import com.blank_learn.demo.AllocationListFragment;
 import com.blank_learn.payment.OneFragment;
+import com.blank_learn.profile.EditFragment;
 import com.blank_learn.profile.ProfileFragment;
 import com.blank_learn.profile.YourSearchActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -42,54 +49,117 @@ public class MainActivity extends AppCompatActivity {
         Window window = getWindow();
         window.setNavigationBarColor(getResources().getColor(android.R.color.white));
 
+        bottomNavigationView = findViewById(R.id.bottomNavigationView); // NEW: Find the view here
 
         if (isConnected()) {
-            setupUI();
+            // MODIFIED: We now call our two new setup methods
+            handleInitialFragment();
+            setupBottomNavigationListener();
         } else {
             showNoInternetDialog();
         }
     }
+
+    /**
+     * NEW: This is the most important new method. It decides which fragment to show on startup.
+     * It checks the flag we set in demoActivity.
+     */
+    private void handleInitialFragment() {
+        // Read the persistent flag
+        SharedPreferences prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        boolean shouldShowDemoSuccess = prefs.getBoolean("SHOW_DEMO_SUCCESS_FRAGMENT", false);
+
+        if (shouldShowDemoSuccess) {
+            // The flag is true! The user just booked a demo.
+
+            // IMPORTANT: Reset the flag so it doesn't show again on the next app start.
+            prefs.edit().putBoolean("SHOW_DEMO_SUCCESS_FRAGMENT", false).apply();
+
+            // Load the AllocationListFragment, as it's the perfect "success" screen.
+            Log.d("MainActivity", "Demo success flag is true. Loading AllocationListFragment.");
+            loadFragment(new AllocationListFragment());
+
+            // Also update the bottom navigation to show the "My Class" tab as selected.
+            bottomNavigationView.setSelectedItemId(R.id.classs);
+
+        } else {
+            // This is the normal flow. The flag is false, so load the default home fragment.
+            Log.d("MainActivity", "No special navigation flag. Loading HomFragment.");
+            loadFragment(new HomFragment());
+        }
+    }
+
+
+    /**
+     * MODIFIED: This method was renamed from setupUI() and now ONLY handles the click listener.
+     * The initial fragment loading is now done in handleInitialFragment().
+     */
+    private void setupBottomNavigationListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.home) {
+                    loadFragment(new HomFragment());
+                } else if (itemId == R.id.notificationid) {
+                    loadFragment(new OneFragment());
+                } else if (itemId == R.id.profile) {
+                    loadFragment(new ProfileFragment());
+                } else if (itemId == R.id.classs) {
+                    loadFragment(new AllocationListFragment());
+                }
+                return true;
+            }
+        });
+    }
+
+    /**
+     * NEW: A reusable helper method to load fragments into the container.
+     * This avoids repeating code.
+     */
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+
+
+    // --- All other methods below are unchanged and correct ---
+
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
                 if (isGranted) {
-                    // FCM SDK (and your app) can post notifications.
                     Log.d("Permission", "Notification permission granted");
-                    // You might want to retrieve and update the token here if previously denied
                     getAndUpdateFcmToken();
                 } else {
-                    // Inform user about consequences
                     Log.w("Permission", "Notification permission denied");
                     Toast.makeText(this, "Notifications will be disabled.", Toast.LENGTH_SHORT).show();
                 }
             });
 
     private void askNotificationPermission() {
-        // This is only necessary for API level 33 and higher.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) ==
                     PackageManager.PERMISSION_GRANTED) {
-                // Permission already granted
-                getAndUpdateFcmToken(); // Good place to ensure token is up-to-date
+                getAndUpdateFcmToken();
             } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
-                // TODO: Display an educational UI explaining why the permission is needed
-                // Then, request the permission
-                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS); // Request again after rationale
+                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
             } else {
-                // Directly ask for the permission
                 requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
             }
         } else {
-            getAndUpdateFcmToken(); // On older versions, permission is implicitly granted - just get token
+            getAndUpdateFcmToken();
         }
     }
 
-    // Helper function to get and update token
     private void getAndUpdateFcmToken() {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult() != null) {
                 String token = task.getResult();
                 Log.d("FCM_TOKEN", "Current token: " + token);
-                sendRegistrationToServer(token); // Call the method from your service or implement similar logic here
+                sendRegistrationToServer(token);
             } else {
                 Log.w("FCM_TOKEN", "Fetching FCM registration token failed", task.getException());
             }
@@ -108,40 +178,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // In your Activity's onCreate:
-
-    private void setupUI() {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, new HomFragment());
-        fragmentTransaction.commit();
-
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-                int itemId = item.getItemId(); // Get the item ID
-
-                if (itemId == R.id.home) {
-                    fragmentTransaction.replace(R.id.container, new HomFragment());
-                } else if (itemId == R.id.notificationid) {
-                    fragmentTransaction.replace(R.id.container, new OneFragment());
-                }
-//                else if (itemId == R.id.search) {
-//                    fragmentTransaction.replace(R.id.container, new n());
-//                }
-                else if (itemId == R.id.profile) {
-                    fragmentTransaction.replace(R.id.container, new ProfileFragment());
-                } else if (itemId == R.id.classs) {
-                    fragmentTransaction.replace(R.id.container, new AllocationListFragment());
-                }
-                fragmentTransaction.commit();
-                return true;
-            }
-        });
-    }
-
     private boolean isConnected() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         if (connectivityManager != null) {
@@ -151,26 +187,10 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-
-
-    /**
-     * Public method that can be called from fragments to navigate to the AllocationListFragment.
-     * It replaces the current fragment and updates the bottom navigation bar.
-     */
     public void navigateToAllocations() {
         Log.d("MainActivity", "navigateToAllocations() called. Switching to AllocationListFragment.");
-
-        // Create an instance of the fragment you want to show
-        AllocationListFragment allocationFragment = new AllocationListFragment();
-
-        // Perform the fragment transaction to replace the content
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, allocationFragment)
-                .commit();
-
-        // Also, update the bottom navigation view to show the correct item as selected
+        loadFragment(new AllocationListFragment());
         if (bottomNavigationView != null) {
-            // Use the ID of your "My Class" or "Allocations" tab from your menu.xml
             bottomNavigationView.setSelectedItemId(R.id.classs);
         }
     }
@@ -179,25 +199,16 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("No Internet Connection")
                 .setMessage("Please check your internet connection and try again.")
-                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (isConnected()) {
-                            setupUI();
-                        } else {
-                            showNoInternetDialog();
-                        }
+                .setPositiveButton("Retry", (dialog, which) -> {
+                    if (isConnected()) {
+                        handleInitialFragment();
+                        setupBottomNavigationListener();
+                    } else {
+                        showNoInternetDialog();
                     }
                 })
-                .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
+                .setNegativeButton("Exit", (dialog, which) -> finish())
                 .setCancelable(false)
                 .show();
     }
 }
-
-

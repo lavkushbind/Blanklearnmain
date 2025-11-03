@@ -1,0 +1,103 @@
+<!-- res/layout/activity_setup.xml -->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp" >
+
+    <ImageView
+        android:id="@+id/iv_mascot"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_greeting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Hi [User]! I'm Sparky.\nLet's personalize your adventure!"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/iv_mascot"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv_mascot"
+        app:layout_constraintTop_toTopOf="@id/iv_mascot" />
+
+    <TextView
+        android:id="@+id/label_class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Which class are you in?"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_mascot" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_class"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:singleSelection="true"
+        app:layout_constraintTop_toBottomOf="@id/label_class">
+        <!-- Chips can be added dynamically or statically -->
+        <com.google.android.material.chip.Chip style="@style/Widget.MaterialComponents.Chip.Choice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Class 6"/>
+        <com.google.android.material.chip.Chip style="@style/Widget.MaterialComponents.Chip.Choice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Class 7"/>
+        <com.google.android.material.chip.Chip style="@style/Widget.MaterialComponents.Chip.Choice" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Class 8"/>
+    </com.google.android.material.chip.ChipGroup>
+
+    <TextView
+        android:id="@+id/label_interests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="What are your interests?"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip_group_class" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_interests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:singleSelection="false"
+        app:layout_constraintTop_toBottomOf="@id/label_interests">
+        <com.google.android.material.chip.Chip style="@style/Widget.MaterialComponents.Chip.Choice" app:chipIcon="@drawable/ic_rocket" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Space"/>
+        <com.google.android.material.chip.Chip style="@style/Widget.MaterialComponents.Chip.Choice" app:chipIcon="@drawable/ic_dinosaur" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dinosaurs"/>
+        <com.google.android.material.chip.Chip style="@style/Widget.MaterialComponents.Chip.Choice" app:chipIcon="@drawable/ic_circuit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Technology"/>
+        <com.google.android.material.chip.Chip style="@style/Widget.MaterialComponents.Chip.Choice" app:chipIcon="@drawable/ic_alert" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="History"/>
+    </com.google.android.material.chip.ChipGroup>
+
+    <TextView
+        android:id="@+id/tv_confirmation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@id/btn_create_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Awesome! We'll find quests about Space and History." />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_create_profile"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Create My Quest Profile!"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

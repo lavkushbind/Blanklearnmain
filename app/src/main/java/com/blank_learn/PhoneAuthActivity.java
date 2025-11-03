@@ -20,9 +20,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
+import com.blank_learn.Booking.BookingWizardActivity;
 import com.blank_learn.dark.R;
 import com.blank_learn.home.MainActivity;
-import com.blank_learn.loginandsignup.Users;
+import com.blank_learn.home.demoActivity;
+import com.blank_learn.home.demoActivity2;
 import com.facebook.appevents.AppEventsConstants;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest;
@@ -55,6 +57,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
     public static final String SIGNUP_DEBUG_TAG = "SIGNUP_ACTIVITY_DEBUG";
     private static final String TAG = "AuthActivity";
 
+
     private FirebaseAuth mAuth;
     private FirebaseAnalytics mFirebaseAnalytics;
     private GoogleSignInClient mGoogleSignInClient;
@@ -69,14 +72,13 @@ public class PhoneAuthActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> googleSignInLauncher;
     private ActivityResultLauncher<IntentSenderRequest> phoneHintLauncher;
 
-
-    // All methods up to `updateUserInDatabase` are the same...
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
 
-        mAuth = FirebaseAuth.getInstance();
+
+                mAuth = FirebaseAuth.getInstance();
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -87,6 +89,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
         setupActivityLaunchers();
 
         requestPhoneNumberHint();
+
     }
 
     @Override
@@ -271,10 +274,6 @@ public class PhoneAuthActivity extends AppCompatActivity {
                 });
     }
 
-    /**
-     * MAJOR REWRITE: This method now uses HashMaps to write data.
-     * This prevents saving empty fields to the database for new users.
-     */
     private void updateUserInDatabase(String registrationMethod) {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         if (firebaseUser == null) {
@@ -282,6 +281,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
             showLoading(false);
             return;
         }
+
 
         String uid = firebaseUser.getUid();
         DatabaseReference userNode = databaseReference.child(uid);
@@ -295,12 +295,8 @@ public class PhoneAuthActivity extends AppCompatActivity {
             }
 
             if (task.getResult().exists()) {
-                // --- CASE 1: USER ALREADY EXISTS ---
-                // We only update the core details that might change upon re-login.
-                // We use `updateChildren` so we don't wipe out fields the user set themselves (like bio).
                 Log.d(TAG, "User " + uid + " exists. Updating info.");
                 Map<String, Object> updates = new HashMap<>();
-
                 if (firebaseUser.getDisplayName() != null) {
                     updates.put("name", firebaseUser.getDisplayName());
                 }
@@ -313,24 +309,17 @@ public class PhoneAuthActivity extends AppCompatActivity {
                 if (firebaseUser.getPhotoUrl() != null) {
                     updates.put("profilepic", firebaseUser.getPhotoUrl().toString());
                 }
-
-                // Only perform an update if there's something to update
                 if (!updates.isEmpty()) {
                     userNode.updateChildren(updates).addOnCompleteListener(dbTask -> handleDbWriteCompletion(dbTask));
                 } else {
-                    // Nothing to update, just proceed
                     handleDbWriteCompletion(null);
                 }
 
             }
             else {
-                // --- CASE 2: THIS IS A NEW USER ---
-                // We create a new user object with only the available data and essential defaults.
-                // We use `setValue` because we are creating the entire node for the first time.
                 Log.d(TAG, "New user: " + uid + ". Creating new entry.");
                 Map<String, Object> newUserMap = new HashMap<>();
 
-                // Essential fields that should always exist
                 newUserMap.put("uid", uid);
                 newUserMap.put("userID", uid);
                 newUserMap.put("creationTimestamp", System.currentTimeMillis());
@@ -339,7 +328,6 @@ public class PhoneAuthActivity extends AppCompatActivity {
                 newUserMap.put("charge", 0L);
                 newUserMap.put("verify", false);
 
-                // Optional fields - only add them if they are not null/empty
                 if (firebaseUser.getDisplayName() != null && !firebaseUser.getDisplayName().isEmpty()) {
                     newUserMap.put("name", firebaseUser.getDisplayName());
                 }
@@ -356,25 +344,24 @@ public class PhoneAuthActivity extends AppCompatActivity {
                 userNode.setValue(newUserMap).addOnCompleteListener(dbTask -> handleDbWriteCompletion(dbTask));
             }
         });
+
     }
 
-    /**
-     * NEW HELPER METHOD to avoid repeating code. Handles the result of a database write.
-     */
     private void handleDbWriteCompletion(Task<Void> dbTask) {
-        // The task can be null if there were no updates to perform for an existing user.
         if (dbTask == null || dbTask.isSuccessful()) {
             Toast.makeText(this, "Sign-In Successful!", Toast.LENGTH_SHORT).show();
-            navigateToHome();
-        } else {
+            Intent intent = new Intent(this, BookingWizardActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        }
+        else {
             showLoading(false);
             Toast.makeText(this, "Failed to save user data.", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "Failed to write to database", dbTask.getException());
         }
     }
 
-
-    // The rest of the helper methods remain the same...
     private void showLoading(boolean isLoading) {
         progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         btnGoogleSignIn.setEnabled(!isLoading);
@@ -392,6 +379,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
     private void logAllRegistrationEvents(String registrationMethod) {
         Log.d(SIGNUP_DEBUG_TAG, "SUCCESS: >>> ABOUT TO SEND META SIGNUP EVENT NOW! <<<");
 
+
         Bundle firebaseBundle = new Bundle();
         firebaseBundle.putString(FirebaseAnalytics.Param.METHOD, registrationMethod);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, firebaseBundle);
@@ -400,6 +388,7 @@ public class PhoneAuthActivity extends AppCompatActivity {
         metaParams.putString(AppEventsConstants.EVENT_PARAM_REGISTRATION_METHOD, registrationMethod);
         logger.logEvent(AppEventsConstants.EVENT_NAME_COMPLETED_REGISTRATION, metaParams);
         Log.d(TAG, "Logged SIGN_UP event for method: " + registrationMethod);
+
     }
     @Override
     protected void onResume() {
@@ -412,6 +401,5 @@ public class PhoneAuthActivity extends AppCompatActivity {
         profilimg.pauseAnimation();
         super.onPause();
     }
+
 }
-
-

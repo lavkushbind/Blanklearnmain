@@ -50,6 +50,35 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730022278030:android:d654009ce550f1ae73aadf",
+        "android_client_info": {
+          "package_name": "com.dark.mon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730022278030-mshkr0up0o888kqg9l29p3fr456f602q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7Mfh6FbkY8yDKsxSJ8LQxStRE_SaHwZI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "730022278030-50ve4ljs9gj2dh7614f41jav48nrah4c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

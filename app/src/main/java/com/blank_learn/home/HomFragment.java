@@ -6,10 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -18,9 +22,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.blank_learn.Booking.BookingWizardActivity;
 import com.blank_learn.dark.R;
 import com.blank_learn.dark.databinding.FragmentHomeBinding;
 import com.blank_learn.chat.Chat_list_Activity;
@@ -28,6 +35,7 @@ import com.blank_learn.dark.Search_course_adapter;
 import com.blank_learn.dark.databinding.Home2Binding;
 import com.blank_learn.demo.AllocationAdapter;
 import com.blank_learn.demo.AllocationData;
+import com.blank_learn.demoActivity3;
 import com.blank_learn.loginandsignup.Teacher_form_Activity;
 import com.blank_learn.loginandsignup.Users;
 //import com.example.payment.SliderAdapter;
@@ -51,13 +59,17 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 public class HomFragment extends Fragment {
- Home2Binding binding;
+    FragmentHomeBinding binding;
     private boolean isTeacher=true;
 
-    private ActivityResultLauncher<Intent> demoActivityLauncher;
-
+     private ActivityResultLauncher<Intent> demoActivityLauncher;
+    private DatabaseReference userQuestRef;
+    private DatabaseReference dailyQuestInfoRef;
+    private CountDownTimer countDownTimer;
     private static final String CHANNEL_ID = "media_notification_channel";
 
     private FAQAdapter faqAdapter;
@@ -74,7 +86,7 @@ public class HomFragment extends Fragment {
     ArrayList<ReviewItem> list_review;
 
     ArrayList<postmodel> allPosts;
-     ArrayList<appmodel> app_list;
+    ArrayList<appmodel> app_list;
     ArrayList<Story_model> story_list;
     Context context;
     private AllocationAdapter allocationAdapter;
@@ -133,60 +145,28 @@ public class HomFragment extends Fragment {
 
 
 
-    private void showWelcomeDialog() {
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_home, null);
-
-        AlertDialog alertDialog = new AlertDialog.Builder(requireContext())
-                .setView(dialogView)
-                .setCancelable(false)
-                .create();
-        // Inside showWelcomeDialog()
-        dialogView.findViewById(R.id.btnDismiss).setOnClickListener(v -> {
-            alertDialog.dismiss();
-            Log.d("HomFragment", "Welcome dialog dismissed. Launching demoActivity for result.");
-            Intent intent = new Intent(getActivity(), demoActivity.class);
-            demoActivityLauncher.launch(intent); // <-- This is the NEW way
-        });
-//        dialogView.findViewById(R.id.btnDismiss).setOnClickListener(v -> {
-//            alertDialog.dismiss();
-//            Intent intent = new Intent(getActivity(), demoActivity.class);
-//            startActivity(intent);
-////            showCustomDialog();
-//
-//        });
-        dialogView.findViewById(R.id.imageView40).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-
-            }
-        });
-        alertDialog.show();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        binding = Home2Binding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         binding.postnow.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
-
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+              FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
 
         if (user != null) {
             currentUserId = user.getUid();
             loadAllocations();
         } else
-        {}
-
+            userQuestRef = FirebaseDatabase.getInstance().getReference("users").child(currentUserId).child("dailyQuest");
+        dailyQuestInfoRef = FirebaseDatabase.getInstance().getReference("dailyQuestInfo");
 
         database.getReference().child("Poster").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    String imageUrl = snapshot.getValue(String.class);
-
-                    Picasso.get().load(imageUrl).into(binding.poster);
+//                    String imageUrl = snapshot.getValue(String.class);
+//
+//                    Picasso.get().load(imageUrl).into(binding.poster);
                 }
             }
 
@@ -224,96 +204,31 @@ public class HomFragment extends Fragment {
                 }
             }
         });
-        binding.poster.setOnClickListener(new View.OnClickListener() {
+        binding.textView67.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), demoActivity.class);
-//                startActivity(intent);
-                Intent intent = new Intent(getActivity(), demoActivity.class);
+                Intent intent = new Intent(getActivity(), BookingWizardActivity.class);
                 demoActivityLauncher.launch(intent);
             }
         });
-        binding.greetingTextView.setOnClickListener(new View.OnClickListener() {
+        binding.poster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Teacher_form_Activity.class);
-                startActivity(intent);
+                Intent intent = new Intent(getActivity(), BookingWizardActivity.class);
+                demoActivityLauncher.launch(intent);
             }
         });
-        binding.studentPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-        ReviewAdapter reviewAdapter = new ReviewAdapter( list_review, getContext());
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true);
-        binding.postRV.setLayoutManager(layoutManager2);
-        binding.postRV.scrollToPosition(reviewAdapter.getItemCount() - 1);
-        binding.postRV.setAdapter(reviewAdapter);
-         layoutManager2.setStackFromEnd(true);
 
-        database.getReference().child("reviews").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list_review.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    ReviewItem reviewItem = dataSnapshot.getValue(ReviewItem.class);
-                    if (reviewItem != null) {
-                        list_review.add(reviewItem);
-
-                        }
-                    }
-                Collections.shuffle(list);
-                reviewAdapter.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error loading reviews: " + error.getMessage());
-
-            }
-        });
 
         homeadapter homeadapter2 = new homeadapter(list, getContext());
         LinearLayoutManager layoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true);
         binding.TopTeacherRv.setLayoutManager(layoutManager4);
-       binding.TopTeacherRv .setAdapter(homeadapter2);
+        binding.TopTeacherRv .setAdapter(homeadapter2);
         binding.TopTeacherRv.scrollToPosition(homeadapter2.getItemCount() - 1);
         layoutManager4.setStackFromEnd(true);
 
 
 
-        database.getReference().child("App").child("top courses").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String value = snapshot.getValue(String.class);
-
-//                    binding.textView11.setText(value);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull     DatabaseError error) {
-
-            }
-        });
-        database.getReference().child("App").child("new upload").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String value = snapshot.getValue(String.class);
-
-//                    binding.textView18.setText(value);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -368,7 +283,7 @@ public class HomFragment extends Fragment {
                 }
                 Collections.shuffle(list);
 
-              useradapter.notifyDataSetChanged();
+                useradapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -377,34 +292,8 @@ public class HomFragment extends Fragment {
 
 
 
-        Search_course_adapter homeadapter = new Search_course_adapter(list, getContext());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true);
-        binding.postnow.setLayoutManager(layoutManager);
-        binding.postnow.setAdapter(homeadapter);
-        binding.postnow.scrollToPosition(homeadapter.getItemCount() - 1);
-        layoutManager.setStackFromEnd(true);
 
-//        database.getReference().child("posts").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot)
-//            {
-//                list.clear();
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    if (dataSnapshot.child("postVideo").getValue() == null) {
-//                        continue;
-//                    }
-//                    postmodel postmodel = dataSnapshot.getValue(postmodel.class);
-//                    postmodel.setPostid(dataSnapshot.getKey());
-//                        list.add(postmodel);
-//                    }
-//                Collections.shuffle(list);
-//
-//                homeadapter.notifyDataSetChanged();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
+
         StoryAdapter storyAdapter = new StoryAdapter(story_list, getContext());
         LinearLayoutManager layoutManagers = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, true);
         binding.StoryRV.setLayoutManager(layoutManagers);
@@ -431,6 +320,8 @@ public class HomFragment extends Fragment {
         });
         return binding.getRoot();
     }
+
+
 
 
     private void loadAllocations() {
@@ -509,7 +400,6 @@ public class HomFragment extends Fragment {
         SharedPreferences preferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         boolean isDialogShown = preferences.getBoolean("isDialogShown", false);
         if (!isDialogShown) {
-            showWelcomeDialog();
             SharedPreferences.Editor editor = preferences.edit();
             editor.putBoolean("isDialogShown", true);
             editor.apply();
@@ -518,36 +408,7 @@ public class HomFragment extends Fragment {
 
 
 
-        DatabaseReference sliderReference = database.getReference().child("Slider");
-        sliderReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (getActivity() != null && isAdded()) {
-                    if (snapshot.exists()) {
-                        String url1 = snapshot.child("url1").getValue(String.class);
-                        String url2 = snapshot.child("url2").getValue(String.class);
-                        String url3 = snapshot.child("url3").getValue(String.class);
-                        if (url1 != null && url2 != null && url3 != null) {
-                            ArrayList<SliderData> sliderDataArrayList = new ArrayList<>();
-                            sliderDataArrayList.add(new SliderData(url1));
-                            sliderDataArrayList.add(new SliderData(url2));
-                            sliderDataArrayList.add(new SliderData(url3));
-//                            SliderAdapter adapter = new SliderAdapter(requireContext(), sliderDataArrayList);
-//                            binding.slider.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
-//                            binding.slider.setSliderAdapter(adapter);
-//                            binding.slider.setScrollTimeInSec(3);
-//                            binding.slider.setAutoCycle(true);
-//                            binding.slider.startAutoCycle();
-//                        } else {
-                        }
-                    } else {
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+
 
 
         faqList = new ArrayList<>();
@@ -562,9 +423,5 @@ public class HomFragment extends Fragment {
         binding.faqRV.setAdapter(faqAdapter);
     }
 
+
 }
-
-
-
-
-

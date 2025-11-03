@@ -13,6 +13,7 @@ import android.webkit.MimeTypeMap;
 
 import com.blank_learn.dark.databinding.ActivityOneclassBinding;
 import com.blank_learn.home.demoActivity;
+import com.blank_learn.home.demoActivity2;
 import com.blank_learn.loginandsignup.Users;
 import com.blank_learn.profile.ProActivity;
 import com.google.android.exoplayer2.MediaItem;
@@ -65,7 +66,7 @@ public class oneclassActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (name != null) {
-                    Intent intent = new Intent(com.blank_learn.dark.oneclassActivity.this, demoActivity.class);
+                    Intent intent = new Intent(com.blank_learn.dark.oneclassActivity.this, demoActivity2.class);
                     intent.putExtra("name", name);
                     startActivity(intent);
                 }

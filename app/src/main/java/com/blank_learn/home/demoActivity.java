@@ -1,5 +1,7 @@
 package com.blank_learn.home;
-
+// NEW: Ye imports zaroori hain
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,15 +15,20 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.blank_learn.dark.R;
+import com.blank_learn.demo.ReviewAdapter;
+import com.blank_learn.demo.ReviewModel;
+import com.blank_learn.demo.VideoAdapter;
+import com.blank_learn.demo.VideoInfo;
 import com.facebook.appevents.AppEventsConstants;
 import com.facebook.appevents.AppEventsLogger;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,15 +39,16 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
-
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-
+import java.util.List;
+import java.util.Locale;
 public class demoActivity extends AppCompatActivity {
 
-     public static final String DEBUG_TAG = "DEMO_ACTIVITY_DEBUG";
-
-     private CalendarView calendarView;
+    public static final String DEBUG_TAG = "DEMO_ACTIVITY_DEBUG";
+    private CalendarView calendarView;
     private LinearLayout timeSlotContainer, classContainer;
     private androidx.cardview.widget.CardView mainLayout;
     private Button payButton;
@@ -52,20 +60,27 @@ public class demoActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String currentUserID;
     private String selectedDate, selectedTimeSlot, selectedClass;
+    private AppEventsLogger metaLogger;
+    private ReviewAdapter reviewAdapter;
+    private List<ReviewModel> reviewList;
+    private RecyclerView reviewsRecyclerView;
 
+    private RecyclerView  recyclerView;
+    private VideoAdapter adapter;
+    private Query databaseQuery;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demo);
 
-        // --- Initialization ---
         database = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         currentUserID = mAuth.getCurrentUser().getUid();
 
-        // --- View Binding ---
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        metaLogger = AppEventsLogger.newLogger(this);
+
         calendarView = findViewById(R.id.calendar_view);
         timeSlotContainer = findViewById(R.id.time_slot_container);
         classContainer = findViewById(R.id.time_slot_container1);
@@ -73,16 +88,40 @@ public class demoActivity extends AppCompatActivity {
         mainLayout = findViewById(R.id.main_layout_demo);
         progressBar = findViewById(R.id.progress_bar_demo);
         alreadyBookedMessage = findViewById(R.id.already_booked_message);
+        reviewsRecyclerView = findViewById(R.id.reviews_recycler_view);
 
-        // --- Initial UI State ---
+        reviewList = new ArrayList<>();
+        reviewAdapter = new ReviewAdapter(this, reviewList);
+
         progressBar.setVisibility(View.VISIBLE);
         mainLayout.setVisibility(View.GONE);
         alreadyBookedMessage.setVisibility(View.GONE);
 
-        setDefaultDate();
-        checkIfUserHasBooking();
 
-        // --- Listener Setup ---
+        recyclerView = findViewById(R.id.rv_demo);
+
+        LinearLayoutManager horizontalManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+        horizontalManager.setReverseLayout(true);
+
+        horizontalManager.setStackFromEnd(true);
+
+        recyclerView.setLayoutManager(horizontalManager);
+
+        databaseQuery = FirebaseDatabase.getInstance().getReference("VideoUploads");
+
+        FirebaseRecyclerOptions<VideoInfo> options =
+                new FirebaseRecyclerOptions.Builder<VideoInfo>()
+                        .setQuery(databaseQuery, VideoInfo.class)
+                        .build();
+
+        adapter = new VideoAdapter(options);
+        recyclerView.setAdapter(adapter);
+
+        checkIfUserHasBooking();
+        setupUI();
+        loadReviews();
+
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) ->
                 selectedDate = dayOfMonth + "-" + (month + 1) + "-" + year
         );
@@ -93,149 +132,26 @@ public class demoActivity extends AppCompatActivity {
         });
     }
 
-    private void setDefaultDate() {
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
-        selectedDate = dayOfMonth + "-" + (month + 1) + "-" + year;
-        Log.d(DEBUG_TAG, "Default date set to: " + selectedDate);
-    }
 
-    private void checkIfUserHasBooking() {
-        Query userBookingQuery = databaseReference.child("allocated_classes")
-                .orderByChild("studentID")
-                .equalTo(currentUserID);
-
-        userBookingQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                progressBar.setVisibility(View.GONE);
-                if (snapshot.exists()) {
-                    Log.d(DEBUG_TAG, "User has a previous booking. Showing message.");
-                    mainLayout.setVisibility(View.GONE);
-                    alreadyBookedMessage.setVisibility(View.VISIBLE);
-                    alreadyBookedMessage.setText("You have already booked your free demo class. Please check your schedule.");
-                } else {
-                    Log.d(DEBUG_TAG, "User has not booked. Showing booking UI.");
-                    mainLayout.setVisibility(View.VISIBLE);
-                    alreadyBookedMessage.setVisibility(View.GONE);
-                    loadTimeSlots();
-                    loadClasses();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(demoActivity.this, "Error checking booking status.", Toast.LENGTH_SHORT).show();
-                Log.e(DEBUG_TAG, "Database error checking booking status", error.toException());
-            }
-        });
-    }
-
-    private void allocateTeacher() {
-        if (selectedDate == null || selectedTimeSlot == null || selectedClass == null) {
-            Log.e(DEBUG_TAG, "FAILURE: A selection is null. Halting process.");
-            Log.e(DEBUG_TAG, "selectedDate: " + selectedDate);
-            Log.e(DEBUG_TAG, "selectedTimeSlot: " + selectedTimeSlot);
-            Log.e(DEBUG_TAG, "selectedClass: " + selectedClass);
-            Toast.makeText(this, "Please select a date, time slot, and class", Toast.LENGTH_SHORT).show();
-            return;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (adapter != null) {
+            adapter.startListening();
         }
-
-        Log.d(DEBUG_TAG, "All selections are present. Querying Firebase for available teachers...");
-        databaseReference.child("teachers").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d(DEBUG_TAG, "Firebase onDataChange successful. Searching through teachers...");
-                String bestTeacherID = null;
-                int minStudents = Integer.MAX_VALUE;
-
-                for (DataSnapshot teacherSnap : snapshot.getChildren()) {
-                    String teacherID = teacherSnap.getKey();
-                    DataSnapshot classesSnapshot = teacherSnap.child("classes");
-                    DataSnapshot timeSlotsSnapshot = teacherSnap.child("timeSlots");
-                    DataSnapshot studentsCountSnapshot = teacherSnap.child("studentsCount").child(selectedTimeSlot);
-                    if (classesSnapshot.exists() && timeSlotsSnapshot.exists() && studentsCountSnapshot.exists()) {
-                        boolean teachesClass = false;
-                        for (DataSnapshot classSnap : classesSnapshot.getChildren()) {
-                            if (classSnap.getValue(String.class).equals(selectedClass.replace("Class ", ""))) {
-                                teachesClass = true;
-                                break;
-                            }
-                        }
-                        boolean availableAtSlot = false;
-                        for (DataSnapshot slotSnap : timeSlotsSnapshot.getChildren()) {
-                            if (slotSnap.getValue(String.class).equals(selectedTimeSlot)) {
-                                availableAtSlot = true;
-                                break;
-                            }
-                        }
-                        int studentCount = studentsCountSnapshot.getValue(Integer.class) != null ? studentsCountSnapshot.getValue(Integer.class) : 0;
-                        if (teachesClass && availableAtSlot && studentCount < 3) {
-                            if (studentCount < minStudents) {
-                                minStudents = studentCount;
-                                bestTeacherID = teacherID;
-                            }
-                        }
-                    }
-                }
-
-                if (bestTeacherID != null) {
-                    Log.d(DEBUG_TAG, "SUCCESS: Found a suitable teacher. ID: " + bestTeacherID);
-                    assignTeacher(bestTeacherID);
-                } else {
-                    Log.e(DEBUG_TAG, "FAILURE: No available teacher found for the selected slot/class.");
-                    Toast.makeText(demoActivity.this, "No available teacher for this slot", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(DEBUG_TAG, "FIREBASE ERROR: Could not fetch teachers.", error.toException());
-                Toast.makeText(demoActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
-    private void assignTeacher(String teacherID) {
-        Log.d(DEBUG_TAG, "assignTeacher called. Running transaction to update student count...");
-        DatabaseReference teacherRef = databaseReference.child("teachers").child(teacherID).child("studentsCount").child(selectedTimeSlot);
-        teacherRef.runTransaction(new Transaction.Handler() {
-            @NonNull
-            @Override
-            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
-                Integer count = currentData.getValue(Integer.class);
-                if (count == null) count = 0;
-                if (count < 3) {
-                    currentData.setValue(count + 1);
-                    return Transaction.success(currentData);
-                } else {
-                    return Transaction.abort();
-                }
-            }
-
-            @Override
-            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
-                if (error != null) {
-                    Log.e(DEBUG_TAG, "TRANSACTION ERROR: " + error.getMessage());
-                    Toast.makeText(demoActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (committed) {
-                    Log.d(DEBUG_TAG, "TRANSACTION SUCCESS: Slot was available. Proceeding to save allocation.");
-                    saveAllocationToDatabase(teacherID);
-                } else {
-                    Log.e(DEBUG_TAG, "TRANSACTION FAILED: Slot is full or was taken. Aborting.");
-                    Toast.makeText(demoActivity.this, "Slot is full, please select another time.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (adapter != null) {
+            adapter.stopListening();
+            adapter.stopAnyPlayingVideo();
+        }
     }
+
 
     private void saveAllocationToDatabase(String teacherID) {
-        Log.d(DEBUG_TAG, "saveAllocationToDatabase called. Creating final record...");
         String randomKey = database.getReference().push().getKey();
         if (randomKey == null) {
             Toast.makeText(this, "Could not create allocation record.", Toast.LENGTH_SHORT).show();
@@ -263,24 +179,15 @@ public class demoActivity extends AppCompatActivity {
                 allocationData.put("studentName", studentName);
                 allocationData.put("paymentStatus", "booked");
 
+                String finalRandomKey = randomKey;
                 allocationRef.setValue(allocationData)
                         .addOnSuccessListener(aVoid -> {
                             Log.d(DEBUG_TAG, "DATABASE SAVE SUCCESS: Allocation saved to Firebase.");
-                            Toast.makeText(demoActivity.this, "Allocation saved! Taking you to your schedule...", Toast.LENGTH_LONG).show();
+                            Toast.makeText(demoActivity.this, "Demo Booked Successfully!", Toast.LENGTH_LONG).show();
+                            logFirebaseScheduleEvent(finalRandomKey, selectedClass, selectedTimeSlot);
+                            logMetaScheduleEvent(finalRandomKey);
+                            navigateToMainWithSuccess();
 
-                            // Log events to analytics
-                            Bundle firebaseBundle = new Bundle();
-                            firebaseBundle.putString("class_name", selectedClass);
-                            firebaseBundle.putString("time_slot", selectedTimeSlot);
-                            mFirebaseAnalytics.logEvent("demo_booked", firebaseBundle);
-
-                            Log.d(DEBUG_TAG, "SUCCESS: >>> ABOUT TO SEND META SCHEDULE EVENT NOW! <<<");
-                            logMetaScheduleEvent(randomKey, selectedClass, selectedTimeSlot);
-
-                            // Navigate back to MainActivity after success
-                            Intent resultIntent = new Intent();
-                            setResult(RESULT_OK, resultIntent);
-                            finish(); // Close this activity.
                         })
                         .addOnFailureListener(e -> {
                             Log.e(DEBUG_TAG, "DATABASE SAVE FAILED: Could not save allocation.", e);
@@ -290,10 +197,185 @@ public class demoActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e(DEBUG_TAG, "Error fetching user details.", error.toException());
                 Toast.makeText(demoActivity.this, "Error fetching user details.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void navigateToMainWithSuccess() {
+        SharedPreferences prefs = getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("SHOW_DEMO_SUCCESS_FRAGMENT", true).apply();
+        Intent intent = new Intent(demoActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void setupUI() {
+        setDefaultDate();
+        reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        reviewsRecyclerView.setAdapter(reviewAdapter);
+        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year, month, dayOfMonth);
+            selectedDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calendar.getTime());
+        });
+    }
+
+    private void loadReviews() {
+        databaseReference.child("reviews").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                reviewList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    ReviewModel review = snapshot.getValue(ReviewModel.class);
+                    if (review != null) {
+                        reviewList.add(review);
+                    }
+                }
+                reviewAdapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(demoActivity.this, "Failed to load reviews.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setDefaultDate() {
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+        selectedDate = dayOfMonth + "-" + (month + 1) + "-" + year;
+        Log.d(DEBUG_TAG, "Default date set to: " + selectedDate);
+    }
+
+    private void checkIfUserHasBooking() {
+        Query userBookingQuery = databaseReference.child("allocated_classes").orderByChild("studentID").equalTo(currentUserID);
+        userBookingQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                progressBar.setVisibility(View.GONE);
+                if (snapshot.exists()) {
+                    mainLayout.setVisibility(View.GONE);
+                    alreadyBookedMessage.setVisibility(View.VISIBLE);
+                    alreadyBookedMessage.setText("You have already booked your free demo class. Please check your schedule.");
+                } else {
+                    mainLayout.setVisibility(View.VISIBLE);
+                    alreadyBookedMessage.setVisibility(View.GONE);
+                    loadTimeSlots();
+                    loadClasses();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(demoActivity.this, "Error checking booking status.", Toast.LENGTH_SHORT).show();
+                Log.e(DEBUG_TAG, "Database error checking booking status", error.toException());
+            }
+        });
+    }
+
+    private void allocateTeacher() {
+        if (selectedDate == null || selectedTimeSlot == null || selectedClass == null) {
+            Toast.makeText(this, "Please select a date, time slot, and class", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        databaseReference.child("teachers").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String bestTeacherID = null;
+                int minStudents = Integer.MAX_VALUE;
+                for (DataSnapshot teacherSnap : snapshot.getChildren()) {
+                    String teacherID = teacherSnap.getKey();
+                    DataSnapshot classesSnapshot = teacherSnap.child("classes");
+                    DataSnapshot timeSlotsSnapshot = teacherSnap.child("timeSlots");
+                    DataSnapshot studentsCountSnapshot = teacherSnap.child("studentsCount").child(selectedTimeSlot);
+                    if (classesSnapshot.exists() && timeSlotsSnapshot.exists() && studentsCountSnapshot.exists()) {
+                        boolean teachesClass = false;
+                        for (DataSnapshot classSnap : classesSnapshot.getChildren()) {
+                            if (classSnap.getValue(String.class).equals(selectedClass.replace("Class ", ""))) {
+                                teachesClass = true;
+                                break;
+                            }
+                        }
+                        boolean availableAtSlot = false;
+                        for (DataSnapshot slotSnap : timeSlotsSnapshot.getChildren()) {
+                            if (slotSnap.getValue(String.class).equals(selectedTimeSlot)) {
+                                availableAtSlot = true;
+                                break;
+                            }
+                        }
+                        int studentCount = studentsCountSnapshot.getValue(Integer.class) != null ? studentsCountSnapshot.getValue(Integer.class) : 0;
+                        if (teachesClass && availableAtSlot && studentCount < 10) {
+                            if (studentCount < minStudents) {
+                                minStudents = studentCount;
+                                bestTeacherID = teacherID;
+                            }
+                        }
+                    }
+                }
+                if (bestTeacherID != null) {
+                    assignTeacher(bestTeacherID);
+                } else {
+                    Toast.makeText(demoActivity.this, "No available teacher for this slot", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(demoActivity.this, "Error fetching data", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void assignTeacher(String teacherID) {
+        DatabaseReference teacherRef = databaseReference.child("teachers").child(teacherID).child("studentsCount").child(selectedTimeSlot);
+        teacherRef.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                Integer count = currentData.getValue(Integer.class);
+                if (count == null) count = 0;
+                if (count < 10) {
+                    currentData.setValue(count + 1);
+                    return Transaction.success(currentData);
+                } else {
+                    return Transaction.abort();
+                }
+            }
+            @Override
+            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                if (error != null) {
+                    Toast.makeText(demoActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (committed) {
+                    saveAllocationToDatabase(teacherID);
+                } else {
+                    Toast.makeText(demoActivity.this, "Slot is full, please select another time.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void logFirebaseScheduleEvent(String demoId, String className, String timeSlot) {
+        Bundle params = new Bundle();
+        params.putString(FirebaseAnalytics.Param.ITEM_ID, demoId);
+        params.putString(FirebaseAnalytics.Param.ITEM_NAME, "1-on-1 Demo Class");
+        params.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "Demo");
+        params.putString("class_name", className);
+        params.putString("time_slot", timeSlot);
+        mFirebaseAnalytics.logEvent("demo_session_booked", params);
+        Log.d("FirebaseEvent", "Logged 'Schedule' event for demo ID: " + demoId);
+    }
+
+    private void logMetaScheduleEvent(String demoId) {
+        Bundle params = new Bundle();
+        params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, demoId);
+        params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, "1-on-1-demo");
+        metaLogger.logEvent(AppEventsConstants.EVENT_NAME_SCHEDULE, params);
+        Log.d("MetaEvent", "Logged 'Schedule' event for demo ID: " + demoId);
     }
 
     private void loadTimeSlots() {
@@ -301,10 +383,6 @@ public class demoActivity extends AppCompatActivity {
                 "1-2 PM", "2-3 PM", "3-4 PM", "4-5 PM", "5-6 PM", "6-7 PM", "7-8 PM", "8-9 PM", "9-10 PM"};
         for (String slot : timeSlots) {
             TextView slotView = createTextView(slot);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(10, 10, 10, 10);
-            slotView.setLayoutParams(params);
-            slotView.setBackground(getResources().getDrawable(R.drawable.signbg));
             slotView.setOnClickListener(v -> {
                 if (selectedTimeSlotView == slotView) {
                     slotView.setBackground(getResources().getDrawable(R.drawable.signbg));
@@ -324,13 +402,10 @@ public class demoActivity extends AppCompatActivity {
     }
 
     private void loadClasses() {
-        String[] classes = {"Class LKG", "Class UKG", "Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7", "Class 8"};
+        String[] classes = {"Class LKG", "Class UKG", "Class 1",
+                "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7", "Class 8"};
         for (String cls : classes) {
             TextView classView = createTextView(cls);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(10, 10, 10, 10);
-            classView.setLayoutParams(params);
-            classView.setBackground(ContextCompat.getDrawable(this, R.drawable.signbg));
             classView.setOnClickListener(v -> {
                 if (selectedClassView == classView) {
                     classView.setBackground(ContextCompat.getDrawable(this, R.drawable.signbg));
@@ -356,17 +431,10 @@ public class demoActivity extends AppCompatActivity {
         textView.setTextColor(Color.WHITE);
         textView.setGravity(Gravity.CENTER);
         textView.setPadding(20, 20, 20, 20);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(10, 10, 10, 10);
+        textView.setLayoutParams(params);
+        textView.setBackground(getResources().getDrawable(R.drawable.signbg));
         return textView;
-    }
-
-    private void logMetaScheduleEvent(String demoId, String className, String timeSlot) {
-        AppEventsLogger logger = AppEventsLogger.newLogger(this);
-        Bundle params = new Bundle();
-        params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_ID, demoId);
-        params.putString(AppEventsConstants.EVENT_PARAM_CONTENT_TYPE, "demo_class");
-        params.putString("class_name", className);
-        params.putString("time_slot", timeSlot);
-        logger.logEvent(AppEventsConstants.EVENT_NAME_SCHEDULE, params);
-        Log.d("MetaEvent", "Logged 'Schedule' event for demo ID: " + demoId);
     }
 }

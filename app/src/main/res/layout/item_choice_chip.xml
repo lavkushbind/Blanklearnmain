@@ -1,0 +1,16 @@
+<!-- res/layout/item_choice_chip.xml -->
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/choice_text"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="12dp"
+    android:background="@drawable/selector_choice_chip_background"
+    android:gravity="center"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="12dp"
+    android:textColor="@drawable/selector_choice_chip_text"
+    android:textStyle="bold"
+    android:textSize="14sp"
+    tools:text="Mon\n25" />

@@ -1,0 +1,10 @@
+<!-- File Location: res/color/selector_choice_text.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- State when item is selected -->
+    <item android:state_selected="true" android:color="@android:color/white" />
+
+    <!-- Default state -->
+    <item android:color="@android:color/white" />
+
+</selector>

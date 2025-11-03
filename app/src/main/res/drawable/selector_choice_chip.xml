@@ -1,0 +1,18 @@
+<!-- res/drawable/selector_choice_chip.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Jab item SELECT hoga -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <!-- Yahan apna primary blue color daalein -->
+            <solid android:color="#3F8CFF" />
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+    <!-- Default state (jab SELECT nahi hai) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#2A2F45" /> <!-- Thoda dark background -->
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+</selector>

@@ -1,0 +1,35 @@
+<!-- res/layout/item_date_slot.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/date_slot_container"
+    android:layout_width="60dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingVertical="12dp"
+    android:paddingHorizontal="8dp"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/bg_date_unselected"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- Din ka naam (e.g., Mon) -->
+    <TextView
+        android:id="@+id/tv_day_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mon"
+        android:textColor="@color/white"
+        android:textSize="14sp"/>
+
+    <!-- Taarikh (e.g., 25) -->
+    <TextView
+        android:id="@+id/tv_date_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="25"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="4dp"/>
+</LinearLayout>

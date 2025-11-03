@@ -1,13 +1,13 @@
 <resources>
 
-    <!-- Base application theme -->
-    <style name="Theme.YourAppName" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <!-- Customize your theme here -->
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
+<!--    &lt;!&ndash; Base application theme &ndash;&gt;-->
+<!--    <style name="Theme.YourAppName" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here &ndash;&gt;-->
+<!--        <item name="android:windowFullscreen">true</item>-->
+<!--        <item name="android:windowNoTitle">true</item>-->
+<!--        <item name="android:windowActionBar">false</item>-->
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--    </style>-->
         <style name="Theme.App.White" parent="Theme.MaterialComponents.DayNight.NoActionBar">
             <!-- Background Colors -->
             <item name="android:colorBackground">#FFFFFF</item>  <!-- White background -->

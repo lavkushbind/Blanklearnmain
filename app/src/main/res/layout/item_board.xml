@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_board"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:strokeWidth="2dp"
+    app:strokeColor="@android:color/transparent">
+
+    <!-- लोगो और टेक्स्ट को वर्टिकली (ऊपर-नीचे) रखने के लिए LinearLayout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <!-- बोर्ड का लोगो -->
+        <ImageView
+            android:id="@+id/iv_board_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+             tools:src="@drawable/background_logo" /> <!-- डिज़ाइन में देखने के लिए -->
+
+        <!-- बोर्ड का नाम -->
+        <TextView
+            android:id="@+id/tv_board_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textStyle="bold"
+            tools:text="CBSE" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

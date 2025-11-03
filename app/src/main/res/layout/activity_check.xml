@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/inputWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter a word"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/uploadBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Upload to Firebase" />
+
+    <TextView
+        android:id="@+id/displayWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Firebase word will appear here"
+        android:textSize="16sp"
+        android:paddingTop="16dp" />
+</LinearLayout>

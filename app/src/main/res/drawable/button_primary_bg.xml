@@ -1,0 +1,6 @@
+<!-- res/drawable/button_primary_bg.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="#3F8CFF" /> <!-- Wahi blue color jo chip mein hai -->
+    <corners android:radius="100dp" /> <!-- Pill shape ke liye -->
+</shape>
